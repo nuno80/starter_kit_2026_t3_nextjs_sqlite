@@ -27,6 +27,11 @@ export const posts = sqliteTable(
   ],
 );
 
+export const role = sqliteTable("role", (d) => ({
+  name: d.text({ length: 255 }).primaryKey(),
+  description: d.text({ length: 1024 }),
+}));
+
 export const user = sqliteTable("user", (d) => ({
   id: d
     .text({ length: 255 })

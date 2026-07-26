@@ -49,6 +49,64 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     expect(rolesRes.status()).toBe(401);
   });
 
+  test("tRPC role catalog procedures enforce admin rights and protect system roles", async () => {
+    process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET ?? "mock";
+
+    const { adminRouter } = await import("~/server/api/routers/admin");
+    const { TRPCError } = await import("@trpc/server");
+
+    let deletedRole: string | null = null;
+    const mockCtx = {
+      db: {
+        query: {
+          user: {
+            findFirst: () => Promise.resolve({ role: "admin" }),
+          },
+        },
+        delete: () => ({
+          where: () => {
+            deletedRole = "mock-deleted";
+            return Promise.resolve();
+          },
+        }),
+      } as any,
+      session: {
+        user: {
+          id: "admin-user-id",
+          email: "admin@example.com",
+          name: "Admin User",
+          role: "admin",
+        },
+      } as any,
+      headers: new Headers(),
+    };
+
+    const caller = adminRouter.createCaller(mockCtx);
+
+    try {
+      await caller.deleteRole({ name: "admin" });
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("FORBIDDEN");
+      expect(err.message).toBe("Cannot delete core system roles.");
+    }
+
+    try {
+      await caller.deleteRole({ name: "user" });
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("FORBIDDEN");
+    }
+
+    const res = await caller.deleteRole({ name: "custom-role" });
+    expect(res.success).toBe(true);
+    expect(deletedRole).toBe("mock-deleted");
+  });
+
   test("updateUserRole mutation rejects self-demotion when userId === session.user.id and newRole !== 'admin'", async () => {
     process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
     process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";

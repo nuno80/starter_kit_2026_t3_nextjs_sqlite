@@ -3,9 +3,51 @@ import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 
 import { createTRPCRouter, adminProcedure } from "~/server/api/trpc";
-import { user } from "~/server/db/schema";
+import { user, role } from "~/server/db/schema";
 
 export const adminRouter = createTRPCRouter({
+  getRoles: adminProcedure.query(async ({ ctx }) => {
+    const dbRoles = await ctx.db.query.role.findMany();
+    if (dbRoles.length === 0) {
+      return [
+        { name: "admin", description: "Core system administrator role" },
+        { name: "user", description: "Core system user role" },
+      ];
+    }
+    return dbRoles;
+  }),
+
+  createRole: adminProcedure
+    .input(
+      z.object({
+        name: z.string().min(1),
+        description: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .insert(role)
+        .values({
+          name: input.name,
+          description: input.description ?? null,
+        })
+        .onConflictDoNothing();
+      return { success: true };
+    }),
+
+  deleteRole: adminProcedure
+    .input(z.object({ name: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      if (input.name === "admin" || input.name === "user") {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Cannot delete core system roles.",
+        });
+      }
+      await ctx.db.delete(role).where(eq(role.name, input.name));
+      return { success: true };
+    }),
+
   getUsers: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.user.findMany({
       orderBy: (users, { desc }) => [desc(users.createdAt)],
