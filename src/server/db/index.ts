@@ -17,3 +17,16 @@ export const client =
 if (env.NODE_ENV !== "production") globalForDb.client = client;
 
 export const db = drizzle(client, { schema });
+
+// Ensure system roles exist
+await db
+  .insert(schema.role)
+  .values([
+    { name: "user", description: "Standard user role" },
+    { name: "admin", description: "Administrator role with elevated privileges" },
+  ])
+  .onConflictDoNothing()
+  .catch(() => {
+    // Ignore errors during initial schema migration/push when tables might not exist yet
+  });
+

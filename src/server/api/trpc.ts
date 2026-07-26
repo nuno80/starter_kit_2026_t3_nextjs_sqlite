@@ -13,6 +13,8 @@ import { ZodError } from "zod";
 
 import { auth } from "~/server/better-auth";
 import { db } from "~/server/db";
+import { user } from "~/server/db/schema";
+import { eq } from "drizzle-orm";
 
 /**
  * 1. CONTEXT
@@ -132,3 +134,18 @@ export const protectedProcedure = t.procedure
       },
     });
   });
+
+/**
+ * Admin (elevated) procedure
+ *
+ * Guarantees `ctx.session.user` is not null and has `role === "admin"`.
+ */
+export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
+  const dbUser = await ctx.db.query.user.findFirst({
+    where: eq(user.id, ctx.session.user.id),
+  });
+  if (dbUser?.role !== "admin" && (ctx.session.user as { role?: string }).role !== "admin") {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({ ctx });
+});

@@ -28,6 +28,11 @@ export const posts = sqliteTable(
 );
 
 // Better Auth core tables
+export const role = sqliteTable("role", (d) => ({
+  name: d.text({ length: 255 }).notNull().primaryKey(),
+  description: d.text({ length: 255 }),
+}));
+
 export const user = sqliteTable("user", (d) => ({
   id: d
     .text({ length: 255 })
@@ -38,6 +43,10 @@ export const user = sqliteTable("user", (d) => ({
   email: d.text({ length: 255 }).notNull().unique(),
   emailVerified: d.integer({ mode: "boolean" }).default(false),
   image: d.text({ length: 255 }),
+  role: d
+    .text({ length: 255 })
+    .default("user")
+    .references(() => role.name),
   createdAt: d
     .integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
@@ -45,7 +54,8 @@ export const user = sqliteTable("user", (d) => ({
   updatedAt: d.integer({ mode: "timestamp" }).$onUpdate(() => new Date()),
 }));
 
-export const userRelations = relations(user, ({ many }) => ({
+export const userRelations = relations(user, ({ one, many }) => ({
+  role: one(role, { fields: [user.role], references: [role.name] }),
   account: many(account),
   session: many(session),
   posts: many(posts),

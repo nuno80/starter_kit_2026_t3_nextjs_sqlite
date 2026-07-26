@@ -29,3 +29,17 @@ test.describe("Landing Page and Demo App Bridge Seams", () => {
     await expect(page).toHaveURL("http://localhost:3000/");
   });
 });
+
+test.describe("Admin Dashboard & Guard Seams", () => {
+  test("unauthenticated visitor accessing /admin-dashboard is redirected to /", async ({ page }) => {
+    await page.goto("/admin-dashboard");
+    await expect(page).toHaveURL("http://localhost:3000/");
+  });
+
+  test("tRPC adminProcedure rejects unauthenticated request with UNAUTHORIZED", async ({ request }) => {
+    const res = await request.get("http://localhost:3000/api/trpc/post.adminCheck");
+    expect(res.status()).toBe(401);
+    const body = await res.json();
+    expect(JSON.stringify(body)).toContain("UNAUTHORIZED");
+  });
+});
