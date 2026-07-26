@@ -45,6 +45,9 @@ export const user = sqliteTable("user", (d) => ({
   role: d
     .text({ length: 255 })
     .default("user"),
+  banned: d.integer({ mode: "boolean" }).default(false),
+  banReason: d.text({ length: 1024 }),
+  banExpires: d.integer({ mode: "timestamp" }),
   createdAt: d
     .integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
@@ -112,6 +115,7 @@ export const session = sqliteTable(
     expiresAt: d.integer({ mode: "timestamp" }).notNull(),
     ipAddress: d.text({ length: 255 }),
     userAgent: d.text({ length: 255 }),
+    impersonatedBy: d.text({ length: 255 }),
     createdAt: d
       .integer({ mode: "timestamp" })
       .default(sql`(unixepoch())`)
