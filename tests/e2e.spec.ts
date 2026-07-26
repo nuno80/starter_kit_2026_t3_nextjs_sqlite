@@ -48,4 +48,65 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     const rolesRes = await request.get("http://localhost:3000/api/trpc/admin.getRoles");
     expect(rolesRes.status()).toBe(401);
   });
+
+  test("updateUserRole mutation rejects self-demotion when userId === session.user.id and newRole !== 'admin'", async () => {
+    process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET ?? "mock";
+
+    const { adminRouter } = await import("~/server/api/routers/admin");
+    const { TRPCError } = await import("@trpc/server");
+
+    const mockCtx = {
+      db: {
+        query: {
+          user: {
+            findFirst: () => Promise.resolve({ role: "admin" }),
+          },
+        },
+        update: () => ({
+          set: () => ({
+            where: () => Promise.resolve(),
+          }),
+        }),
+      } as any,
+      session: {
+        user: {
+          id: "admin-user-id",
+          email: "admin@example.com",
+          name: "Admin User",
+          role: "admin",
+          emailVerified: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        session: {
+          id: "session-id",
+          userId: "admin-user-id",
+          token: "token",
+          expiresAt: new Date(Date.now() + 86400000),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          ipAddress: null,
+          userAgent: null,
+        },
+      },
+      headers: new Headers(),
+    };
+
+    const caller = adminRouter.createCaller(mockCtx);
+
+    try {
+      await caller.updateUserRole({
+        userId: "admin-user-id",
+        newRole: "user",
+      });
+      expect(true).toBe(false); // should not reach here
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("FORBIDDEN");
+      expect(err.message).toBe("Cannot demote your own admin account.");
+    }
+  });
 });
+
