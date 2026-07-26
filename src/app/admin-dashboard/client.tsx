@@ -18,8 +18,12 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [newRoleName, setNewRoleName] = useState("");
   const [newRoleDesc, setNewRoleDesc] = useState("");
+  const [assignEmail, setAssignEmail] = useState("");
+  const [assignRole, setAssignRole] = useState("user");
+  const [assignSuccessMsg, setAssignSuccessMsg] = useState<string | null>(null);
+  const [assignErrorMsg, setAssignErrorMsg] = useState<string | null>(null);
 
-  const { data: users, isLoading: usersLoading } = api.admin.getUsers.useQuery();
+  const { data: users, isLoading: usersLoading, refetch: refetchUsers } = api.admin.getUsers.useQuery();
   const { data: roles, isLoading: rolesLoading, refetch: refetchRoles } = api.admin.getRoles.useQuery();
 
   const createRoleMutation = api.admin.createRole.useMutation({
@@ -38,6 +42,19 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
       await refetchRoles();
     },
     onError: (err) => setErrorMsg(err.message),
+  });
+
+  const assignRoleByEmailMutation = api.admin.assignRoleByEmail.useMutation({
+    onSuccess: async () => {
+      setAssignSuccessMsg(`Successfully assigned role "${assignRole}" to ${assignEmail}`);
+      setAssignErrorMsg(null);
+      setAssignEmail("");
+      await refetchUsers();
+    },
+    onError: (err) => {
+      setAssignErrorMsg(err.message);
+      setAssignSuccessMsg(null);
+    },
   });
 
   const updateUserRoleMutation = api.admin.updateUserRole.useMutation({
@@ -135,6 +152,65 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
             </TableBody>
           </Table>
         )}
+      </section>
+
+      {/* Assign Role by Email Section */}
+      <section className="flex flex-col gap-6 p-6 rounded-lg bg-plaster-deep border border-line">
+        <div className="flex flex-col gap-1">
+          <h2 className="font-serif text-2xl font-bold text-ink">Assign Role by Email</h2>
+          <p className="text-sm text-ink-soft">
+            Instantly assign a role to a registered user by their email address.
+          </p>
+        </div>
+
+        {assignSuccessMsg && (
+          <div className="p-3 rounded-md bg-green-100 border border-green-300 text-green-800 text-sm">
+            {assignSuccessMsg}
+          </div>
+        )}
+        {assignErrorMsg && (
+          <div className="p-3 rounded-md bg-red-100 border border-red-300 text-red-800 text-sm">
+            {assignErrorMsg}
+          </div>
+        )}
+
+        <div className="flex gap-4 items-end">
+          <div className="flex flex-col gap-1 flex-1">
+            <label className="text-xs font-semibold text-ink-soft">User Email</label>
+            <input
+              type="email"
+              placeholder="user@example.com"
+              value={assignEmail}
+              onChange={(e) => {
+                setAssignEmail(e.target.value);
+                setAssignSuccessMsg(null);
+                setAssignErrorMsg(null);
+              }}
+              className="px-3 py-1.5 rounded border border-line bg-plaster text-sm text-ink w-full"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-xs font-semibold text-ink-soft">Role</label>
+            <Select
+              value={assignRole}
+              onChange={(e) => setAssignRole(e.target.value)}
+            >
+              {availableRoles.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </Select>
+          </div>
+          <button
+            type="button"
+            disabled={!assignEmail.trim() || assignRoleByEmailMutation.isPending}
+            onClick={() => assignRoleByEmailMutation.mutate({ email: assignEmail.trim(), role: assignRole })}
+            className="px-4 py-1.5 rounded bg-terracotta text-plaster text-sm font-medium hover:bg-terracotta/90 disabled:opacity-50"
+          >
+            Assign Role
+          </button>
+        </div>
       </section>
 
       {/* Registered Users Section */}

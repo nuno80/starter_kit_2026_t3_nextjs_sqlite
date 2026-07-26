@@ -107,6 +107,79 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     expect(deletedRole).toBe("mock-deleted");
   });
 
+  test("assignRoleByEmail assigns role to existing user and throws NOT_FOUND for unregistered email", async () => {
+    process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET ?? "mock";
+
+    const { adminRouter } = await import("~/server/api/routers/admin");
+    const { TRPCError } = await import("@trpc/server");
+
+    let updatedRole: string | null = null;
+    let updatedId: string | null = null;
+
+    const mockCtx = {
+      db: {
+        query: {
+          user: {
+            findFirst: ({ where }: any) => {
+              // Simulating Drizzle eq check behavior
+              return Promise.resolve(where ? { id: "target-user-id", email: "existing@example.com", role: "user" } : undefined);
+            },
+          },
+        },
+        update: () => ({
+          set: ({ role }: any) => ({
+            where: () => {
+              updatedRole = role;
+              updatedId = "target-user-id";
+              return Promise.resolve();
+            },
+          }),
+        }),
+      } as any,
+      session: {
+        user: {
+          id: "admin-user-id",
+          email: "admin@example.com",
+          name: "Admin User",
+          role: "admin",
+        },
+      } as any,
+      headers: new Headers(),
+    };
+
+    // Override findFirst for testing both found and not found branches
+    const mockCtxNotFound = {
+      ...mockCtx,
+      db: {
+        ...mockCtx.db,
+        query: {
+          user: {
+            findFirst: () => Promise.resolve(undefined),
+          },
+        },
+      },
+    };
+
+    const caller = adminRouter.createCaller(mockCtx);
+    const callerNotFound = adminRouter.createCaller(mockCtxNotFound);
+
+    const res = await caller.assignRoleByEmail({ email: "existing@example.com", role: "editor" });
+    expect(res.success).toBe(true);
+    expect(updatedRole).toBe("editor");
+    expect(updatedId).toBe("target-user-id");
+
+    try {
+      await callerNotFound.assignRoleByEmail({ email: "missing@example.com", role: "editor" });
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("NOT_FOUND");
+      expect(err.message).toBe("User with this email is not registered yet");
+    }
+  });
+
   test("updateUserRole mutation rejects self-demotion when userId === session.user.id and newRole !== 'admin'", async () => {
     process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
     process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";

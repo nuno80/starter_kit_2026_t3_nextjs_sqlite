@@ -48,6 +48,41 @@ export const adminRouter = createTRPCRouter({
       return { success: true };
     }),
 
+  assignRoleByEmail: adminProcedure
+    .input(
+      z.object({
+        email: z.string().email(),
+        role: z.string().min(1),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const targetUser = await ctx.db.query.user.findFirst({
+        where: eq(user.email, input.email),
+      });
+
+      if (!targetUser) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User with this email is not registered yet",
+        });
+      }
+
+      const isAdmin = (r?: string | null) => r?.split(",").map(x => x.trim()).includes("admin") ?? false;
+      if (targetUser.id === ctx.session.user.id && !isAdmin(input.role)) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Cannot demote your own admin account.",
+        });
+      }
+
+      await ctx.db
+        .update(user)
+        .set({ role: input.role })
+        .where(eq(user.id, targetUser.id));
+
+      return { success: true };
+    }),
+
   getUsers: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.user.findMany({
       orderBy: (users, { desc }) => [desc(users.createdAt)],
