@@ -3,18 +3,31 @@
 import { useState } from "react";
 import { api } from "~/trpc/react";
 
-export function LatestPost() {
+export function LatestPost({
+  currentUserId,
+  userRole,
+}: {
+  currentUserId?: string;
+  userRole?: string | null;
+}) {
   const { data: posts = [], isLoading } = api.post.getAll.useQuery();
   const utils = api.useUtils();
   const [name, setName] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingName, setEditingName] = useState("");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const isAdmin = (r?: string | null) =>
+    r ? r.split(",").map((x) => x.trim()).includes("admin") : false;
+  const userIsAdmin = isAdmin(userRole);
 
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
       await utils.post.getAll.invalidate();
       setName("");
+      setErrorMsg(null);
     },
+    onError: (err) => setErrorMsg(err.message),
   });
 
   const updatePost = api.post.update.useMutation({
@@ -22,13 +35,17 @@ export function LatestPost() {
       await utils.post.getAll.invalidate();
       setEditingId(null);
       setEditingName("");
+      setErrorMsg(null);
     },
+    onError: (err) => setErrorMsg(err.message),
   });
 
   const deletePost = api.post.delete.useMutation({
     onSuccess: async () => {
       await utils.post.getAll.invalidate();
+      setErrorMsg(null);
     },
+    onError: (err) => setErrorMsg(err.message),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -63,6 +80,12 @@ export function LatestPost() {
           {posts.length} {posts.length === 1 ? "post" : "posts"}
         </span>
       </div>
+
+      {errorMsg && (
+        <div className="mb-4 p-3 rounded-xl bg-red-100 border border-red-300 text-red-800 text-xs">
+          {errorMsg}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="mb-8 flex gap-2">
         <input
@@ -153,124 +176,132 @@ export function LatestPost() {
         </div>
       ) : (
         <div className="flex max-h-[380px] flex-col gap-2.5 overflow-y-auto pr-1">
-          {posts.map((post) => (
-            <div
-              key={post.id}
-              className="group flex items-center justify-between gap-4 rounded-xl border border-line bg-plaster p-4 transition-all duration-200 hover:border-line-strong hover:shadow-2xs"
-            >
-              {editingId === post.id ? (
-                <form
-                  onSubmit={(e) => handleUpdateSubmit(e, post.id)}
-                  className="flex flex-1 items-center gap-2"
-                >
-                  <input
-                    type="text"
-                    value={editingName}
-                    onChange={(e) => setEditingName(e.target.value)}
-                    disabled={updatePost.isPending}
-                    autoFocus
-                    className="min-w-0 flex-1 rounded-lg border border-line-strong bg-white px-3 py-1.5 text-sm text-ink focus:ring-2 focus:ring-terracotta/20 focus:outline-none"
-                  />
-                  <button
-                    type="submit"
-                    disabled={updatePost.isPending || !editingName.trim()}
-                    className="rounded-lg bg-terracotta px-3 py-1.5 text-xs font-semibold text-plaster transition hover:bg-terracotta-d active:scale-[0.98] disabled:opacity-50"
+          {posts.map((post) => {
+            const isOwner = post.createdById === currentUserId;
+            const canEdit = isOwner || userIsAdmin;
+
+            return (
+              <div
+                key={post.id}
+                className="group flex items-center justify-between gap-4 rounded-xl border border-line bg-plaster p-4 transition-all duration-200 hover:border-line-strong hover:shadow-2xs"
+              >
+                {editingId === post.id ? (
+                  <form
+                    onSubmit={(e) => handleUpdateSubmit(e, post.id)}
+                    className="flex flex-1 items-center gap-2"
                   >
-                    Salva
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setEditingId(null)}
-                    disabled={updatePost.isPending}
-                    className="rounded-lg border border-line bg-plaster-deep px-3 py-1.5 text-xs font-medium text-ink-soft transition hover:bg-plaster hover:text-ink active:scale-[0.98]"
-                  >
-                    Annulla
-                  </button>
-                </form>
-              ) : (
-                <>
-                  <div className="min-w-0 flex-1 text-left">
-                    <p className="truncate text-sm font-semibold text-ink">
-                      {post.name}
-                    </p>
-                    <span className="font-mono text-xs text-ink-soft">
-                      ID: #{post.id} •{" "}
-                      {new Date(post.createdAt).toISOString().slice(11, 16)}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
+                    <input
+                      type="text"
+                      value={editingName}
+                      onChange={(e) => setEditingName(e.target.value)}
+                      disabled={updatePost.isPending}
+                      autoFocus
+                      className="min-w-0 flex-1 rounded-lg border border-line-strong bg-white px-3 py-1.5 text-sm text-ink focus:ring-2 focus:ring-terracotta/20 focus:outline-none"
+                    />
                     <button
-                      type="button"
-                      onClick={() => startEditing(post.id, post.name)}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-transparent text-ink-soft transition hover:border-line hover:bg-plaster-deep hover:text-ink active:scale-[0.95]"
-                      title="Modifica post"
+                      type="submit"
+                      disabled={updatePost.isPending || !editingName.trim()}
+                      className="rounded-lg bg-terracotta px-3 py-1.5 text-xs font-semibold text-plaster transition hover:bg-terracotta-d active:scale-[0.98] disabled:opacity-50"
                     >
-                      <svg
-                        className="h-4 w-4"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.75"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                        />
-                      </svg>
+                      Salva
                     </button>
                     <button
                       type="button"
-                      onClick={() => deletePost.mutate({ id: post.id })}
-                      disabled={
-                        deletePost.isPending &&
-                        deletePost.variables?.id === post.id
-                      }
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-transparent text-ink-soft transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-600 active:scale-[0.95] disabled:opacity-50"
-                      title="Elimina post"
+                      onClick={() => setEditingId(null)}
+                      disabled={updatePost.isPending}
+                      className="rounded-lg border border-line bg-plaster-deep px-3 py-1.5 text-xs font-medium text-ink-soft transition hover:bg-plaster hover:text-ink active:scale-[0.98]"
                     >
-                      {deletePost.isPending &&
-                      deletePost.variables?.id === post.id ? (
-                        <svg
-                          className="h-3.5 w-3.5 animate-spin text-red-600"
-                          viewBox="0 0 24 24"
-                          fill="none"
+                      Annulla
+                    </button>
+                  </form>
+                ) : (
+                  <>
+                    <div className="min-w-0 flex-1 text-left">
+                      <p className="truncate text-sm font-semibold text-ink">
+                        {post.name}
+                      </p>
+                      <span className="font-mono text-xs text-ink-soft">
+                        ID: #{post.id} •{" "}
+                        {new Date(post.createdAt).toISOString().slice(11, 16)}
+                        {isOwner && <span className="ml-1 text-terracotta font-semibold">• Tuo</span>}
+                      </span>
+                    </div>
+                    {canEdit && (
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => startEditing(post.id, post.name)}
+                          className="flex h-8 w-8 items-center justify-center rounded-lg border border-transparent text-ink-soft transition hover:border-line hover:bg-plaster-deep hover:text-ink active:scale-[0.95]"
+                          title="Modifica post"
                         >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
+                          <svg
+                            className="h-4 w-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
                             stroke="currentColor"
-                            strokeWidth="3"
-                          />
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                          />
-                        </svg>
-                      ) : (
-                        <svg
-                          className="h-4 w-4"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.75"
+                            strokeWidth="1.75"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => deletePost.mutate({ id: post.id })}
+                          disabled={
+                            deletePost.isPending &&
+                            deletePost.variables?.id === post.id
+                          }
+                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-transparent text-ink-soft transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-600 active:scale-[0.95] disabled:opacity-50"
+                          title="Elimina post"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                          />
-                        </svg>
-                      )}
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          ))}
+                          {deletePost.isPending &&
+                          deletePost.variables?.id === post.id ? (
+                            <svg
+                              className="h-3.5 w-3.5 animate-spin text-red-600"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="3"
+                              />
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                              />
+                            </svg>
+                          ) : (
+                            <svg
+                              className="h-4 w-4"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.75"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                              />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
