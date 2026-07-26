@@ -15,7 +15,7 @@ export default async function PostsPage() {
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
         <div className="flex w-full justify-between items-center border-b border-line pb-4">
           <Link href="/" className="font-serif text-2xl font-bold hover:text-terracotta">
-            ← T3 Starter Home
+            ← Nuno Starter SQlite
           </Link>
           <span className="text-sm text-ink-soft">Demo App Page (/posts)</span>
         </div>
@@ -27,18 +27,18 @@ export default async function PostsPage() {
           Test real-time CRUD operations against local <code className="bg-plaster-deep px-2 py-1 rounded border border-line">db.sqlite</code> using tRPC, Drizzle ORM, and Better-Auth.
         </p>
 
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-xl text-ink-soft font-medium">
+        <div className="flex w-full flex-col items-center gap-2">
+          <p className="text-xl font-medium text-ink-soft">
             {hello ? hello.greeting : "Loading tRPC query..."}
           </p>
 
-          <div className="flex flex-col items-center justify-center gap-4 mt-4 bg-plaster-deep p-6 rounded-xl border border-line shadow-sm w-full max-w-md">
+          <div className="mt-4 flex w-full max-w-md flex-col items-center justify-center gap-4">
             {!session ? <AuthForm /> : <UserProfile user={session.user} />}
           </div>
         </div>
 
         {session?.user && (
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-xl">
             <LatestPost />
           </div>
         )}

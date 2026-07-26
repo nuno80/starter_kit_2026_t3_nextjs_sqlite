@@ -61,7 +61,7 @@ const dictionaries: Record<Language, Dictionary> = {
     "nav.login": "Accedi",
     "nav.demo": "Demo App",
     "hero.badge": "Artigianato Digitale & Modern Stack",
-    "hero.title1": "Ingegneria T3,",
+    "hero.title1": "Nuno Starter SQlite,",
     "hero.title2": "Anima Editoriale.",
     "hero.desc": "Uno starter kit che fonde la robustezza dei tipi end-to-end con l'estetica materica di Plaster & Terracotta. Veloce, locale, senza compromessi.",
     "hero.cta.demo": "Esplora Demo App",
@@ -83,9 +83,9 @@ const dictionaries: Record<Language, Dictionary> = {
     "dx.metric.migration.title": "1 Comando Migration",
     "dx.metric.migration.desc": "Sincronizza e aggiorna il tuo schema istantaneamente con Drizzle Kit, senza attese o complessità esterne.",
     "phil.label": "03 / Filosofia & Vantaggi",
-    "phil.quote": "Siamo tornati alla semplicità di un file locale. Niente container, niente latenze di rete esterne, niente drift tra client e server. La robustezza del T3 stack e la chiarezza dell'architettura materica liberano la mente per concentrarsi solo sulla logica dell'applicazione.",
+    "phil.quote": "Siamo tornati alla semplicità di un file locale. Niente container, niente latenze di rete esterne, niente drift tra client e server. La robustezza di Nuno Starter SQlite e la chiarezza dell'architettura materica liberano la mente per concentrarsi solo sulla logica dell'applicazione.",
     "phil.author": "Architettura & Team di Core Design",
-    "phil.role": "T3 Starter Kit Philosophy",
+    "phil.role": "Nuno Starter SQlite Philosophy",
     "phil.score.stars": "100% Locale",
     "phil.score.types": "Zero Drift",
     "phil.score.footprint": "Ultra-light Footprint",
@@ -108,7 +108,7 @@ const dictionaries: Record<Language, Dictionary> = {
     "nav.login": "Sign In",
     "nav.demo": "Demo App",
     "hero.badge": "Digital Craftsmanship & Modern Stack",
-    "hero.title1": "T3 Engineering,",
+    "hero.title1": "Nuno Starter SQlite,",
     "hero.title2": "Editorial Soul.",
     "hero.desc": "A starter kit blending end-to-end type robustness with the tactile aesthetics of Plaster & Terracotta. Fast, local, uncompromising.",
     "hero.cta.demo": "Explore Demo App",
@@ -130,9 +130,9 @@ const dictionaries: Record<Language, Dictionary> = {
     "dx.metric.migration.title": "1-Command Schema",
     "dx.metric.migration.desc": "Synchronize and update your schema instantly using Drizzle Kit without waiting or external complexities.",
     "phil.label": "03 / Philosophy & Advantages",
-    "phil.quote": "We have returned to the simplicity of a local file. No containers, no external network latencies, no contract drift between client and server. The robustness of the T3 stack and tactile architectural clarity free your mind to focus entirely on application logic.",
+    "phil.quote": "We have returned to the simplicity of a local file. No containers, no external network latencies, no contract drift between client and server. The robustness of Nuno Starter SQlite and tactile architectural clarity free your mind to focus entirely on application logic.",
     "phil.author": "Architecture & Core Design Team",
-    "phil.role": "T3 Starter Kit Philosophy",
+    "phil.role": "Nuno Starter SQlite Philosophy",
     "phil.score.stars": "100% Local-First",
     "phil.score.types": "Zero Contract Drift",
     "phil.score.footprint": "Ultra-light Footprint",
@@ -163,13 +163,13 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const saved = localStorage.getItem("t3-lang") as Language;
+    const saved = localStorage.getItem("nuno-lang") as Language;
     if (saved === "it" || saved === "en") setLangState(saved);
   }, []);
 
   const setLang = (next: Language) => {
     setLangState(next);
-    localStorage.setItem("t3-lang", next);
+    localStorage.setItem("nuno-lang", next);
     document.documentElement.lang = next;
   };
 

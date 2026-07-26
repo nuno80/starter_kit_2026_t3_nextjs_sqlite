@@ -52,8 +52,8 @@ export function Navbar() {
     return (
       <nav className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-line bg-plaster/90 px-4 py-3 text-ink backdrop-blur-md md:px-8">
         <Link href="/" className="flex items-baseline gap-2 font-serif text-xl font-bold tracking-tight text-ink">
-          <span>T3</span>
-          <span className="font-sans text-xs font-normal tracking-widest text-ink-soft uppercase">Starter</span>
+          <span>Nuno</span>
+          <span className="font-sans text-xs font-normal tracking-widest text-ink-soft uppercase">Starter SQlite</span>
         </Link>
         <ul className="hidden items-center gap-6 text-sm font-medium text-ink-soft md:flex">
           {navLinks.map((link) => (
@@ -85,8 +85,8 @@ export function Navbar() {
     <nav className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-line bg-plaster/90 px-4 py-3 text-ink backdrop-blur-md md:px-8">
       {/* Brand */}
       <Link href="/" className="flex items-baseline gap-2 font-serif text-xl font-bold tracking-tight text-ink hover:text-terracotta">
-        <span>T3</span>
-        <span className="font-sans text-xs font-normal tracking-widest text-ink-soft uppercase">Starter</span>
+        <span>Nuno</span>
+        <span className="font-sans text-xs font-normal tracking-widest text-ink-soft uppercase">Starter SQlite</span>
       </Link>
 
       {/* Navigation links (01-04) - only relevant on / or smooth scroll */}

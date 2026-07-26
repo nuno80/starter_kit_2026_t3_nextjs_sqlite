@@ -209,7 +209,7 @@ export function DxSection() {
               </div>
               <div className="pt-4 border-t border-line/60 flex items-center justify-between font-mono text-xs text-ink-faint">
                 <span>LOCAL-FIRST</span>
-                <span>T3-STACK</span>
+                <span>NUNO-SQLITE</span>
               </div>
             </div>
           ))}
@@ -222,7 +222,7 @@ export function DxSection() {
               <span className="h-3 w-3 rounded-full bg-terracotta/80 inline-block" />
               <span className="h-3 w-3 rounded-full bg-brass/80 inline-block" />
               <span className="h-3 w-3 rounded-full bg-olive/80 inline-block" />
-              <span className="ml-2 font-semibold text-plaster-warm">t3-starter-kit — bash</span>
+              <span className="ml-2 font-semibold text-plaster-warm">nuno-starter-sqlite — bash</span>
             </div>
             <span>SQLite Local File Environment</span>
           </div>
@@ -253,7 +253,7 @@ export function PhilSection() {
   const { t } = useI18n();
 
   return (
-    <section id="phil" className="w-full border-b border-line bg-plaster px-4 py-24 md:px-12 lg:px-20">
+    <section id="filosofia" className="w-full border-b border-line bg-plaster px-4 py-24 md:px-12 lg:px-20">
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-12">
         <span className="text-xs font-mono font-semibold uppercase tracking-widest text-terracotta">
           {t("phil.label")}
@@ -309,7 +309,7 @@ pnpm dev`;
   };
 
   return (
-    <section id="quick" className="w-full bg-plaster-deep/40 px-4 py-24 md:px-12 lg:px-20">
+    <section id="quickstart" className="w-full bg-plaster-deep/40 px-4 py-24 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto flex flex-col gap-16">
         {/* Header */}
         <div className="max-w-3xl flex flex-col gap-4">

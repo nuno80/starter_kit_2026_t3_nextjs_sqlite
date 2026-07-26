@@ -1,4 +1,4 @@
-# T3 Starter Kit (SQLite + Better-Auth)
+# Nuno Starter SQlite (Better-Auth + Drizzle + tRPC)
 
 Uno starter kit moderno e altamente performante basato sullo [T3 Stack](https://create.t3.gg/), configurato per la massima velocità di sviluppo, type-safety end-to-end e semplicità di avvio con database SQLite locale e autenticazione moderna.
 

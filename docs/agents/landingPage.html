@@ -1,0 +1,1423 @@
+<html lang="it" dir="ltr"><head><meta charset="utf-8"><base href="/"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><link rel="icon" type="image/png" href="https://app-cdn.clickup.com/assets/favicons/favicon-16x16.png" sizes="16x16"><link rel="icon" type="image/png" href="https://app-cdn.clickup.com/assets/favicons/favicon-32x32.png" sizes="32x32"><link rel="stylesheet" href="styles-EUJ4CZUO.css" crossorigin="anonymous"><style>.cu-embedded-html__container[_ngcontent-ng-c94272347]{display:flow-root;width:100%}</style></head><body data-git-sha="cf5a2c1f65b09b0630f9a90f60476f44f89ee8b2" data-build-version="4.15.1" data-build-time="2026-07-20T21:33:30.868Z" class="artifact-editable"><cu-root ng-version="21.2.17" _nghost-ng-c94272347=""><div _ngcontent-ng-c94272347="" class="cu-embedded-html__container">
+
+
+<!-- skill:chrome -->
+<style>
+/* Credit line — bottom-right */
+.design-ui-credit {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  font: 11px/1 system-ui, sans-serif;
+  color: rgba(128,128,128,0.5);
+  pointer-events: none;
+  z-index: 2147483647;
+  transition: opacity 0.4s ease;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+/* Hide chrome on touch devices */
+@media (hover: none) {
+  .design-ui-credit { display: none; }
+}
+
+/* Print fixes */
+@media print {
+  * {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .design-ui-credit { display: none !important; }
+}
+
+</style>
+<script data-activated="true">
+(function () {
+    // Design-ui pages are single compositions, so the whole body is editable.
+    function markEditable() {
+        document.body.classList.add('artifact-editable');
+    }
+
+    // Credit badge with idle-fade. Hover devices only.
+    function initChromeUI() {
+        if (!matchMedia('(hover: hover)').matches) return;
+
+        var credit = document.createElement('div');
+        credit.className = 'design-ui-credit';
+        credit.setAttribute('aria-hidden', 'true');
+        credit.innerHTML = '\u{1F49C} by ClickUp Brain';
+        document.body.appendChild(credit);
+
+        var timer = null;
+        var fade = function (out) { credit.style.opacity = out ? '0' : ''; };
+        fade(true);
+        var show = function () {
+            fade(false);
+            clearTimeout(timer);
+            timer = setTimeout(function () { fade(true); }, 3000);
+        };
+        document.addEventListener('mousemove', show);
+        show();
+    }
+
+    function init() {
+        markEditable();
+        initChromeUI();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
+</script>
+<!-- /skill:chrome -->
+<!-- skill:libraries -->
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js" integrity="sha384-wHFvAtjmgnkA2PJcMsDaCgdipf7X7YV44X/igbLHpvGiq6T5/PvFKl93grpvtbQT" crossorigin="anonymous" data-activated="true"></script>
+<script data-activated="true">document.addEventListener("DOMContentLoaded",()=>lucide.createIcons())</script>
+<!-- /skill:libraries -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BnB Roma · Camera matrimoniale a 500 m dai Musei Vaticani</title>
+<meta name="description" id="metaDesc" content="BnB in Via Luigi Rizzo, Roma. Camera matrimoniale con bagno privato a 500 metri dai Musei Vaticani e 100 metri dalla Metro A Cipro. Colazione inclusa.">
+<meta name="theme-color" content="#f4ece0">
+<meta property="og:type" content="website">
+<meta property="og:title" id="ogTitle" content="BnB Roma · A due passi dalla Cappella Sistina">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="de_DE">
+<link rel="alternate" hreflang="it" href="https://bnbroma.it/">
+<link rel="alternate" hreflang="en" href="https://bnbroma.it/en">
+<link rel="alternate" hreflang="fr" href="https://bnbroma.it/fr">
+<link rel="alternate" hreflang="es" href="https://bnbroma.it/es">
+<link rel="alternate" hreflang="de" href="https://bnbroma.it/de">
+<link rel="alternate" hreflang="x-default" href="https://bnbroma.it/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..700&amp;family=Instrument+Sans:ital,wght@0,400..700;1,400..600&amp;display=swap" rel="stylesheet">
+<style>
+/* ============================================================ TOKENS ============================================================ */
+:root{
+  --plaster:oklch(96.5% 0.014 82);
+  --plaster-deep:oklch(93% 0.021 80);
+  --plaster-warm:oklch(89% 0.028 76);
+  --ink:oklch(24% 0.021 48);
+  --ink-soft:oklch(41% 0.019 52);
+  --ink-faint:oklch(58% 0.014 56);
+  --terracotta:oklch(56% 0.135 40);
+  --terracotta-d:oklch(46% 0.118 38);
+  --terracotta-l:oklch(72% 0.086 46);
+  --olive:oklch(43% 0.052 122);
+  --brass:oklch(75% 0.104 84);
+  --line:oklch(84% 0.018 74);
+  --line-strong:oklch(72% 0.024 70);
+
+  --serif:"Fraunces",ui-serif,Georgia,serif;
+  --sans:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --fs-xs:0.75rem; --fs-sm:0.875rem; --fs-base:1.0625rem; --fs-lg:1.375rem;
+  --fs-2:clamp(1.75rem,4vw,2.5rem); --fs-3:clamp(2.25rem,6vw,4rem);
+  --fs-display:clamp(2.75rem,11vw,8rem);
+
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px;
+  --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px;
+
+  --ease-out-quint:cubic-bezier(0.22,1,0.36,1);
+  --ease-out-expo:cubic-bezier(0.16,1,0.3,1);
+  --ease-io:cubic-bezier(0.65,0,0.35,1);
+
+  --shadow-md:0 1px 2px oklch(24% .02 48/.05),0 8px 24px -12px oklch(24% .02 48/.18);
+  --shadow-lg:0 2px 4px oklch(24% .02 48/.06),0 24px 56px -20px oklch(24% .02 48/.3);
+  --z-nav:60; --z-bar:70; --z-pop:90;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--plaster);color:var(--ink);font-family:var(--sans);font-size:var(--fs-base);line-height:1.6;font-optical-sizing:auto;-webkit-font-smoothing:antialiased}
+img,iframe{display:block;max-width:100%}
+h1,h2,h3,h4{margin:0;font-family:var(--serif);font-weight:400;text-wrap:balance;letter-spacing:-.015em;line-height:1.02}
+p{margin:0;text-wrap:pretty}
+a{color:inherit}
+ul{margin:0;padding:0;list-style:none}
+button,input,select{font:inherit;color:inherit}
+/* la lunghezza dei testi cambia molto tra lingue: DE ha parole lunghissime */
+h1,h2,h3,.walk .n,.amen-list b,.tag{overflow-wrap:break-word;hyphens:auto}
+
+/* ============================================================ PRIMITIVES ============================================================ */
+.wrap{width:100%;max-width:1240px;margin-inline:auto;padding-inline:var(--s-5)}
+@media (min-width:768px){.wrap{padding-inline:var(--s-7)}}
+.eyebrow{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.14em;font-weight:600;color:var(--terracotta-d)}
+.lede{font-size:var(--fs-lg);line-height:1.5;color:var(--ink-soft);max-width:42ch}
+.prose{max-width:66ch;color:var(--ink-soft)}
+.prose+.prose{margin-top:var(--s-4)}
+.sec-head{display:grid;gap:var(--s-4);border-top:1px solid var(--line-strong);padding-top:var(--s-4);grid-template-columns:1fr}
+@media (min-width:900px){.sec-head{grid-template-columns:9rem 1fr;gap:var(--s-7);align-items:start}}
+.sec-num{font-family:var(--serif);font-size:var(--fs-sm);letter-spacing:.06em;color:var(--ink-faint);font-variant-numeric:tabular-nums;padding-top:.4em}
+.sec-title{font-size:var(--fs-3);font-variation-settings:"SOFT" 20,"WONK" 1}
+
+.btn{--btn-bg:var(--terracotta);--btn-fg:var(--plaster);--btn-bd:var(--terracotta);
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);
+  background:var(--btn-bg);color:var(--btn-fg);border:1px solid var(--btn-bd);padding:15px var(--s-6);
+  border-radius:999px;cursor:pointer;font-size:var(--fs-sm);font-weight:600;letter-spacing:.02em;text-decoration:none;
+  transition:transform .18s var(--ease-out-quint),background-color .18s var(--ease-io),color .18s var(--ease-io),box-shadow .24s var(--ease-out-quint)}
+.btn:hover{background:var(--terracotta-d);border-color:var(--terracotta-d);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.btn:active{transform:translateY(0)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.btn[disabled]{background:var(--plaster-warm);border-color:var(--line-strong);color:var(--ink-faint);cursor:not-allowed;transform:none;box-shadow:none}
+.btn-onphoto{--btn-bg:transparent;--btn-fg:oklch(97% .012 82);--btn-bd:oklch(97% .012 82/.55)}
+.btn-onphoto:hover{background:oklch(97% .012 82);border-color:oklch(97% .012 82);color:var(--ink)}
+
+.frame{position:relative;overflow:hidden;border-radius:2px;
+  background:repeating-linear-gradient(135deg,var(--plaster-deep) 0 12px,var(--plaster-warm) 12px 24px)}
+.frame img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease-out-expo),opacity .6s ease-out}
+.frame img[data-broken]{opacity:0}
+.frame::after{content:attr(data-label);position:absolute;inset:auto var(--s-3) var(--s-3) auto;font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);opacity:0;transition:opacity .3s}
+.frame:has(img[data-broken])::after{opacity:1}
+.zoom:hover img{transform:scale(1.035)}
+figcaption{font-size:var(--fs-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:var(--s-3)}
+
+.rev{opacity:0;transform:translateY(18px);transition:opacity .8s var(--ease-out-expo),transform .8s var(--ease-out-expo);transition-delay:calc(var(--i,0)*70ms)}
+.rev.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}}
+/* micro-fade quando cambia lingua */
+.swapping [data-i18n],.swapping [data-i18n-html]{animation:swap .42s var(--ease-out-expo) both}
+@keyframes swap{from{opacity:.15}to{opacity:1}}
+
+/* ============================================================ NAV + LANG ============================================================ */
+.nav{position:fixed;inset:0 0 auto 0;z-index:var(--z-nav);display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);
+  padding:var(--s-4) var(--s-5);color:oklch(97% .012 82);border-bottom:1px solid transparent;
+  transition:background-color .4s var(--ease-io),color .4s var(--ease-io),border-color .4s,padding .4s var(--ease-io)}
+@media (min-width:768px){.nav{padding:var(--s-5) var(--s-7)}}
+.nav[data-solid]{background:var(--plaster);color:var(--ink);border-bottom-color:var(--line);padding-block:var(--s-3)}
+.mark{display:flex;align-items:baseline;gap:var(--s-2);text-decoration:none;flex:none}
+.mark b{font-family:var(--serif);font-weight:600;font-size:1.5rem;letter-spacing:-.03em;font-variation-settings:"SOFT" 40,"WONK" 1}
+.mark span{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.22em;opacity:.72}
+.nav-links{display:none;gap:var(--s-6);font-size:var(--fs-sm)}
+@media (min-width:1040px){.nav-links{display:flex}}
+.nav-links a{text-decoration:none;padding-block:var(--s-1);position:relative;opacity:.86;transition:opacity .2s}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease-out-quint)}
+.nav-links a:hover{opacity:1}.nav-links a:hover::after{transform:scaleX(1)}
+.nav-right{display:flex;align-items:center;gap:var(--s-3)}
+.nav .btn{padding:11px var(--s-5)}
+@media (max-width:479px){.nav .btn{display:none}}
+
+/* selettore lingua */
+.lang{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid currentColor;
+  border-radius:999px;padding:9px 13px;cursor:pointer;font-size:var(--fs-xs);font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;opacity:.82;
+  transition:opacity .2s,background-color .2s var(--ease-io),color .2s var(--ease-io)}
+.lang:hover{opacity:1;background:currentColor}
+.lang:hover .lc,.lang:hover i{color:var(--plaster);mix-blend-mode:normal}
+.nav[data-solid] .lang:hover .lc,.nav[data-solid] .lang:hover i{color:var(--plaster)}
+.lang:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.lang .lc{font-variant-numeric:tabular-nums}
+.lang i{transition:transform .3s var(--ease-out-quint)}
+.lang[aria-expanded="true"] i{transform:rotate(180deg)}
+
+#langMenu{position:fixed;margin:0;padding:var(--s-2);border:1px solid var(--line-strong);border-radius:4px;
+  background:var(--plaster);color:var(--ink);box-shadow:var(--shadow-lg);min-width:216px;z-index:var(--z-pop);
+  opacity:0;transform:translateY(-6px) scale(.98);transition:opacity .22s var(--ease-out-expo),transform .22s var(--ease-out-expo),overlay .22s allow-discrete,display .22s allow-discrete}
+#langMenu:popover-open{opacity:1;transform:none}
+@starting-style{#langMenu:popover-open{opacity:0;transform:translateY(-6px) scale(.98)}}
+#langMenu li button{display:flex;width:100%;align-items:baseline;gap:var(--s-3);background:none;border:0;
+  padding:11px var(--s-3);cursor:pointer;text-align:left;border-radius:2px;transition:background-color .16s}
+#langMenu li button:hover{background:var(--plaster-deep)}
+#langMenu li button:focus-visible{outline:2px solid var(--terracotta);outline-offset:-2px}
+#langMenu .code{font-size:var(--fs-xs);font-weight:700;letter-spacing:.1em;color:var(--ink-faint);width:2.1em;flex:none}
+#langMenu .name{font-size:var(--fs-sm)}
+#langMenu .tick{margin-left:auto;color:var(--terracotta);opacity:0;flex:none}
+#langMenu button[aria-current="true"] .tick{opacity:1}
+#langMenu button[aria-current="true"] .name{font-weight:600}
+#langMenu button[aria-current="true"] .code{color:var(--terracotta)}
+
+/* ============================================================ HERO ============================================================ */
+.hero{position:relative;min-height:100svh;display:grid;align-items:end;overflow:hidden;isolation:isolate}
+.hero-media{position:absolute;inset:0;z-index:-2}
+.hero-media .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.6s var(--ease-io)}
+.hero-media .slide[data-active]{opacity:1}
+.hero-media img{width:100%;height:100%;object-fit:cover;animation:drift 24s var(--ease-io) infinite alternate}
+@keyframes drift{from{transform:scale(1.02)}to{transform:scale(1.12)}}
+@media (prefers-reduced-motion:reduce){.hero-media img{animation:none}}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(to top,oklch(22% .03 44/.88) 0%,oklch(22% .03 44/.45) 42%,oklch(22% .03 44/.12) 72%,oklch(22% .03 44/.4) 100%)}
+.hero-inner{padding-block:var(--s-9) var(--s-6);color:oklch(97% .012 82)}
+.hero h1{font-size:var(--fs-display);font-weight:300;line-height:.95;letter-spacing:-.04em;font-variation-settings:"SOFT" 60,"WONK" 1;max-width:17ch;margin-top:var(--s-4)}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--brass)}
+.hero .eyebrow{color:oklch(88% .05 84)}
+.hero-sub{margin-top:var(--s-5);font-size:var(--fs-lg);line-height:1.45;max-width:36ch;color:oklch(92% .014 82)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:var(--s-3);margin-top:var(--s-6)}
+.facts{display:flex;flex-wrap:wrap;gap:var(--s-3) var(--s-5);align-items:center;margin-top:var(--s-8);padding-top:var(--s-4);
+  border-top:1px solid oklch(97% .012 82/.28);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.1em;color:oklch(90% .014 82/.9)}
+.facts li{display:flex;align-items:center;gap:var(--s-2)}
+.facts i{color:var(--brass);flex:none}
+.dots{position:absolute;right:var(--s-5);bottom:var(--s-6);display:flex;gap:var(--s-2);z-index:2}
+@media (min-width:768px){.dots{right:var(--s-7)}}
+.dots button{width:28px;height:2px;border:0;padding:0;cursor:pointer;background:oklch(97% .012 82/.35);transition:background-color .3s}
+.dots button[aria-current="true"]{background:oklch(97% .012 82)}
+.dots button:focus-visible{outline:2px solid var(--brass);outline-offset:4px}
+
+/* ============================================================ SEZIONI ============================================================ */
+section{scroll-margin-top:88px}
+.room{padding-block:var(--s-9)}
+.room-grid{display:grid;gap:var(--s-7);margin-top:var(--s-7)}
+@media (min-width:900px){.room-grid{grid-template-columns:1.05fr 1fr;gap:var(--s-8);align-items:start}.room-copy{position:sticky;top:110px}}
+.room-copy .price{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s-2);margin-top:var(--s-6);font-family:var(--serif);font-size:var(--fs-2)}
+.room-copy .price small{font-family:var(--sans);font-size:var(--fs-sm);color:var(--ink-faint);letter-spacing:.02em}
+.stack{display:grid;gap:var(--s-4)}
+.stack>figure:first-child{aspect-ratio:4/5}
+.stack .duo{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4)}
+.stack .duo .frame{aspect-ratio:1}
+@media (min-width:900px){.stack{margin-top:var(--s-9)}}
+.amen{margin-top:var(--s-9)}
+.amen h3{font-size:var(--fs-lg);font-family:var(--sans);font-weight:600}
+.amen-list{margin-top:var(--s-5);display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));border-top:1px solid var(--line)}
+.amen-list li{display:flex;gap:var(--s-3);align-items:flex-start;padding:var(--s-4) var(--s-5) var(--s-4) 0;border-bottom:1px solid var(--line)}
+.amen-list i{color:var(--olive);flex:none;margin-top:3px}
+.amen-list b{display:block;font-weight:600;font-size:var(--fs-sm)}
+.amen-list span{display:block;font-size:var(--fs-sm);color:var(--ink-faint);line-height:1.45}
+
+.loc{padding-block:var(--s-9);background:var(--plaster-deep)}
+.loc-grid{display:grid;gap:var(--s-7);margin-top:var(--s-7)}
+@media (min-width:1000px){.loc-grid{grid-template-columns:.9fr 1.1fr;gap:var(--s-8)}}
+.walk{border-top:1px solid var(--line-strong)}
+.walk li{display:grid;grid-template-columns:auto 1fr auto;gap:var(--s-4);align-items:baseline;padding:var(--s-4) 0;border-bottom:1px solid var(--line)}
+.walk .t{font-family:var(--serif);font-size:var(--fs-lg);color:var(--terracotta);font-variant-numeric:tabular-nums;line-height:1}
+.walk .n{font-weight:600;font-size:var(--fs-base)}
+.walk .n em{display:block;font-style:normal;font-weight:400;font-size:var(--fs-sm);color:var(--ink-faint);line-height:1.4}
+.walk .d{font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);white-space:nowrap}
+.map{position:relative;border:1px solid var(--line-strong);border-radius:2px;overflow:hidden;background:var(--plaster-warm)}
+.map iframe{width:100%;height:clamp(320px,52vh,520px);border:0;filter:saturate(.82) contrast(1.03)}
+.map-note{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-4);align-items:center;justify-content:space-between;
+  padding:var(--s-3) var(--s-4);border-top:1px solid var(--line);background:var(--plaster);
+  font-size:var(--fs-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+.map-note a{color:var(--terracotta-d);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+.nearby{margin-top:var(--s-7);display:flex;flex-wrap:wrap;gap:var(--s-2)}
+.tag{font-size:var(--fs-sm);padding:7px var(--s-4);border:1px solid var(--line-strong);border-radius:999px;color:var(--ink-soft);transition:background-color .2s,color .2s,border-color .2s}
+.tag:hover{background:var(--olive);border-color:var(--olive);color:var(--plaster)}
+
+.rev-sec{padding-block:var(--s-9)}
+.quote-big{margin-top:var(--s-7);max-width:26ch}
+.quote-big blockquote{margin:0;font-family:var(--serif);font-size:var(--fs-3);line-height:1.14;font-weight:300;font-variation-settings:"SOFT" 40,"WONK" 1;letter-spacing:-.025em}
+.byline{display:flex;align-items:center;gap:var(--s-3);margin-top:var(--s-5);font-size:var(--fs-sm)}
+.byline .av{width:38px;height:38px;border-radius:999px;overflow:hidden;flex:none;background:var(--plaster-warm)}
+.byline .av img{width:100%;height:100%;object-fit:cover}
+.byline b{font-weight:600}.byline span{color:var(--ink-faint)}
+.stars{display:flex;gap:2px;color:var(--brass)}
+.quotes{display:grid;gap:var(--s-6);margin-top:var(--s-8);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.quotes>li{padding-top:var(--s-4);border-top:1px solid var(--line-strong)}
+@media (min-width:900px){.quotes>li:nth-child(2){margin-top:var(--s-6)}.quotes>li:nth-child(3){margin-top:var(--s-9)}}
+.quotes p{font-size:var(--fs-base);color:var(--ink-soft);margin-top:var(--s-3)}
+.score{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s-3);margin-top:var(--s-8);padding-top:var(--s-4);border-top:1px solid var(--line);font-size:var(--fs-sm);color:var(--ink-faint)}
+.score b{font-family:var(--serif);font-size:var(--fs-2);color:var(--ink);line-height:1}
+
+/* ============================================================ PRENOTA ============================================================ */
+.book{background:var(--ink);color:var(--plaster);padding-block:var(--s-9)}
+.book .sec-head{border-top-color:oklch(97% .012 82/.2)}
+.book .sec-num{color:oklch(80% .014 82/.65)}
+.book-grid{display:grid;gap:var(--s-7);margin-top:var(--s-7)}
+@media (min-width:1000px){.book-grid{grid-template-columns:1.15fr .85fr;gap:var(--s-8);align-items:start}}
+.field{display:grid;gap:var(--s-2);margin-bottom:var(--s-5)}
+.field label{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.12em;color:oklch(82% .014 82/.8);font-weight:600}
+.ctrl{background:oklch(30% .022 46);border:1px solid oklch(97% .012 82/.18);border-radius:2px;padding:14px var(--s-4);width:100%;color:var(--plaster);
+  transition:border-color .2s var(--ease-io),background-color .2s}
+.ctrl:hover{border-color:oklch(97% .012 82/.34)}
+.ctrl:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-color:var(--brass)}
+.ctrl[aria-invalid="true"]{border-color:var(--terracotta-l)}
+.row2{display:grid;gap:var(--s-4)}
+@media (min-width:560px){.row2{grid-template-columns:1fr 1fr;gap:var(--s-5)}}
+.stepper{display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);padding:8px 10px 8px var(--s-4)}
+.stepper .val{font-family:var(--serif);font-size:var(--fs-lg);font-variant-numeric:tabular-nums}
+.stepper .btns{display:flex;gap:6px}
+.stepper button{width:38px;height:38px;border-radius:999px;border:1px solid oklch(97% .012 82/.24);background:transparent;cursor:pointer;display:grid;place-items:center;
+  transition:background-color .18s,border-color .18s,transform .18s var(--ease-out-quint)}
+.stepper button:hover:not([disabled]){background:oklch(97% .012 82/.12);border-color:oklch(97% .012 82/.5)}
+.stepper button:active:not([disabled]){transform:scale(.94)}
+.stepper button[disabled]{opacity:.3;cursor:not-allowed}
+.stepper button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.hint{font-size:var(--fs-xs);color:oklch(78% .014 82/.7)}
+.alert{display:none;gap:var(--s-3);align-items:flex-start;margin-bottom:var(--s-5);padding:var(--s-4);
+  border:1px solid var(--terracotta-l);background:oklch(34% .055 40);border-radius:2px;font-size:var(--fs-sm)}
+.alert[data-show]{display:flex}
+.alert i{color:var(--terracotta-l);flex:none;margin-top:2px}
+.alert b{display:block;font-weight:600;margin-bottom:2px}
+
+.summary{background:var(--terracotta-d);border-radius:2px;padding:var(--s-6);position:relative;overflow:hidden}
+@media (min-width:1000px){.summary{position:sticky;top:110px}}
+.summary h3{font-family:var(--serif);font-size:var(--fs-2);font-weight:400;font-variation-settings:"SOFT" 30,"WONK" 1}
+.summary .when{font-size:var(--fs-sm);color:oklch(92% .03 60/.9);margin-top:var(--s-2)}
+.lines{margin-top:var(--s-6);border-top:1px solid oklch(97% .012 82/.26)}
+.lines li{display:flex;justify-content:space-between;gap:var(--s-4);padding:var(--s-3) 0;border-bottom:1px solid oklch(97% .012 82/.16);font-size:var(--fs-sm)}
+.lines li span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.lines li.disc span:last-child{color:oklch(90% .09 110)}
+.total{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-4);margin-top:var(--s-5)}
+.total .lbl{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.12em;font-weight:600;opacity:.85}
+.total .amt{font-family:var(--serif);font-size:var(--fs-2);font-variant-numeric:tabular-nums;line-height:1}
+.summary .btn{--btn-bg:var(--plaster);--btn-fg:var(--ink);--btn-bd:var(--plaster);width:100%;margin-top:var(--s-5)}
+.summary .btn:hover{--btn-bg:oklch(99% .008 82);--btn-bd:oklch(99% .008 82);color:var(--ink)}
+.summary .btn[disabled]{--btn-bg:oklch(52% .09 38);--btn-bd:oklch(60% .06 38);--btn-fg:oklch(84% .03 50/.8)}
+.secure{display:flex;align-items:center;gap:var(--s-2);justify-content:center;margin-top:var(--s-3);font-size:var(--fs-xs);opacity:.82;text-align:center}
+.empty-note{font-size:var(--fs-sm);color:oklch(92% .03 60/.85);margin-top:var(--s-5);line-height:1.5}
+.skel{height:12px;border-radius:2px;background:oklch(60% .08 40);animation:pulse 1.4s var(--ease-io) infinite}
+@keyframes pulse{0%,100%{opacity:.45}50%{opacity:.8}}
+.done{text-align:center;padding:var(--s-4) 0}
+.done .tick{width:52px;height:52px;margin:0 auto var(--s-4);border-radius:999px;border:1px solid oklch(97% .012 82/.45);display:grid;place-items:center}
+.done h3{font-size:var(--fs-lg)}
+.done p{font-size:var(--fs-sm);color:oklch(92% .03 60/.9);margin-top:var(--s-2)}
+
+/* ============================================================ FOOTER ============================================================ */
+footer{background:var(--olive);color:oklch(95% .02 100);padding-block:var(--s-8) var(--s-5)}
+.f-grid{display:grid;gap:var(--s-7)}
+@media (min-width:860px){.f-grid{grid-template-columns:1.2fr .8fr .8fr 1fr;gap:var(--s-6)}}
+footer h4{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.14em;font-family:var(--sans);font-weight:600;color:oklch(88% .04 110/.8);margin-bottom:var(--s-4)}
+footer .mark{color:inherit;margin-bottom:var(--s-4)}
+footer p,footer li{font-size:var(--fs-sm);line-height:1.7;color:oklch(93% .02 100/.9)}
+footer a{text-decoration:none;transition:opacity .2s}
+footer .list a{border-bottom:1px solid oklch(95% .02 100/.28);padding-bottom:1px}
+footer .list a:hover{border-bottom-color:currentColor}
+.social{display:flex;gap:var(--s-2);margin-top:var(--s-4)}
+.social a{width:40px;height:40px;border-radius:999px;border:1px solid oklch(95% .02 100/.3);display:grid;place-items:center;transition:background-color .2s,transform .2s var(--ease-out-quint)}
+.social a:hover{background:oklch(95% .02 100/.14);transform:translateY(-2px)}
+.social a:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.minimap{border:1px solid oklch(95% .02 100/.3);border-radius:2px;overflow:hidden}
+.minimap iframe{width:100%;height:150px;border:0;filter:saturate(.7) contrast(1.05)}
+.f-langs{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-4);margin-top:var(--s-4)}
+.f-langs button{background:none;border:0;padding:0;cursor:pointer;font-size:var(--fs-sm);color:inherit;opacity:.75;border-bottom:1px solid transparent;transition:opacity .2s,border-color .2s}
+.f-langs button:hover{opacity:1;border-bottom-color:currentColor}
+.f-langs button[aria-current="true"]{opacity:1;font-weight:600;border-bottom-color:var(--brass)}
+.f-bottom{margin-top:var(--s-8);padding-top:var(--s-4);border-top:1px solid oklch(95% .02 100/.22);display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-5);justify-content:space-between;font-size:var(--fs-xs);color:oklch(90% .02 100/.72)}
+
+.bar{position:fixed;inset:auto 0 0 0;z-index:var(--z-bar);display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);
+  padding:var(--s-3) var(--s-5) calc(var(--s-3) + env(safe-area-inset-bottom));background:var(--plaster);border-top:1px solid var(--line-strong);
+  transform:translateY(110%);transition:transform .45s var(--ease-out-expo)}
+.bar[data-show]{transform:none}
+.bar .p{font-family:var(--serif);font-size:var(--fs-lg);line-height:1.1}
+.bar .p small{display:block;font-family:var(--sans);font-size:var(--fs-xs);color:var(--ink-faint)}
+@media (min-width:900px){.bar{display:none}}
+</style>
+
+
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a class="mark" href="#top" aria-label="BnB Roma"><b>BnB</b><span>Roma</span></a>
+  <ul class="nav-links">
+    <li><a href="#camera" data-i18n="nav.room">La camera</a></li>
+    <li><a href="#posizione" data-i18n="nav.loc">Posizione</a></li>
+    <li><a href="#recensioni" data-i18n="nav.rev">Recensioni</a></li>
+    <li><a href="#prenota" data-i18n="nav.book">Prenota</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang" id="langBtn" popovertarget="langMenu" aria-expanded="false" aria-haspopup="listbox" data-i18n-attr="aria-label:a11y.lang" aria-label="Cambia lingua">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="globe" class="lucide lucide-globe"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+      <span class="lc" id="langCode">IT</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+    </button>
+    <a class="btn" href="#prenota" data-i18n="nav.cta">Prenota ora</a>
+  </div>
+</nav>
+
+<ul id="langMenu" popover="" role="listbox" data-i18n-attr="aria-label:a11y.langList" aria-label="Scegli la lingua">
+    <li role="option" aria-selected="true">
+      <button type="button" data-lang="it" aria-current="true" lang="it">
+        <span class="code">IT</span>
+        <span class="name">Italiano</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check tick"><path d="M20 6 9 17l-5-5"></path></svg>
+      </button>
+    </li>
+    <li role="option" aria-selected="false">
+      <button type="button" data-lang="en" aria-current="false" lang="en">
+        <span class="code">EN</span>
+        <span class="name">English</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check tick"><path d="M20 6 9 17l-5-5"></path></svg>
+      </button>
+    </li>
+    <li role="option" aria-selected="false">
+      <button type="button" data-lang="fr" aria-current="false" lang="fr">
+        <span class="code">FR</span>
+        <span class="name">Français</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check tick"><path d="M20 6 9 17l-5-5"></path></svg>
+      </button>
+    </li>
+    <li role="option" aria-selected="false">
+      <button type="button" data-lang="es" aria-current="false" lang="es">
+        <span class="code">ES</span>
+        <span class="name">Español</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check tick"><path d="M20 6 9 17l-5-5"></path></svg>
+      </button>
+    </li>
+    <li role="option" aria-selected="false">
+      <button type="button" data-lang="de" aria-current="false" lang="de">
+        <span class="code">DE</span>
+        <span class="name">Deutsch</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check tick"><path d="M20 6 9 17l-5-5"></path></svg>
+      </button>
+    </li></ul>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-media" id="slider">
+    <div class="slide"><img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&amp;fit=crop&amp;w=2000&amp;q=80" data-i18n-attr="alt:alt.dome" alt="Cupola di San Pietro al tramonto sopra i tetti di Roma"></div>
+    <div class="slide" data-active=""><img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&amp;fit=crop&amp;w=2000&amp;q=80" data-i18n-attr="alt:alt.bed" alt="Camera matrimoniale luminosa con biancheria di lino bianco"></div>
+    <div class="slide"><img src="https://images.unsplash.com/photo-1533050487297-09b450131914?auto=format&amp;fit=crop&amp;w=2000&amp;q=80" data-i18n-attr="alt:alt.street" alt="Strada romana con palazzi ocra e persiane in legno"></div>
+  </div>
+  <div class="hero-inner wrap">
+    <p class="eyebrow" data-i18n="hero.eyebrow">Via Luigi Rizzo · Prati, Roma</p>
+    <h1 data-i18n-html="hero.title">A due passi dalla <em>Cappella Sistina</em></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Una sola camera matrimoniale, con bagno privato. Curata come si cura una casa, non un albergo.</p>
+    <div class="hero-cta">
+      <a class="btn" href="#prenota" data-i18n="nav.cta">Prenota ora</a>
+      <a class="btn btn-onphoto" href="#camera" data-i18n="hero.cta2">Guarda la camera</a>
+    </div>
+    <ul class="facts">
+      <li><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="landmark" class="lucide lucide-landmark"><line x1="3" x2="21" y1="22" y2="22"></line><line x1="6" x2="6" y1="18" y2="11"></line><line x1="10" x2="10" y1="18" y2="11"></line><line x1="14" x2="14" y1="18" y2="11"></line><line x1="18" x2="18" y1="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg> <span data-i18n="hero.f1">500 m dai Musei Vaticani</span></li>
+      <li><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="train-front" class="lucide lucide-train-front"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1"></path><path d="m9 15-1-1"></path><path d="m15 15 1-1"></path><path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z"></path><path d="m8 19-2 3"></path><path d="m16 19 2 3"></path></svg> <span data-i18n="hero.f2">100 m da Metro A Cipro</span></li>
+      <li><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="croissant" class="lucide lucide-croissant"><path d="m4.6 13.11 5.79-3.21c1.89-1.05 4.79 1.78 3.71 3.71l-3.22 5.81C8.8 23.16.79 15.23 4.6 13.11Z"></path><path d="m10.5 9.5-1-2.29C9.2 6.48 8.8 6 8 6H4.5C2.79 6 2 6.5 2 8.5a7.71 7.71 0 0 0 2 4.83"></path><path d="M8 6c0-1.55.24-4-2-4-2 0-2.5 2.17-2.5 4"></path><path d="m14.5 13.5 2.29 1c.73.3 1.21.7 1.21 1.5v3.5c0 1.71-.5 2.5-2.5 2.5a7.71 7.71 0 0 1-4.83-2"></path><path d="M18 16c1.55 0 4-.24 4 2 0 2-2.17 2.5-4 2.5"></path></svg> <span data-i18n="hero.f3">Colazione inclusa</span></li>
+      <li><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="key-round" class="lucide lucide-key-round"><path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></svg> <span data-i18n="hero.f4">Check-in flessibile</span></li>
+    </ul>
+  </div>
+  <div class="dots" id="dots" role="tablist" data-i18n-attr="aria-label:a11y.slides" aria-label="Immagini della struttura"><button type="button" aria-current="false" aria-label="Immagine 1"></button><button type="button" aria-current="true" aria-label="Immagine 2"></button><button type="button" aria-current="false" aria-label="Immagine 3"></button></div>
+</header>
+
+<!-- LA CAMERA -->
+<section class="room" id="camera">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <p class="sec-num" data-i18n="room.num">01 / La camera</p>
+      <div><h2 class="sec-title" data-i18n-html="room.title">Una stanza sola,<br>fatta bene</h2></div>
+    </div>
+    <div class="room-grid">
+      <div class="room-copy rev">
+        <p class="prose" data-i18n="room.p1">Diciotto metri quadri al terzo piano con ascensore, finestra sul cortile interno: di notte si sente solo il vento tra i pini. Letto matrimoniale in ferro battuto con materasso a molle insacchettate, lenzuola di lino lavato, due comodini presi al mercato di Porta Portese.</p>
+        <p class="prose" data-i18n="room.p2">Il bagno privato è tutto vostro: doccia a filo pavimento, acqua calda immediata, asciugacapelli e set cortesia rifornito ogni giorno. La colazione arriva su un vassoio con caffè della torrefazione sotto casa, cornetti di Fioravanti e frutta di stagione.</p>
+        <p class="prose" data-i18n="room.p3">Siamo Marta e Giulio, viviamo nell'appartamento accanto. Diamo indicazioni sui musei, prenotiamo l'ingresso ai Vaticani senza fila e diciamo con onestà dove non vale la pena mangiare.</p>
+        <p class="price">€135 <small data-i18n="room.priceSmall">a notte · 2 ospiti · minimo 2 notti</small></p>
+      </div>
+      <div class="stack rev" style="--i:1">
+        <figure class="frame zoom" data-i18n-attr="data-label:ui.photoSoon" style="margin:0" data-label="Foto in arrivo">
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" data-i18n-attr="alt:alt.bed" alt="Camera matrimoniale luminosa con biancheria di lino bianco">
+        </figure>
+        <div class="duo">
+          <figure class="frame zoom" data-i18n-attr="data-label:ui.photoSoon" style="margin:0" data-label="Foto in arrivo">
+            <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&amp;fit=crop&amp;w=800&amp;q=80" data-i18n-attr="alt:alt.bath" alt="Bagno privato con doccia a filo pavimento">
+          </figure>
+          <figure class="frame zoom" data-i18n-attr="data-label:ui.photoSoon" style="margin:0" data-label="Foto in arrivo">
+            <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&amp;fit=crop&amp;w=800&amp;q=80" data-i18n-attr="alt:alt.breakfast" alt="Vassoio della colazione con caffè, cornetti e frutta fresca">
+          </figure>
+        </div>
+        <figcaption data-i18n="room.caption">Camera, bagno privato e colazione servita in stanza</figcaption>
+      </div>
+    </div>
+    <div class="amen rev">
+      <h3 data-i18n="room.amenTitle">Cosa c'è dentro</h3>
+      <ul class="amen-list" id="amenList"><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bath" class="lucide lucide-bath"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"></path><line x1="10" x2="8" y1="5" y2="7"></line><line x1="2" x2="22" y1="12" y2="12"></line><line x1="7" x2="7" y1="19" y2="21"></line><line x1="17" x2="17" y1="19" y2="21"></line></svg><div><b>Bagno privato</b><span>Doccia a filo, asciugamani in cotone egiziano</span></div></li><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="wifi" class="lucide lucide-wifi"><path d="M12 20h.01"></path><path d="M2 8.82a15 15 0 0 1 20 0"></path><path d="M5 12.859a10 10 0 0 1 14 0"></path><path d="M8.5 16.429a5 5 0 0 1 7 0"></path></svg><div><b>Wi-Fi in fibra 1 Gbps</b><span>Stabile per videochiamate, rete dedicata agli ospiti</span></div></li><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="snowflake" class="lucide lucide-snowflake"><line x1="2" x2="22" y1="12" y2="12"></line><line x1="12" x2="12" y1="2" y2="22"></line><path d="m20 16-4-4 4-4"></path><path d="m4 8 4 4-4 4"></path><path d="m16 4-4 4-4-4"></path><path d="m8 20 4-4 4 4"></path></svg><div><b>Aria condizionata</b><span>Split silenzioso con pompa di calore, comando in camera</span></div></li><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="croissant" class="lucide lucide-croissant"><path d="m4.6 13.11 5.79-3.21c1.89-1.05 4.79 1.78 3.71 3.71l-3.22 5.81C8.8 23.16.79 15.23 4.6 13.11Z"></path><path d="m10.5 9.5-1-2.29C9.2 6.48 8.8 6 8 6H4.5C2.79 6 2 6.5 2 8.5a7.71 7.71 0 0 0 2 4.83"></path><path d="M8 6c0-1.55.24-4-2-4-2 0-2.5 2.17-2.5 4"></path><path d="m14.5 13.5 2.29 1c.73.3 1.21.7 1.21 1.5v3.5c0 1.71-.5 2.5-2.5 2.5a7.71 7.71 0 0 1-4.83-2"></path><path d="M18 16c1.55 0 4-.24 4 2 0 2-2.17 2.5-4 2.5"></path></svg><div><b>Colazione italiana</b><span>Servita in camera tra le 7:30 e le 10:30</span></div></li><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="tv" class="lucide lucide-tv"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg><div><b>Smart TV 43"</b><span>Netflix e Prime Video con il vostro account</span></div></li><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="coffee" class="lucide lucide-coffee"><path d="M10 2v2"></path><path d="M14 2v2"></path><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"></path><path d="M6 2v2"></path></svg><div><b>Moka e bollitore</b><span>Caffè, tè e tisane sempre riforniti</span></div></li><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="wind" class="lucide lucide-wind"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"></path><path d="M9.6 4.6A2 2 0 1 1 11 8H2"></path><path d="M12.6 19.4A2 2 0 1 0 14 16H2"></path></svg><div><b>Phon e ferro da stiro</b><span>Asciugacapelli in camera, ferro su richiesta</span></div></li><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="lock" class="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><div><b>Cassaforte e serratura smart</b><span>Codice personale valido per il soggiorno</span></div></li><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="luggage" class="lucide lucide-luggage"><path d="M6 20h0a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h0"></path><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"></path><path d="M10 20h4"></path><circle cx="16" cy="20" r="2"></circle><circle cx="8" cy="20" r="2"></circle></svg><div><b>Deposito bagagli</b><span>Prima del check-in e dopo il check-out, gratuito</span></div></li><li><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="ban" class="lucide lucide-ban"><circle cx="12" cy="12" r="10"></circle><path d="m4.9 4.9 14.2 14.2"></path></svg><div><b>Non fumatori</b><span>Balcone condiviso a disposizione</span></div></li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- POSIZIONE -->
+<section class="loc" id="posizione">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <p class="sec-num" data-i18n="loc.num">02 / Posizione</p>
+      <div>
+        <h2 class="sec-title" data-i18n-html="loc.title">Prati, il quartiere<br>dietro il Vaticano</h2>
+        <p class="lede" style="margin-top:var(--s-5)" data-i18n="loc.lede">Strade larghe, palazzi umbertini, panetterie vere. Si dorme in silenzio e si arriva a San Pietro prima dei pullman turistici.</p>
+      </div>
+    </div>
+    <div class="loc-grid">
+      <div class="rev">
+        <ul class="walk" id="walkList"><li><span class="t">6′</span><span class="n">Musei Vaticani<em>Ingresso di Viale Vaticano</em></span><span class="d">500 m</span></li><li><span class="t">2′</span><span class="n">Metro A · Cipro<em>Diretta a Termini in 12 minuti</em></span><span class="d">100 m</span></li><li><span class="t">12′</span><span class="n">Basilica di San Pietro<em>Piazza e cupola</em></span><span class="d">950 m</span></li><li><span class="t">18′</span><span class="n">Castel Sant'Angelo<em>Lungo Via Crescenzio</em></span><span class="d">1,4 km</span></li><li><span class="t">25′</span><span class="n">Piazza Navona<em>Attraversando Ponte Umberto I</em></span><span class="d">2,1 km</span></li><li><span class="t">4′</span><span class="n">Mercato Trionfale<em>Il mercato coperto più grande di Roma</em></span><span class="d">350 m</span></li></ul>
+        <ul class="nearby" id="tagList"><li class="tag">Bonci Pizzarium 5′</li><li class="tag">Pasticceria Fioravanti 3′</li><li class="tag">Farmacia h24 2′</li><li class="tag">Supermercato 4′</li><li class="tag">Bus 49 · 492 · 990</li><li class="tag">Fiumicino 35′ in taxi</li></ul>
+      </div>
+      <div class="rev" style="--i:1">
+        <div class="map">
+          <iframe src="https://www.google.com/maps?q=Via%20Luigi%20Rizzo%2C%20Roma&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-i18n-attr="title:a11y.map" title="Mappa: Via Luigi Rizzo, Roma"></iframe>
+          <div class="map-note">
+            <span>Via Luigi Rizzo, 00136 Roma</span>
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+Luigi+Rizzo,+Roma" target="_blank" rel="noopener" data-i18n="loc.directions">Indicazioni stradali</a>
+          </div>
+        </div>
+        <p class="prose" style="margin-top:var(--s-5);font-size:var(--fs-sm)" data-i18n="loc.note">L'indirizzo esatto e il codice del portone arrivano per email subito dopo la conferma del pagamento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENSIONI -->
+<section class="rev-sec" id="recensioni">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <p class="sec-num" data-i18n="rv.num">03 / Recensioni</p>
+      <div><h2 class="sec-title" data-i18n-html="rv.title">Chi ci ha<br>già dormito</h2></div>
+    </div>
+    <div class="quote-big rev">
+      <blockquote data-i18n="rv.big">“Siamo entrati alle undici di sera e sul tavolo c'era un biglietto scritto a mano con i biglietti dei musei già stampati.”</blockquote>
+      <div class="byline">
+        <span class="av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&amp;fit=crop&amp;w=120&amp;q=80" alt="Hannah L."></span>
+        <div>
+          <b>Hannah L.</b> <span data-i18n="rv.m0">· Manchester, aprile 2026</span>
+          <div class="stars" role="img" aria-label="5 stelle su 5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+        </div>
+      </div>
+    </div>
+    <ul class="quotes" id="quoteList">
+    <li class="rev in" style="--i:0">
+      <div class="stars" role="img" aria-label="5 stelle su 5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+      <p>Venivamo per il Giubileo e la posizione ha fatto la differenza: usciti alle 6:30, in Piazza San Pietro alle 6:45, messa senza folla. Camera immacolata e silenzio totale.</p>
+      <div class="byline">
+        <span class="av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&amp;fit=crop&amp;w=120&amp;q=80" alt="Michael D."></span>
+        <div><b>Michael D.</b> <span>· Boston, marzo 2026</span></div>
+      </div>
+    </li>
+    <li class="rev in" style="--i:1">
+      <div class="stars" role="img" aria-label="5 stelle su 5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+      <p>Il letto è comodissimo e l'aria condizionata a luglio salva la vita. Marta ci ha mandato una lista di trattorie dove i romani mangiano davvero: mai visto un turista.</p>
+      <div class="byline">
+        <span class="av"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&amp;fit=crop&amp;w=120&amp;q=80" alt="Sofia R."></span>
+        <div><b>Sofia R.</b> <span>· Barcellona, luglio 2025</span></div>
+      </div>
+    </li>
+    <li class="rev in" style="--i:2">
+      <div class="stars" role="img" aria-label="4 stelle su 5"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+      <p>Una camera sola significa attenzione totale, e si sente. Unica nota: il bagno è sullo stesso piano ma fuori dalla stanza. Per noi zero problemi, ma è giusto saperlo prima.</p>
+      <div class="byline">
+        <span class="av"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&amp;fit=crop&amp;w=120&amp;q=80" alt="Thomas B."></span>
+        <div><b>Thomas B.</b> <span>· Lione, ottobre 2025</span></div>
+      </div>
+    </li></ul>
+    <p class="score rev" data-i18n-html="rv.score"><b>4,9</b> media su 87 recensioni verificate · ultimi 24 mesi</p>
+  </div>
+</section>
+
+<!-- PRENOTA -->
+<section class="book" id="prenota">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <p class="sec-num" data-i18n="bk.num">04 / Prenota</p>
+      <div>
+        <h2 class="sec-title" style="color:var(--plaster)" data-i18n-html="bk.title">Scegli le date,<br>al resto pensiamo noi</h2>
+        <p class="lede" style="color:oklch(86% .02 82/.85);margin-top:var(--s-5)" data-i18n="bk.lede">Cancellazione gratuita fino a 7 giorni prima. Nessun addebito oggi se scegli il pagamento all'arrivo.</p>
+      </div>
+    </div>
+    <div class="book-grid">
+      <form id="bookingForm" novalidate="">
+        <div class="alert" id="alert" role="alert" aria-live="polite">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-circle" class="lucide lucide-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+          <div><b id="alertTitle"></b><span id="alertMsg"></span></div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="checkin" data-i18n="bk.checkin">Check-in</label>
+            <input class="ctrl" type="date" id="checkin" min="2026-07-26" required="" aria-invalid="false">
+          </div>
+          <div class="field">
+            <label for="checkout" data-i18n="bk.checkout">Check-out</label>
+            <input class="ctrl" type="date" id="checkout" min="2026-07-28" required="" aria-invalid="false">
+          </div>
+        </div>
+        <div class="field">
+          <label for="guests" data-i18n="bk.guests">Ospiti</label>
+          <div class="ctrl stepper">
+            <span class="val" id="guests" aria-live="polite">2</span>
+            <span class="btns">
+              <button type="button" id="gMinus" data-i18n-attr="aria-label:a11y.less" aria-label="Riduci numero ospiti"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="minus" class="lucide lucide-minus"><path d="M5 12h14"></path></svg></button>
+              <button type="button" id="gPlus" data-i18n-attr="aria-label:a11y.more" aria-label="Aumenta numero ospiti" disabled=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></button>
+            </span>
+          </div>
+          <p class="hint" data-i18n="bk.guestsHint">Massimo 2 adulti. Culla disponibile su richiesta, gratuita.</p>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="name" data-i18n="bk.name">Nome e cognome</label>
+            <input class="ctrl" type="text" id="name" autocomplete="name" required="" data-i18n-attr="placeholder:bk.namePh" placeholder="Marco Bianchi">
+          </div>
+          <div class="field">
+            <label for="email" data-i18n="bk.email">Email</label>
+            <input class="ctrl" type="email" id="email" autocomplete="email" required="" placeholder="marco@email.com">
+          </div>
+        </div>
+        <div class="field">
+          <label for="pay" data-i18n="bk.pay">Pagamento</label>
+          <select class="ctrl" id="pay">
+            <option value="stripe" data-i18n="bk.pay1">Carta ora, con Stripe (conferma immediata)</option>
+            <option value="deposit" data-i18n="bk.pay2">Acconto 30% ora, saldo all'arrivo</option>
+            <option value="arrival" data-i18n="bk.pay3">Tutto all'arrivo (richiesta da confermare)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="notes" data-i18n="bk.notes">Note per Marta e Giulio</label>
+          <input class="ctrl" type="text" id="notes" data-i18n-attr="placeholder:bk.notesPh" placeholder="Orario di arrivo, allergie, richieste speciali">
+        </div>
+      </form>
+
+      <aside class="summary rev" aria-live="polite">
+        <div id="sumIdle">
+          <h3 data-i18n="bk.stayTitle">Il tuo soggiorno</h3>
+          <p class="when" data-i18n="bk.idleWhen">Scegli le date per vedere il totale.</p>
+          <p class="empty-note" data-i18n="bk.idleNote">Tariffa base €135 a notte. Dalla settima notte lo sconto lungo soggiorno del 10% è automatico.</p>
+          <button class="btn" type="button" disabled="" data-i18n="bk.idleBtn">Seleziona le date</button>
+        </div>
+        <div id="sumLoading" hidden="">
+          <h3 data-i18n="bk.checking">Verifica disponibilità</h3>
+          <p class="when" data-i18n="bk.oneMoment">Un istante.</p>
+          <div style="border-top:1px solid oklch(97% .012 82/.26);padding-top:var(--s-4);margin-top:var(--s-6);display:grid;gap:var(--s-4)">
+            <div class="skel" style="width:72%"></div><div class="skel" style="width:54%"></div>
+            <div class="skel" style="width:64%"></div><div class="skel" style="width:40%;height:26px"></div>
+          </div>
+        </div>
+        <div id="sumLive" hidden="">
+          <h3 id="nightsTitle"></h3>
+          <p class="when" id="rangeLabel"></p>
+          <ul class="lines" id="lines"></ul>
+          <div class="total">
+            <span class="lbl" data-i18n="bk.total">Totale</span>
+            <span class="amt" id="total">€0</span>
+          </div>
+          <button class="btn" type="submit" form="bookingForm" id="submitBtn" data-i18n="bk.submit">Prenota e paga</button>
+          <p class="secure"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield-check" class="lucide lucide-shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg> <span data-i18n="bk.secure">Pagamento protetto Stripe · 3D Secure</span></p>
+        </div>
+        <div id="sumDone" hidden="">
+          <div class="done">
+            <span class="tick"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></span>
+            <h3 data-i18n="bk.doneTitle">Prenotazione registrata</h3>
+            <p id="doneMsg"></p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <a class="mark" href="#top"><b>BnB</b><span>Roma</span></a>
+        <p data-i18n="ft.about">Camera matrimoniale con bagno privato nel quartiere Prati, a 500 metri dai Musei Vaticani.</p>
+        <div class="social">
+          <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="instagram" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
+          <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="facebook" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-circle" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></a>
+        </div>
+      </div>
+      <div class="list">
+        <h4 data-i18n="ft.contacts">Contatti</h4>
+        <ul>
+          <li><a href="tel:+390612345678">+39 06 1234 5678</a></li>
+          <li><a href="mailto:ciao@bnbroma.it">ciao@bnbroma.it</a></li>
+          <li data-i18n="ft.hours">WhatsApp 9:00 · 22:00</li>
+          <li>Italiano · English · Français · Español · Deutsch</li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="ft.address">Indirizzo</h4>
+        <ul>
+          <li>Via Luigi Rizzo</li>
+          <li data-i18n="ft.city">00136 Roma, Italia</li>
+          <li data-i18n="ft.metro">Metro A · Cipro</li>
+          <li>CIR 0581001ABC12345</li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="ft.whereTitle">Dove siamo</h4>
+        <div class="minimap">
+          <iframe src="https://www.google.com/maps?q=Via%20Luigi%20Rizzo%2C%20Roma&amp;z=14&amp;output=embed" loading="lazy" data-i18n-attr="title:a11y.miniMap" title="Mappa ridotta: Via Luigi Rizzo, Roma"></iframe>
+        </div>
+        <h4 style="margin-top:var(--s-5)" data-i18n="ft.langTitle">Lingua</h4>
+        <div class="f-langs" id="footLangs"><button type="button" data-lang="it" lang="it" aria-current="true">Italiano</button><button type="button" data-lang="en" lang="en" aria-current="false">English</button><button type="button" data-lang="fr" lang="fr" aria-current="false">Français</button><button type="button" data-lang="es" lang="es" aria-current="false">Español</button><button type="button" data-lang="de" lang="de" aria-current="false">Deutsch</button></div>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 BnB Roma · P.IVA 01234567890</span>
+      <span data-i18n="ft.legal">Privacy · Cookie · Termini · Tassa di soggiorno €6 a persona a notte</span>
+    </div>
+  </div>
+</footer>
+
+<div class="bar" id="bar">
+  <div class="p">€135 <small data-i18n="bar.per">a notte · colazione inclusa</small></div>
+  <a class="btn" href="#prenota" data-i18n="nav.book">Prenota</a>
+</div>
+
+<script data-activated="true">
+/* ============================================================
+   DIZIONARIO · it · en · fr · es · de
+   ============================================================ */
+const LOCALES = {
+  it:{name:"Italiano", code:"IT", intl:"it-IT", og:"it_IT"},
+  en:{name:"English",  code:"EN", intl:"en-GB", og:"en_US"},
+  fr:{name:"Français", code:"FR", intl:"fr-FR", og:"fr_FR"},
+  es:{name:"Español",  code:"ES", intl:"es-ES", og:"es_ES"},
+  de:{name:"Deutsch",  code:"DE", intl:"de-DE", og:"de_DE"},
+};
+
+const T = {
+/* ---------------------------------------------------------- IT */
+it:{
+  "meta.title":"BnB Roma · Camera matrimoniale a 500 m dai Musei Vaticani",
+  "meta.desc":"BnB in Via Luigi Rizzo, Roma. Camera matrimoniale con bagno privato a 500 metri dai Musei Vaticani e 100 metri dalla Metro A Cipro. Colazione inclusa.",
+  "meta.og":"BnB Roma · A due passi dalla Cappella Sistina",
+  "nav.room":"La camera","nav.loc":"Posizione","nav.rev":"Recensioni","nav.book":"Prenota","nav.cta":"Prenota ora",
+  "a11y.lang":"Cambia lingua","a11y.langList":"Scegli la lingua","a11y.slides":"Immagini della struttura",
+  "a11y.map":"Mappa: Via Luigi Rizzo, Roma","a11y.miniMap":"Mappa ridotta: Via Luigi Rizzo, Roma",
+  "a11y.less":"Riduci numero ospiti","a11y.more":"Aumenta numero ospiti","a11y.slide":"Immagine {n}","a11y.stars":"{n} stelle su 5",
+  "ui.photoSoon":"Foto in arrivo",
+  "alt.dome":"Cupola di San Pietro al tramonto sopra i tetti di Roma",
+  "alt.bed":"Camera matrimoniale luminosa con biancheria di lino bianco",
+  "alt.street":"Strada romana con palazzi ocra e persiane in legno",
+  "alt.bath":"Bagno privato con doccia a filo pavimento",
+  "alt.breakfast":"Vassoio della colazione con caffè, cornetti e frutta fresca",
+  "hero.eyebrow":"Via Luigi Rizzo · Prati, Roma",
+  "hero.title":"A due passi dalla <em>Cappella Sistina</em>",
+  "hero.sub":"Una sola camera matrimoniale, con bagno privato. Curata come si cura una casa, non un albergo.",
+  "hero.cta2":"Guarda la camera",
+  "hero.f1":"500 m dai Musei Vaticani","hero.f2":"100 m da Metro A Cipro","hero.f3":"Colazione inclusa","hero.f4":"Check-in flessibile",
+  "room.num":"01 / La camera","room.title":"Una stanza sola,<br>fatta bene",
+  "room.p1":"Diciotto metri quadri al terzo piano con ascensore, finestra sul cortile interno: di notte si sente solo il vento tra i pini. Letto matrimoniale in ferro battuto con materasso a molle insacchettate, lenzuola di lino lavato, due comodini presi al mercato di Porta Portese.",
+  "room.p2":"Il bagno privato è tutto vostro: doccia a filo pavimento, acqua calda immediata, asciugacapelli e set cortesia rifornito ogni giorno. La colazione arriva su un vassoio con caffè della torrefazione sotto casa, cornetti di Fioravanti e frutta di stagione.",
+  "room.p3":"Siamo Marta e Giulio, viviamo nell'appartamento accanto. Diamo indicazioni sui musei, prenotiamo l'ingresso ai Vaticani senza fila e diciamo con onestà dove non vale la pena mangiare.",
+  "room.priceSmall":"a notte · 2 ospiti · minimo 2 notti",
+  "room.caption":"Camera, bagno privato e colazione servita in stanza",
+  "room.amenTitle":"Cosa c'è dentro",
+  "loc.num":"02 / Posizione","loc.title":"Prati, il quartiere<br>dietro il Vaticano",
+  "loc.lede":"Strade larghe, palazzi umbertini, panetterie vere. Si dorme in silenzio e si arriva a San Pietro prima dei pullman turistici.",
+  "loc.directions":"Indicazioni stradali",
+  "loc.note":"L'indirizzo esatto e il codice del portone arrivano per email subito dopo la conferma del pagamento.",
+  "rv.num":"03 / Recensioni","rv.title":"Chi ci ha<br>già dormito",
+  "rv.big":"“Siamo entrati alle undici di sera e sul tavolo c'era un biglietto scritto a mano con i biglietti dei musei già stampati.”",
+  "rv.m0":"· Manchester, aprile 2026","rv.m1":"· Boston, marzo 2026","rv.m2":"· Barcellona, luglio 2025","rv.m3":"· Lione, ottobre 2025",
+  "rv.r1":"Venivamo per il Giubileo e la posizione ha fatto la differenza: usciti alle 6:30, in Piazza San Pietro alle 6:45, messa senza folla. Camera immacolata e silenzio totale.",
+  "rv.r2":"Il letto è comodissimo e l'aria condizionata a luglio salva la vita. Marta ci ha mandato una lista di trattorie dove i romani mangiano davvero: mai visto un turista.",
+  "rv.r3":"Una camera sola significa attenzione totale, e si sente. Unica nota: il bagno è sullo stesso piano ma fuori dalla stanza. Per noi zero problemi, ma è giusto saperlo prima.",
+  "rv.score":"<b>4,9</b> media su 87 recensioni verificate · ultimi 24 mesi",
+  "bk.num":"04 / Prenota","bk.title":"Scegli le date,<br>al resto pensiamo noi",
+  "bk.lede":"Cancellazione gratuita fino a 7 giorni prima. Nessun addebito oggi se scegli il pagamento all'arrivo.",
+  "bk.checkin":"Check-in","bk.checkout":"Check-out","bk.guests":"Ospiti",
+  "bk.guestsHint":"Massimo 2 adulti. Culla disponibile su richiesta, gratuita.",
+  "bk.name":"Nome e cognome","bk.namePh":"Marco Bianchi","bk.email":"Email","bk.pay":"Pagamento",
+  "bk.pay1":"Carta ora, con Stripe (conferma immediata)","bk.pay2":"Acconto 30% ora, saldo all'arrivo","bk.pay3":"Tutto all'arrivo (richiesta da confermare)",
+  "bk.notes":"Note per Marta e Giulio","bk.notesPh":"Orario di arrivo, allergie, richieste speciali",
+  "bk.stayTitle":"Il tuo soggiorno","bk.idleWhen":"Scegli le date per vedere il totale.",
+  "bk.idleNote":"Tariffa base €135 a notte. Dalla settima notte lo sconto lungo soggiorno del 10% è automatico.",
+  "bk.idleBtn":"Seleziona le date","bk.checking":"Verifica disponibilità","bk.oneMoment":"Un istante.",
+  "bk.total":"Totale","bk.submit":"Prenota e paga","bk.submitting":"Apro il pagamento…",
+  "bk.secure":"Pagamento protetto Stripe · 3D Secure",
+  "bk.nights_one":"{n} notte a Roma","bk.nights_other":"{n} notti a Roma",
+  "bk.guest_one":"ospite","bk.guest_other":"ospiti",
+  "bk.lineNights_one":"{price} × {n} notte","bk.lineNights_other":"{price} × {n} notti",
+  "bk.lineDiscount":"Sconto lungo soggiorno 10%","bk.lineCleaning":"Pulizia finale","bk.lineTax":"Tassa di soggiorno",
+  "bk.errMinT":"Soggiorno minimo 2 notti","bk.errMinM":"Sposta il check-out di almeno un giorno.",
+  "bk.errOccT":"Camera già occupata","bk.errOccM":"Dall'8 al 17 agosto e dal 3 all'8 settembre siamo pieni. Prova date vicine.",
+  "bk.errNameT":"Servono nome ed email","bk.errNameM":"Ci servono per inviarti la conferma e il codice del portone.",
+  "bk.doneTitle":"Prenotazione registrata",
+  "bk.doneStripe":"Ti stiamo portando su Stripe Checkout per completare il pagamento in sicurezza.",
+  "bk.doneArrival":"Richiesta inviata. Marta risponde entro poche ore con la conferma.",
+  "ft.about":"Camera matrimoniale con bagno privato nel quartiere Prati, a 500 metri dai Musei Vaticani.",
+  "ft.contacts":"Contatti","ft.hours":"WhatsApp 9:00 · 22:00","ft.address":"Indirizzo","ft.city":"00136 Roma, Italia",
+  "ft.metro":"Metro A · Cipro","ft.whereTitle":"Dove siamo","ft.langTitle":"Lingua",
+  "ft.legal":"Privacy · Cookie · Termini · Tassa di soggiorno €6 a persona a notte",
+  "bar.per":"a notte · colazione inclusa",
+},
+/* ---------------------------------------------------------- EN */
+en:{
+  "meta.title":"BnB Rome · Double room 500 m from the Vatican Museums",
+  "meta.desc":"B&B on Via Luigi Rizzo, Rome. One double room with private bathroom, 500 m from the Vatican Museums and 100 m from Metro A Cipro. Breakfast included.",
+  "meta.og":"BnB Rome · A short walk from the Sistine Chapel",
+  "nav.room":"The room","nav.loc":"Location","nav.rev":"Reviews","nav.book":"Book","nav.cta":"Book now",
+  "a11y.lang":"Change language","a11y.langList":"Choose a language","a11y.slides":"Photos of the property",
+  "a11y.map":"Map: Via Luigi Rizzo, Rome","a11y.miniMap":"Small map: Via Luigi Rizzo, Rome",
+  "a11y.less":"Decrease guests","a11y.more":"Increase guests","a11y.slide":"Photo {n}","a11y.stars":"{n} out of 5 stars",
+  "ui.photoSoon":"Photo coming soon",
+  "alt.dome":"St Peter's dome at sunset above the rooftops of Rome",
+  "alt.bed":"Bright double room with white linen bedding",
+  "alt.street":"Roman street with ochre buildings and wooden shutters",
+  "alt.bath":"Private bathroom with walk-in shower",
+  "alt.breakfast":"Breakfast tray with coffee, pastries and fresh fruit",
+  "hero.eyebrow":"Via Luigi Rizzo · Prati, Rome",
+  "hero.title":"A short walk from the <em>Sistine Chapel</em>",
+  "hero.sub":"One double room with a private bathroom. Looked after like a home, not a hotel.",
+  "hero.cta2":"See the room",
+  "hero.f1":"500 m to the Vatican Museums","hero.f2":"100 m to Metro A Cipro","hero.f3":"Breakfast included","hero.f4":"Flexible check-in",
+  "room.num":"01 / The room","room.title":"One room,<br>done properly",
+  "room.p1":"Eighteen square metres on the third floor with a lift, window onto the inner courtyard: at night all you hear is wind in the pine trees. Wrought-iron double bed with a pocket-spring mattress, washed linen sheets, two bedside tables found at the Porta Portese market.",
+  "room.p2":"The private bathroom is all yours: walk-in shower, instant hot water, hairdryer and toiletries restocked daily. Breakfast arrives on a tray with coffee from the roastery downstairs, pastries from Fioravanti and seasonal fruit.",
+  "room.p3":"We are Marta and Giulio, we live in the flat next door. We give museum tips, book skip-the-line Vatican entry for you, and tell you honestly which restaurants to avoid.",
+  "room.priceSmall":"per night · 2 guests · 2-night minimum",
+  "room.caption":"The room, the private bathroom and breakfast served inside",
+  "room.amenTitle":"What's inside",
+  "loc.num":"02 / Location","loc.title":"Prati, the district<br>behind the Vatican",
+  "loc.lede":"Wide streets, turn-of-the-century buildings, real bakeries. You sleep in silence and reach St Peter's before the tour buses.",
+  "loc.directions":"Get directions",
+  "loc.note":"The exact address and the door code arrive by email as soon as your payment is confirmed.",
+  "rv.num":"03 / Reviews","rv.title":"People who<br>slept here",
+  "rv.big":"“We walked in at eleven at night and there was a handwritten note on the table with our museum tickets already printed.”",
+  "rv.m0":"· Manchester, April 2026","rv.m1":"· Boston, March 2026","rv.m2":"· Barcelona, July 2025","rv.m3":"· Lyon, October 2025",
+  "rv.r1":"We came for the Jubilee and the location made all the difference: out at 6:30, in St Peter's Square by 6:45, mass with no crowds. Spotless room and total quiet.",
+  "rv.r2":"The bed is seriously comfortable and the air conditioning saves your life in July. Marta sent us a list of trattorias where Romans actually eat: not a tourist in sight.",
+  "rv.r3":"A single room means undivided attention, and you feel it. One note: the bathroom is on the same floor but outside the room. No issue for us, but worth knowing upfront.",
+  "rv.score":"<b>4.9</b> average across 87 verified reviews · last 24 months",
+  "bk.num":"04 / Book","bk.title":"Pick your dates,<br>we handle the rest",
+  "bk.lede":"Free cancellation up to 7 days before arrival. Nothing charged today if you choose to pay on arrival.",
+  "bk.checkin":"Check-in","bk.checkout":"Check-out","bk.guests":"Guests",
+  "bk.guestsHint":"Maximum 2 adults. Cot available on request, free of charge.",
+  "bk.name":"Full name","bk.namePh":"Mark Baker","bk.email":"Email","bk.pay":"Payment",
+  "bk.pay1":"Card now, via Stripe (instant confirmation)","bk.pay2":"30% deposit now, balance on arrival","bk.pay3":"Everything on arrival (request to confirm)",
+  "bk.notes":"Notes for Marta and Giulio","bk.notesPh":"Arrival time, allergies, special requests",
+  "bk.stayTitle":"Your stay","bk.idleWhen":"Pick your dates to see the total.",
+  "bk.idleNote":"Base rate €135 per night. From the seventh night the 10% long-stay discount applies automatically.",
+  "bk.idleBtn":"Select your dates","bk.checking":"Checking availability","bk.oneMoment":"One moment.",
+  "bk.total":"Total","bk.submit":"Book and pay","bk.submitting":"Opening payment…",
+  "bk.secure":"Secure Stripe payment · 3D Secure",
+  "bk.nights_one":"{n} night in Rome","bk.nights_other":"{n} nights in Rome",
+  "bk.guest_one":"guest","bk.guest_other":"guests",
+  "bk.lineNights_one":"{price} × {n} night","bk.lineNights_other":"{price} × {n} nights",
+  "bk.lineDiscount":"Long-stay discount 10%","bk.lineCleaning":"Final cleaning","bk.lineTax":"City tax",
+  "bk.errMinT":"Minimum stay is 2 nights","bk.errMinM":"Move the check-out date at least one day later.",
+  "bk.errOccT":"Room already booked","bk.errOccM":"We are full from 8 to 17 August and from 3 to 8 September. Try nearby dates.",
+  "bk.errNameT":"We need your name and email","bk.errNameM":"They are how we send your confirmation and the door code.",
+  "bk.doneTitle":"Booking registered",
+  "bk.doneStripe":"Taking you to Stripe Checkout to complete the payment securely.",
+  "bk.doneArrival":"Request sent. Marta replies within a few hours with the confirmation.",
+  "ft.about":"Double room with private bathroom in the Prati district, 500 metres from the Vatican Museums.",
+  "ft.contacts":"Contact","ft.hours":"WhatsApp 9:00 · 22:00","ft.address":"Address","ft.city":"00136 Rome, Italy",
+  "ft.metro":"Metro A · Cipro","ft.whereTitle":"Where we are","ft.langTitle":"Language",
+  "ft.legal":"Privacy · Cookies · Terms · City tax €6 per person per night",
+  "bar.per":"per night · breakfast included",
+},
+/* ---------------------------------------------------------- FR */
+fr:{
+  "meta.title":"BnB Rome · Chambre double à 500 m des Musées du Vatican",
+  "meta.desc":"B&B Via Luigi Rizzo, Rome. Une chambre double avec salle de bain privée, à 500 m des Musées du Vatican et 100 m du métro A Cipro. Petit-déjeuner inclus.",
+  "meta.og":"BnB Rome · À deux pas de la Chapelle Sixtine",
+  "nav.room":"La chambre","nav.loc":"Emplacement","nav.rev":"Avis","nav.book":"Réserver","nav.cta":"Réserver",
+  "a11y.lang":"Changer de langue","a11y.langList":"Choisir la langue","a11y.slides":"Photos du logement",
+  "a11y.map":"Carte : Via Luigi Rizzo, Rome","a11y.miniMap":"Petite carte : Via Luigi Rizzo, Rome",
+  "a11y.less":"Réduire le nombre de personnes","a11y.more":"Augmenter le nombre de personnes","a11y.slide":"Photo {n}","a11y.stars":"{n} étoiles sur 5",
+  "ui.photoSoon":"Photo à venir",
+  "alt.dome":"Coupole de Saint-Pierre au coucher du soleil au-dessus des toits de Rome",
+  "alt.bed":"Chambre double lumineuse avec linge de lit en lin blanc",
+  "alt.street":"Rue romaine aux façades ocre et volets en bois",
+  "alt.bath":"Salle de bain privée avec douche à l'italienne",
+  "alt.breakfast":"Plateau de petit-déjeuner avec café, viennoiseries et fruits frais",
+  "hero.eyebrow":"Via Luigi Rizzo · Prati, Rome",
+  "hero.title":"À deux pas de la <em>Chapelle Sixtine</em>",
+  "hero.sub":"Une seule chambre double, avec salle de bain privée. Entretenue comme une maison, pas comme un hôtel.",
+  "hero.cta2":"Voir la chambre",
+  "hero.f1":"500 m des Musées du Vatican","hero.f2":"100 m du métro A Cipro","hero.f3":"Petit-déjeuner inclus","hero.f4":"Arrivée flexible",
+  "room.num":"01 / La chambre","room.title":"Une seule chambre,<br>vraiment soignée",
+  "room.p1":"Dix-huit mètres carrés au troisième étage avec ascenseur, fenêtre sur la cour intérieure : la nuit, on n'entend que le vent dans les pins. Lit double en fer forgé, matelas à ressorts ensachés, draps en lin lavé, deux tables de chevet trouvées au marché de Porta Portese.",
+  "room.p2":"La salle de bain privée est entièrement à vous : douche à l'italienne, eau chaude immédiate, sèche-cheveux et produits d'accueil réapprovisionnés chaque jour. Le petit-déjeuner arrive sur un plateau, avec le café du torréfacteur d'en bas, les viennoiseries de Fioravanti et des fruits de saison.",
+  "room.p3":"Nous sommes Marta et Giulio, nous habitons l'appartement d'à côté. Nous donnons des conseils sur les musées, réservons l'entrée coupe-file au Vatican et disons honnêtement où il ne vaut pas la peine de manger.",
+  "room.priceSmall":"par nuit · 2 personnes · 2 nuits minimum",
+  "room.caption":"La chambre, la salle de bain privée et le petit-déjeuner servi en chambre",
+  "room.amenTitle":"Ce qu'il y a dedans",
+  "loc.num":"02 / Emplacement","loc.title":"Prati, le quartier<br>derrière le Vatican",
+  "loc.lede":"Rues larges, immeubles du début du siècle, vraies boulangeries. On dort dans le silence et on arrive à Saint-Pierre avant les cars de touristes.",
+  "loc.directions":"Itinéraire",
+  "loc.note":"L'adresse exacte et le code de la porte arrivent par e-mail dès la confirmation du paiement.",
+  "rv.num":"03 / Avis","rv.title":"Ceux qui y ont<br>déjà dormi",
+  "rv.big":"“Nous sommes arrivés à onze heures du soir et il y avait sur la table un mot écrit à la main avec nos billets de musée déjà imprimés.”",
+  "rv.m0":"· Manchester, avril 2026","rv.m1":"· Boston, mars 2026","rv.m2":"· Barcelone, juillet 2025","rv.m3":"· Lyon, octobre 2025",
+  "rv.r1":"Nous venions pour le Jubilé et l'emplacement a tout changé : sortis à 6h30, place Saint-Pierre à 6h45, messe sans la foule. Chambre impeccable et silence total.",
+  "rv.r2":"Le lit est très confortable et la climatisation sauve la vie en juillet. Marta nous a envoyé une liste de trattorias où les Romains mangent vraiment : aucun touriste.",
+  "rv.r3":"Une seule chambre, donc une attention totale, et ça se sent. Une remarque : la salle de bain est au même étage mais hors de la chambre. Aucun problème pour nous, mais autant le savoir.",
+  "rv.score":"<b>4,9</b> de moyenne sur 87 avis vérifiés · 24 derniers mois",
+  "bk.num":"04 / Réserver","bk.title":"Choisissez les dates,<br>on s'occupe du reste",
+  "bk.lede":"Annulation gratuite jusqu'à 7 jours avant l'arrivée. Aucun prélèvement aujourd'hui si vous payez sur place.",
+  "bk.checkin":"Arrivée","bk.checkout":"Départ","bk.guests":"Personnes",
+  "bk.guestsHint":"2 adultes maximum. Lit bébé disponible sur demande, gratuit.",
+  "bk.name":"Nom et prénom","bk.namePh":"Marc Blanchard","bk.email":"E-mail","bk.pay":"Paiement",
+  "bk.pay1":"Carte maintenant, via Stripe (confirmation immédiate)","bk.pay2":"Acompte de 30 % maintenant, solde à l'arrivée","bk.pay3":"Tout à l'arrivée (demande à confirmer)",
+  "bk.notes":"Message pour Marta et Giulio","bk.notesPh":"Heure d'arrivée, allergies, demandes particulières",
+  "bk.stayTitle":"Votre séjour","bk.idleWhen":"Choisissez les dates pour voir le total.",
+  "bk.idleNote":"Tarif de base 135 € par nuit. À partir de la septième nuit, la remise long séjour de 10 % est automatique.",
+  "bk.idleBtn":"Sélectionnez les dates","bk.checking":"Vérification des disponibilités","bk.oneMoment":"Un instant.",
+  "bk.total":"Total","bk.submit":"Réserver et payer","bk.submitting":"Ouverture du paiement…",
+  "bk.secure":"Paiement sécurisé Stripe · 3D Secure",
+  "bk.nights_one":"{n} nuit à Rome","bk.nights_other":"{n} nuits à Rome",
+  "bk.guest_one":"personne","bk.guest_other":"personnes",
+  "bk.lineNights_one":"{price} × {n} nuit","bk.lineNights_other":"{price} × {n} nuits",
+  "bk.lineDiscount":"Remise long séjour 10 %","bk.lineCleaning":"Ménage final","bk.lineTax":"Taxe de séjour",
+  "bk.errMinT":"Séjour minimum de 2 nuits","bk.errMinM":"Décalez la date de départ d'au moins un jour.",
+  "bk.errOccT":"Chambre déjà réservée","bk.errOccM":"Nous sommes complets du 8 au 17 août et du 3 au 8 septembre. Essayez des dates proches.",
+  "bk.errNameT":"Nom et e-mail requis","bk.errNameM":"Ils nous servent à envoyer la confirmation et le code de la porte.",
+  "bk.doneTitle":"Réservation enregistrée",
+  "bk.doneStripe":"Nous vous redirigeons vers Stripe Checkout pour finaliser le paiement en toute sécurité.",
+  "bk.doneArrival":"Demande envoyée. Marta répond avec la confirmation dans quelques heures.",
+  "ft.about":"Chambre double avec salle de bain privée dans le quartier Prati, à 500 mètres des Musées du Vatican.",
+  "ft.contacts":"Contact","ft.hours":"WhatsApp 9h00 · 22h00","ft.address":"Adresse","ft.city":"00136 Rome, Italie",
+  "ft.metro":"Métro A · Cipro","ft.whereTitle":"Où nous sommes","ft.langTitle":"Langue",
+  "ft.legal":"Confidentialité · Cookies · Conditions · Taxe de séjour 6 € par personne et par nuit",
+  "bar.per":"par nuit · petit-déjeuner inclus",
+},
+/* ---------------------------------------------------------- ES */
+es:{
+  "meta.title":"BnB Roma · Habitación doble a 500 m de los Museos Vaticanos",
+  "meta.desc":"B&B en Via Luigi Rizzo, Roma. Una habitación doble con baño privado, a 500 m de los Museos Vaticanos y 100 m del metro A Cipro. Desayuno incluido.",
+  "meta.og":"BnB Roma · A dos pasos de la Capilla Sixtina",
+  "nav.room":"La habitación","nav.loc":"Ubicación","nav.rev":"Opiniones","nav.book":"Reservar","nav.cta":"Reservar ahora",
+  "a11y.lang":"Cambiar idioma","a11y.langList":"Elige el idioma","a11y.slides":"Fotos del alojamiento",
+  "a11y.map":"Mapa: Via Luigi Rizzo, Roma","a11y.miniMap":"Mapa reducido: Via Luigi Rizzo, Roma",
+  "a11y.less":"Reducir huéspedes","a11y.more":"Aumentar huéspedes","a11y.slide":"Foto {n}","a11y.stars":"{n} estrellas de 5",
+  "ui.photoSoon":"Foto en camino",
+  "alt.dome":"Cúpula de San Pedro al atardecer sobre los tejados de Roma",
+  "alt.bed":"Habitación doble luminosa con ropa de cama de lino blanco",
+  "alt.street":"Calle romana con edificios ocre y contraventanas de madera",
+  "alt.bath":"Baño privado con ducha a nivel del suelo",
+  "alt.breakfast":"Bandeja de desayuno con café, bollería y fruta fresca",
+  "hero.eyebrow":"Via Luigi Rizzo · Prati, Roma",
+  "hero.title":"A dos pasos de la <em>Capilla Sixtina</em>",
+  "hero.sub":"Una sola habitación doble, con baño privado. Cuidada como se cuida una casa, no un hotel.",
+  "hero.cta2":"Ver la habitación",
+  "hero.f1":"500 m de los Museos Vaticanos","hero.f2":"100 m del metro A Cipro","hero.f3":"Desayuno incluido","hero.f4":"Check-in flexible",
+  "room.num":"01 / La habitación","room.title":"Una sola habitación,<br>bien hecha",
+  "room.p1":"Dieciocho metros cuadrados en la tercera planta con ascensor, ventana al patio interior: de noche solo se oye el viento entre los pinos. Cama de matrimonio de hierro forjado con colchón de muelles embolsados, sábanas de lino lavado y dos mesillas encontradas en el mercado de Porta Portese.",
+  "room.p2":"El baño privado es solo vuestro: ducha a nivel del suelo, agua caliente inmediata, secador y amenities repuestos cada día. El desayuno llega en bandeja con café del tostador de abajo, bollería de Fioravanti y fruta de temporada.",
+  "room.p3":"Somos Marta y Giulio, vivimos en el piso de al lado. Damos consejos sobre los museos, reservamos la entrada sin cola al Vaticano y decimos con honestidad dónde no merece la pena comer.",
+  "room.priceSmall":"por noche · 2 huéspedes · mínimo 2 noches",
+  "room.caption":"La habitación, el baño privado y el desayuno servido dentro",
+  "room.amenTitle":"Qué incluye",
+  "loc.num":"02 / Ubicación","loc.title":"Prati, el barrio<br>detrás del Vaticano",
+  "loc.lede":"Calles anchas, edificios de principios de siglo, panaderías de verdad. Se duerme en silencio y se llega a San Pedro antes que los autobuses turísticos.",
+  "loc.directions":"Cómo llegar",
+  "loc.note":"La dirección exacta y el código del portal llegan por email en cuanto se confirma el pago.",
+  "rv.num":"03 / Opiniones","rv.title":"Quien ya ha<br>dormido aquí",
+  "rv.big":"“Entramos a las once de la noche y sobre la mesa había una nota escrita a mano con nuestras entradas a los museos ya impresas.”",
+  "rv.m0":"· Mánchester, abril 2026","rv.m1":"· Boston, marzo 2026","rv.m2":"· Barcelona, julio 2025","rv.m3":"· Lyon, octubre 2025",
+  "rv.r1":"Veníamos por el Jubileo y la ubicación lo cambió todo: salimos a las 6:30, en la plaza de San Pedro a las 6:45, misa sin multitudes. Habitación impecable y silencio absoluto.",
+  "rv.r2":"La cama es comodísima y el aire acondicionado en julio salva la vida. Marta nos mandó una lista de trattorias donde comen los romanos de verdad: ni un turista.",
+  "rv.r3":"Una sola habitación significa atención total, y se nota. Un detalle: el baño está en la misma planta pero fuera de la habitación. Para nosotros ningún problema, pero conviene saberlo.",
+  "rv.score":"<b>4,9</b> de media sobre 87 opiniones verificadas · últimos 24 meses",
+  "bk.num":"04 / Reservar","bk.title":"Elige las fechas,<br>del resto nos encargamos",
+  "bk.lede":"Cancelación gratuita hasta 7 días antes de la llegada. Hoy no se cobra nada si eliges pagar al llegar.",
+  "bk.checkin":"Entrada","bk.checkout":"Salida","bk.guests":"Huéspedes",
+  "bk.guestsHint":"Máximo 2 adultos. Cuna disponible bajo petición, gratuita.",
+  "bk.name":"Nombre y apellidos","bk.namePh":"Marcos Blanco","bk.email":"Email","bk.pay":"Pago",
+  "bk.pay1":"Tarjeta ahora, con Stripe (confirmación inmediata)","bk.pay2":"Anticipo del 30 % ahora, resto al llegar","bk.pay3":"Todo al llegar (solicitud por confirmar)",
+  "bk.notes":"Notas para Marta y Giulio","bk.notesPh":"Hora de llegada, alergias, peticiones especiales",
+  "bk.stayTitle":"Tu estancia","bk.idleWhen":"Elige las fechas para ver el total.",
+  "bk.idleNote":"Tarifa base 135 € por noche. A partir de la séptima noche se aplica automáticamente el 10 % de descuento por estancia larga.",
+  "bk.idleBtn":"Selecciona las fechas","bk.checking":"Comprobando disponibilidad","bk.oneMoment":"Un momento.",
+  "bk.total":"Total","bk.submit":"Reservar y pagar","bk.submitting":"Abriendo el pago…",
+  "bk.secure":"Pago protegido con Stripe · 3D Secure",
+  "bk.nights_one":"{n} noche en Roma","bk.nights_other":"{n} noches en Roma",
+  "bk.guest_one":"huésped","bk.guest_other":"huéspedes",
+  "bk.lineNights_one":"{price} × {n} noche","bk.lineNights_other":"{price} × {n} noches",
+  "bk.lineDiscount":"Descuento estancia larga 10 %","bk.lineCleaning":"Limpieza final","bk.lineTax":"Impuesto turístico",
+  "bk.errMinT":"Estancia mínima de 2 noches","bk.errMinM":"Mueve la fecha de salida al menos un día.",
+  "bk.errOccT":"Habitación ya ocupada","bk.errOccM":"Estamos completos del 8 al 17 de agosto y del 3 al 8 de septiembre. Prueba fechas cercanas.",
+  "bk.errNameT":"Necesitamos nombre y email","bk.errNameM":"Nos sirven para enviarte la confirmación y el código del portal.",
+  "bk.doneTitle":"Reserva registrada",
+  "bk.doneStripe":"Te llevamos a Stripe Checkout para completar el pago de forma segura.",
+  "bk.doneArrival":"Solicitud enviada. Marta responde con la confirmación en pocas horas.",
+  "ft.about":"Habitación doble con baño privado en el barrio de Prati, a 500 metros de los Museos Vaticanos.",
+  "ft.contacts":"Contacto","ft.hours":"WhatsApp 9:00 · 22:00","ft.address":"Dirección","ft.city":"00136 Roma, Italia",
+  "ft.metro":"Metro A · Cipro","ft.whereTitle":"Dónde estamos","ft.langTitle":"Idioma",
+  "ft.legal":"Privacidad · Cookies · Términos · Impuesto turístico 6 € por persona y noche",
+  "bar.per":"por noche · desayuno incluido",
+},
+/* ---------------------------------------------------------- DE */
+de:{
+  "meta.title":"BnB Rom · Doppelzimmer, 500 m zu den Vatikanischen Museen",
+  "meta.desc":"B&B in der Via Luigi Rizzo, Rom. Ein Doppelzimmer mit eigenem Bad, 500 m zu den Vatikanischen Museen und 100 m zur Metro A Cipro. Frühstück inklusive.",
+  "meta.og":"BnB Rom · Wenige Schritte zur Sixtinischen Kapelle",
+  "nav.room":"Das Zimmer","nav.loc":"Lage","nav.rev":"Bewertungen","nav.book":"Buchen","nav.cta":"Jetzt buchen",
+  "a11y.lang":"Sprache wechseln","a11y.langList":"Sprache wählen","a11y.slides":"Fotos der Unterkunft",
+  "a11y.map":"Karte: Via Luigi Rizzo, Rom","a11y.miniMap":"Kleine Karte: Via Luigi Rizzo, Rom",
+  "a11y.less":"Gäste verringern","a11y.more":"Gäste erhöhen","a11y.slide":"Foto {n}","a11y.stars":"{n} von 5 Sternen",
+  "ui.photoSoon":"Foto folgt",
+  "alt.dome":"Kuppel des Petersdoms bei Sonnenuntergang über den Dächern Roms",
+  "alt.bed":"Helles Doppelzimmer mit weißer Leinenbettwäsche",
+  "alt.street":"Römische Straße mit ockerfarbenen Häusern und Holzfensterläden",
+  "alt.bath":"Eigenes Bad mit bodengleicher Dusche",
+  "alt.breakfast":"Frühstückstablett mit Kaffee, Gebäck und frischem Obst",
+  "hero.eyebrow":"Via Luigi Rizzo · Prati, Rom",
+  "hero.title":"Wenige Schritte zur <em>Sixtinischen Kapelle</em>",
+  "hero.sub":"Ein einziges Doppelzimmer mit eigenem Bad. Gepflegt wie ein Zuhause, nicht wie ein Hotel.",
+  "hero.cta2":"Zimmer ansehen",
+  "hero.f1":"500 m zu den Vatikanischen Museen","hero.f2":"100 m zur Metro A Cipro","hero.f3":"Frühstück inklusive","hero.f4":"Flexibler Check-in",
+  "room.num":"01 / Das Zimmer","room.title":"Ein Zimmer,<br>richtig gemacht",
+  "room.p1":"Achtzehn Quadratmeter im dritten Stock mit Aufzug, Fenster zum Innenhof: nachts hört man nur den Wind in den Pinien. Doppelbett aus Schmiedeeisen mit Taschenfederkernmatratze, gewaschene Leinenbettwäsche und zwei Nachttische vom Markt an der Porta Portese.",
+  "room.p2":"Das eigene Bad gehört ganz Ihnen: bodengleiche Dusche, sofort heißes Wasser, Haartrockner und täglich nachgefüllte Pflegeprodukte. Das Frühstück kommt auf einem Tablett, mit Kaffee aus der Rösterei im Haus, Gebäck von Fioravanti und Obst der Saison.",
+  "room.p3":"Wir sind Marta und Giulio und wohnen in der Wohnung nebenan. Wir geben Museumstipps, buchen den Vatikan-Eintritt ohne Anstehen und sagen ehrlich, wo sich das Essen nicht lohnt.",
+  "room.priceSmall":"pro Nacht · 2 Gäste · mindestens 2 Nächte",
+  "room.caption":"Zimmer, eigenes Bad und Frühstück im Zimmer serviert",
+  "room.amenTitle":"Was drin ist",
+  "loc.num":"02 / Lage","loc.title":"Prati, das Viertel<br>hinter dem Vatikan",
+  "loc.lede":"Breite Straßen, Gründerzeithäuser, echte Bäckereien. Man schläft in Ruhe und ist am Petersplatz, bevor die Reisebusse kommen.",
+  "loc.directions":"Route anzeigen",
+  "loc.note":"Die genaue Adresse und der Türcode kommen per E-Mail, sobald die Zahlung bestätigt ist.",
+  "rv.num":"03 / Bewertungen","rv.title":"Wer hier schon<br>geschlafen hat",
+  "rv.big":"„Wir kamen um elf Uhr abends an, und auf dem Tisch lag eine handschriftliche Notiz mit unseren bereits ausgedruckten Museumstickets.“",
+  "rv.m0":"· Manchester, April 2026","rv.m1":"· Boston, März 2026","rv.m2":"· Barcelona, Juli 2025","rv.m3":"· Lyon, Oktober 2025",
+  "rv.r1":"Wir kamen zum Heiligen Jahr, und die Lage war entscheidend: um 6:30 los, um 6:45 am Petersplatz, Messe ohne Gedränge. Makelloses Zimmer und völlige Stille.",
+  "rv.r2":"Das Bett ist außerordentlich bequem, und die Klimaanlage rettet im Juli den Tag. Marta schickte uns eine Liste mit Trattorien, in denen wirklich Römer essen: kein Tourist in Sicht.",
+  "rv.r3":"Ein einziges Zimmer bedeutet volle Aufmerksamkeit, und das merkt man. Eine Anmerkung: das Bad liegt auf derselben Etage, aber außerhalb des Zimmers. Für uns kein Problem, sollte man aber vorher wissen.",
+  "rv.score":"<b>4,9</b> im Schnitt aus 87 geprüften Bewertungen · letzte 24 Monate",
+  "bk.num":"04 / Buchen","bk.title":"Daten wählen,<br>um alles andere kümmern wir uns",
+  "bk.lede":"Kostenlose Stornierung bis 7 Tage vor Anreise. Heute keine Abbuchung, wenn Sie bei der Ankunft zahlen.",
+  "bk.checkin":"Anreise","bk.checkout":"Abreise","bk.guests":"Gäste",
+  "bk.guestsHint":"Maximal 2 Erwachsene. Babybett auf Anfrage, kostenlos.",
+  "bk.name":"Vor- und Nachname","bk.namePh":"Markus Weiß","bk.email":"E-Mail","bk.pay":"Zahlung",
+  "bk.pay1":"Karte jetzt, über Stripe (sofortige Bestätigung)","bk.pay2":"30 % Anzahlung jetzt, Rest bei Ankunft","bk.pay3":"Alles bei Ankunft (Anfrage, wird bestätigt)",
+  "bk.notes":"Nachricht an Marta und Giulio","bk.notesPh":"Ankunftszeit, Allergien, besondere Wünsche",
+  "bk.stayTitle":"Ihr Aufenthalt","bk.idleWhen":"Wählen Sie die Daten, um den Gesamtpreis zu sehen.",
+  "bk.idleNote":"Grundpreis 135 € pro Nacht. Ab der siebten Nacht gilt automatisch der Langzeitrabatt von 10 %.",
+  "bk.idleBtn":"Daten auswählen","bk.checking":"Verfügbarkeit wird geprüft","bk.oneMoment":"Einen Moment.",
+  "bk.total":"Gesamt","bk.submit":"Buchen und zahlen","bk.submitting":"Zahlung wird geöffnet…",
+  "bk.secure":"Geschützte Zahlung mit Stripe · 3D Secure",
+  "bk.nights_one":"{n} Nacht in Rom","bk.nights_other":"{n} Nächte in Rom",
+  "bk.guest_one":"Gast","bk.guest_other":"Gäste",
+  "bk.lineNights_one":"{price} × {n} Nacht","bk.lineNights_other":"{price} × {n} Nächte",
+  "bk.lineDiscount":"Langzeitrabatt 10 %","bk.lineCleaning":"Endreinigung","bk.lineTax":"Kurtaxe",
+  "bk.errMinT":"Mindestaufenthalt 2 Nächte","bk.errMinM":"Verschieben Sie die Abreise um mindestens einen Tag.",
+  "bk.errOccT":"Zimmer bereits belegt","bk.errOccM":"Vom 8. bis 17. August und vom 3. bis 8. September sind wir ausgebucht. Versuchen Sie nahe Daten.",
+  "bk.errNameT":"Name und E-Mail fehlen","bk.errNameM":"Damit senden wir die Bestätigung und den Türcode.",
+  "bk.doneTitle":"Buchung erfasst",
+  "bk.doneStripe":"Wir leiten Sie zu Stripe Checkout weiter, um die Zahlung sicher abzuschließen.",
+  "bk.doneArrival":"Anfrage gesendet. Marta antwortet innerhalb weniger Stunden mit der Bestätigung.",
+  "ft.about":"Doppelzimmer mit eigenem Bad im Viertel Prati, 500 Meter von den Vatikanischen Museen.",
+  "ft.contacts":"Kontakt","ft.hours":"WhatsApp 9:00 · 22:00","ft.address":"Adresse","ft.city":"00136 Rom, Italien",
+  "ft.metro":"Metro A · Cipro","ft.whereTitle":"Wo wir sind","ft.langTitle":"Sprache",
+  "ft.legal":"Datenschutz · Cookies · AGB · Kurtaxe 6 € pro Person und Nacht",
+  "bar.per":"pro Nacht · Frühstück inklusive",
+},
+};
+
+/* liste generate: servizi, distanze, tag, recensioni brevi */
+const LISTS = {
+  amenities:[
+    {icon:"bath", it:["Bagno privato","Doccia a filo, asciugamani in cotone egiziano"], en:["Private bathroom","Walk-in shower, Egyptian cotton towels"], fr:["Salle de bain privée","Douche à l'italienne, serviettes en coton égyptien"], es:["Baño privado","Ducha a nivel del suelo, toallas de algodón egipcio"], de:["Eigenes Bad","Bodengleiche Dusche, Handtücher aus ägyptischer Baumwolle"]},
+    {icon:"wifi", it:["Wi-Fi in fibra 1 Gbps","Stabile per videochiamate, rete dedicata agli ospiti"], en:["1 Gbps fibre Wi-Fi","Stable for video calls, dedicated guest network"], fr:["Wi-Fi fibre 1 Gbit/s","Stable pour les visios, réseau dédié aux hôtes"], es:["Wi-Fi de fibra 1 Gbps","Estable para videollamadas, red dedicada"], de:["Glasfaser-WLAN 1 Gbit/s","Stabil für Videocalls, eigenes Gästenetz"]},
+    {icon:"snowflake", it:["Aria condizionata","Split silenzioso con pompa di calore, comando in camera"], en:["Air conditioning","Quiet heat-pump split unit, control in the room"], fr:["Climatisation","Split silencieux avec pompe à chaleur, commande dans la chambre"], es:["Aire acondicionado","Split silencioso con bomba de calor, mando en la habitación"], de:["Klimaanlage","Leises Splitgerät mit Wärmepumpe, Bedienung im Zimmer"]},
+    {icon:"croissant", it:["Colazione italiana","Servita in camera tra le 7:30 e le 10:30"], en:["Italian breakfast","Served in the room between 7:30 and 10:30"], fr:["Petit-déjeuner italien","Servi en chambre entre 7h30 et 10h30"], es:["Desayuno italiano","Servido en la habitación de 7:30 a 10:30"], de:["Italienisches Frühstück","Im Zimmer serviert zwischen 7:30 und 10:30"]},
+    {icon:"tv", it:["Smart TV 43\"","Netflix e Prime Video con il vostro account"], en:["43\" smart TV","Netflix and Prime Video with your own account"], fr:["Smart TV 43\"","Netflix et Prime Video avec votre compte"], es:["Smart TV de 43\"","Netflix y Prime Video con tu cuenta"], de:["43\"-Smart-TV","Netflix und Prime Video mit Ihrem Konto"]},
+    {icon:"coffee", it:["Moka e bollitore","Caffè, tè e tisane sempre riforniti"], en:["Moka pot and kettle","Coffee, tea and herbal teas always restocked"], fr:["Cafetière moka et bouilloire","Café, thé et infusions toujours réapprovisionnés"], es:["Cafetera italiana y hervidor","Café, té e infusiones siempre repuestos"], de:["Espressokanne und Wasserkocher","Kaffee, Tee und Kräutertees stets nachgefüllt"]},
+    {icon:"wind", it:["Phon e ferro da stiro","Asciugacapelli in camera, ferro su richiesta"], en:["Hairdryer and iron","Hairdryer in the room, iron on request"], fr:["Sèche-cheveux et fer à repasser","Sèche-cheveux dans la chambre, fer sur demande"], es:["Secador y plancha","Secador en la habitación, plancha bajo petición"], de:["Haartrockner und Bügeleisen","Haartrockner im Zimmer, Bügeleisen auf Anfrage"]},
+    {icon:"lock", it:["Cassaforte e serratura smart","Codice personale valido per il soggiorno"], en:["Safe and smart lock","Personal code valid for your stay"], fr:["Coffre-fort et serrure connectée","Code personnel valable pour le séjour"], es:["Caja fuerte y cerradura inteligente","Código personal válido para la estancia"], de:["Safe und Smart-Schloss","Persönlicher Code für die Dauer des Aufenthalts"]},
+    {icon:"luggage", it:["Deposito bagagli","Prima del check-in e dopo il check-out, gratuito"], en:["Luggage storage","Before check-in and after check-out, free"], fr:["Consigne à bagages","Avant l'arrivée et après le départ, gratuite"], es:["Depósito de equipaje","Antes de la entrada y después de la salida, gratis"], de:["Gepäckaufbewahrung","Vor dem Check-in und nach dem Check-out, kostenlos"]},
+    {icon:"ban", it:["Non fumatori","Balcone condiviso a disposizione"], en:["Non-smoking","Shared balcony available"], fr:["Non-fumeur","Balcon partagé à disposition"], es:["No fumadores","Balcón compartido disponible"], de:["Nichtraucher","Gemeinsamer Balkon verfügbar"]},
+  ],
+  walk:[
+    {t:"6′", d:"500 m", it:["Musei Vaticani","Ingresso di Viale Vaticano"], en:["Vatican Museums","Entrance on Viale Vaticano"], fr:["Musées du Vatican","Entrée Viale Vaticano"], es:["Museos Vaticanos","Entrada de Viale Vaticano"], de:["Vatikanische Museen","Eingang Viale Vaticano"]},
+    {t:"2′", d:"100 m", it:["Metro A · Cipro","Diretta a Termini in 12 minuti"], en:["Metro A · Cipro","Direct to Termini in 12 minutes"], fr:["Métro A · Cipro","Direct vers Termini en 12 minutes"], es:["Metro A · Cipro","Directo a Termini en 12 minutos"], de:["Metro A · Cipro","Direkt zu Termini in 12 Minuten"]},
+    {t:"12′", d:"950 m", it:["Basilica di San Pietro","Piazza e cupola"], en:["St Peter's Basilica","Square and dome"], fr:["Basilique Saint-Pierre","Place et coupole"], es:["Basílica de San Pedro","Plaza y cúpula"], de:["Petersdom","Platz und Kuppel"]},
+    {t:"18′", d:"1,4 km", it:["Castel Sant'Angelo","Lungo Via Crescenzio"], en:["Castel Sant'Angelo","Along Via Crescenzio"], fr:["Château Saint-Ange","Par la Via Crescenzio"], es:["Castillo Sant'Angelo","Por Via Crescenzio"], de:["Engelsburg","Entlang der Via Crescenzio"]},
+    {t:"25′", d:"2,1 km", it:["Piazza Navona","Attraversando Ponte Umberto I"], en:["Piazza Navona","Crossing Ponte Umberto I"], fr:["Place Navone","En traversant le Ponte Umberto I"], es:["Piazza Navona","Cruzando el Ponte Umberto I"], de:["Piazza Navona","Über den Ponte Umberto I"]},
+    {t:"4′", d:"350 m", it:["Mercato Trionfale","Il mercato coperto più grande di Roma"], en:["Trionfale market","The largest covered market in Rome"], fr:["Marché Trionfale","Le plus grand marché couvert de Rome"], es:["Mercado Trionfale","El mercado cubierto más grande de Roma"], de:["Markt Trionfale","Die größte Markthalle Roms"]},
+  ],
+  tags:{
+    it:["Bonci Pizzarium 5′","Pasticceria Fioravanti 3′","Farmacia h24 2′","Supermercato 4′","Bus 49 · 492 · 990","Fiumicino 35′ in taxi"],
+    en:["Bonci Pizzarium 5′","Fioravanti pastry shop 3′","24h pharmacy 2′","Supermarket 4′","Bus 49 · 492 · 990","Fiumicino 35′ by taxi"],
+    fr:["Bonci Pizzarium 5′","Pâtisserie Fioravanti 3′","Pharmacie 24h 2′","Supermarché 4′","Bus 49 · 492 · 990","Fiumicino 35′ en taxi"],
+    es:["Bonci Pizzarium 5′","Pastelería Fioravanti 3′","Farmacia 24 h 2′","Supermercado 4′","Bus 49 · 492 · 990","Fiumicino 35′ en taxi"],
+    de:["Bonci Pizzarium 5′","Konditorei Fioravanti 3′","Apotheke 24 h 2′","Supermarkt 4′","Bus 49 · 492 · 990","Fiumicino 35′ per Taxi"],
+  },
+  quotes:[
+    {name:"Michael D.", meta:"rv.m1", body:"rv.r1", stars:5, av:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80"},
+    {name:"Sofia R.",   meta:"rv.m2", body:"rv.r2", stars:5, av:"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=120&q=80"},
+    {name:"Thomas B.",  meta:"rv.m3", body:"rv.r3", stars:4, av:"https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&q=80"},
+  ],
+};
+
+/* ============================================================
+   MOTORE i18n
+   ============================================================ */
+const SUPPORTED = Object.keys(LOCALES);
+let lang = "it";
+
+const t = (key, vars) => {
+  let s = T[lang][key] ?? T.it[key] ?? key;
+  if (vars) for (const [k, v] of Object.entries(vars)) s = s.replaceAll("{" + k + "}", v);
+  return s;
+};
+const plural = (base, n, vars) =>
+  t(`${base}_${n === 1 ? "one" : "other"}`, { n, ...vars });
+
+function detectLang(){
+  const saved = localStorage.getItem("bnb-lang");
+  if (saved && SUPPORTED.includes(saved)) return saved;
+  const url = new URLSearchParams(location.search).get("lang");
+  if (url && SUPPORTED.includes(url)) return url;
+  for (const l of navigator.languages ?? [navigator.language]) {
+    const short = (l || "").slice(0, 2).toLowerCase();
+    if (SUPPORTED.includes(short)) return short;
+  }
+  return "it";
+}
+
+function applyI18n(){
+  document.documentElement.lang = lang;
+  document.title = t("meta.title");
+  document.getElementById("metaDesc").content = t("meta.desc");
+  document.getElementById("ogTitle").content = t("meta.og");
+  document.querySelector('meta[property="og:locale"]').content = LOCALES[lang].og;
+
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-html]").forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll("[data-i18n-attr]").forEach(el => {
+    el.dataset.i18nAttr.split(",").forEach(pair => {
+      const [attr, key] = pair.split(":").map(s => s.trim());
+      el.setAttribute(attr, t(key));
+    });
+  });
+
+  document.getElementById("langCode").textContent = LOCALES[lang].code;
+  renderLists();
+  buildDots();
+  if (window.lucide) lucide.createIcons();
+  quote(true);
+}
+
+function stars(n){
+  return `<div class="stars" role="img" aria-label="${t("a11y.stars",{n})}">` +
+    Array.from({length:5},(_,i)=>`<i data-lucide="star" width="13" height="13"${i<n?' fill="currentColor"':""}></i>`).join("") +
+    `</div>`;
+}
+
+function renderLists(){
+  document.getElementById("amenList").innerHTML = LISTS.amenities.map(a => {
+    const [title, sub] = a[lang] ?? a.it;
+    return `<li><i data-lucide="${a.icon}" width="18" height="18"></i><div><b>${title}</b><span>${sub}</span></div></li>`;
+  }).join("");
+
+  document.getElementById("walkList").innerHTML = LISTS.walk.map(w => {
+    const [name, detail] = w[lang] ?? w.it;
+    return `<li><span class="t">${w.t}</span><span class="n">${name}<em>${detail}</em></span><span class="d">${w.d}</span></li>`;
+  }).join("");
+
+  document.getElementById("tagList").innerHTML =
+    (LISTS.tags[lang] ?? LISTS.tags.it).map(x => `<li class="tag">${x}</li>`).join("");
+
+  document.getElementById("quoteList").innerHTML = LISTS.quotes.map((q,i) => `
+    <li class="rev in" style="--i:${i}">
+      ${stars(q.stars)}
+      <p>${t(q.body)}</p>
+      <div class="byline">
+        <span class="av"><img src="${q.av}" alt="${q.name}"></span>
+        <div><b>${q.name}</b> <span>${t(q.meta)}</span></div>
+      </div>
+    </li>`).join("");
+
+  document.querySelectorAll("[data-stars]").forEach(el => {
+    el.outerHTML = stars(Number(el.dataset.stars));
+  });
+}
+
+function setLang(next, {persist = true} = {}){
+  if (!SUPPORTED.includes(next)) return;
+  lang = next;
+  if (persist) localStorage.setItem("bnb-lang", next);
+  document.body.classList.add("swapping");
+  applyI18n();
+  buildLangMenu();
+  setTimeout(() => document.body.classList.remove("swapping"), 460);
+}
+
+/* menu lingua: popover nel top layer, posizionato sotto il pulsante */
+const langBtn = document.getElementById("langBtn");
+const langMenu = document.getElementById("langMenu");
+
+function buildLangMenu(){
+  langMenu.innerHTML = SUPPORTED.map(l => `
+    <li role="option" aria-selected="${l===lang}">
+      <button type="button" data-lang="${l}" aria-current="${l===lang}" lang="${l}">
+        <span class="code">${LOCALES[l].code}</span>
+        <span class="name">${LOCALES[l].name}</span>
+        <i class="tick" data-lucide="check" width="15" height="15"></i>
+      </button>
+    </li>`).join("");
+  langMenu.querySelectorAll("button").forEach(b =>
+    b.addEventListener("click", () => { setLang(b.dataset.lang); langMenu.hidePopover(); langBtn.focus(); }));
+  if (window.lucide) lucide.createIcons();
+
+  document.getElementById("footLangs").innerHTML = SUPPORTED.map(l =>
+    `<button type="button" data-lang="${l}" lang="${l}" aria-current="${l===lang}">${LOCALES[l].name}</button>`).join("");
+  document.querySelectorAll("#footLangs button").forEach(b =>
+    b.addEventListener("click", () => setLang(b.dataset.lang)));
+}
+
+function placeMenu(){
+  const r = langBtn.getBoundingClientRect();
+  langMenu.style.top = `${r.bottom + 10}px`;
+  const w = langMenu.offsetWidth || 216;
+  langMenu.style.left = `${Math.min(Math.max(12, r.right - w), innerWidth - w - 12)}px`;
+}
+langMenu.addEventListener("beforetoggle", e => {
+  langBtn.setAttribute("aria-expanded", e.newState === "open");
+  if (e.newState === "open") placeMenu();
+});
+addEventListener("resize", () => { if (langMenu.matches(":popover-open")) placeMenu(); });
+addEventListener("scroll", () => { if (langMenu.matches(":popover-open")) placeMenu(); }, {passive:true});
+langMenu.addEventListener("keydown", e => {
+  const items = [...langMenu.querySelectorAll("button")];
+  const i = items.indexOf(document.activeElement);
+  if (e.key === "ArrowDown"){ e.preventDefault(); items[(i+1)%items.length].focus(); }
+  if (e.key === "ArrowUp"){ e.preventDefault(); items[(i-1+items.length)%items.length].focus(); }
+});
+
+/* ============================================================
+   NAV, SLIDER, REVEAL
+   ============================================================ */
+const nav = document.getElementById("nav"), bar = document.getElementById("bar");
+const onScroll = () => {
+  const y = scrollY;
+  y > innerHeight * .72 ? nav.setAttribute("data-solid","") : nav.removeAttribute("data-solid");
+  const book = document.getElementById("prenota").getBoundingClientRect().top;
+  (y > 600 && book > innerHeight * .6) ? bar.setAttribute("data-show","") : bar.removeAttribute("data-show");
+};
+onScroll(); addEventListener("scroll", onScroll, {passive:true});
+
+const slides = [...document.querySelectorAll("#slider .slide")];
+const dotsBox = document.getElementById("dots");
+let cur = 0, timer;
+function buildDots(){
+  dotsBox.innerHTML = slides.map((_,i) =>
+    `<button type="button" aria-current="${i===cur}" aria-label="${t("a11y.slide",{n:i+1})}"></button>`).join("");
+  [...dotsBox.children].forEach((d,i) => d.addEventListener("click", () => { go(i); play(); }));
+}
+function go(i){
+  const dots = [...dotsBox.children];
+  slides[cur].removeAttribute("data-active"); dots[cur]?.setAttribute("aria-current","false");
+  cur = (i + slides.length) % slides.length;
+  slides[cur].setAttribute("data-active",""); dots[cur]?.setAttribute("aria-current","true");
+}
+const play = () => { clearInterval(timer); timer = setInterval(() => go(cur+1), 6500); };
+
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+}), {rootMargin:"0px 0px -12% 0px", threshold:.1});
+document.querySelectorAll(".rev").forEach(el => io.observe(el));
+
+document.addEventListener("error", e => {
+  if (e.target.tagName === "IMG") e.target.setAttribute("data-broken","");
+}, true);
+
+/* ============================================================
+   PRENOTAZIONE
+   ============================================================ */
+const RATE = 135, CLEANING = 25, TAX = 6, LONG_STAY = 7, DISCOUNT = .10, MIN_NIGHTS = 2;
+const BLOCKED = [["2026-08-08","2026-08-17"],["2026-09-03","2026-09-08"]];
+
+const ci = document.getElementById("checkin"), co = document.getElementById("checkout");
+const guestsEl = document.getElementById("guests");
+const gMinus = document.getElementById("gMinus"), gPlus = document.getElementById("gPlus");
+const alertBox = document.getElementById("alert"), alertTitle = document.getElementById("alertTitle"), alertMsg = document.getElementById("alertMsg");
+const idle = document.getElementById("sumIdle"), loading = document.getElementById("sumLoading"),
+      live = document.getElementById("sumLive"), done = document.getElementById("sumDone");
+const lines = document.getElementById("lines"), totalEl = document.getElementById("total"),
+      nightsTitle = document.getElementById("nightsTitle"), rangeLabel = document.getElementById("rangeLabel"),
+      submitBtn = document.getElementById("submitBtn"), form = document.getElementById("bookingForm");
+
+let guests = 2, quoteTimer, lastState = "idle";
+const money = n => new Intl.NumberFormat(LOCALES[lang].intl, {style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);
+const fmtDate = d => d.toLocaleDateString(LOCALES[lang].intl, {day:"numeric", month:"long"});
+const nightsOf = (a,b) => Math.round((b-a)/86400000);
+const overlaps = (a,b) => BLOCKED.some(([s,e]) => a < new Date(e) && b > new Date(s));
+
+const show = el => { [idle,loading,live,done].forEach(x => x.hidden = x !== el); };
+const warn = (tk,mk) => { alertTitle.textContent = t(tk); alertMsg.textContent = t(mk); alertBox.setAttribute("data-show",""); alertBox.dataset.keys = tk+"|"+mk; };
+const clearWarn = () => { alertBox.removeAttribute("data-show"); delete alertBox.dataset.keys; };
+
+function setGuests(n){
+  guests = Math.min(2, Math.max(1, n));
+  guestsEl.textContent = guests;
+  gMinus.disabled = guests <= 1; gPlus.disabled = guests >= 2;
+  quote();
+}
+gMinus.addEventListener("click", () => setGuests(guests-1));
+gPlus.addEventListener("click", () => setGuests(guests+1));
+
+ci.addEventListener("change", () => {
+  if (ci.value){
+    const min = new Date(ci.value); min.setDate(min.getDate() + MIN_NIGHTS);
+    co.min = min.toISOString().slice(0,10);
+    if (co.value && new Date(co.value) < min) co.value = co.min;
+  }
+  quote();
+});
+co.addEventListener("change", () => quote());
+
+function quote(silent){
+  if (lastState === "done" && silent) { renderDone(); return; }
+  if (alertBox.dataset.keys && silent){
+    const [tk,mk] = alertBox.dataset.keys.split("|");
+    alertTitle.textContent = t(tk); alertMsg.textContent = t(mk);
+  } else if (!silent) clearWarn();
+
+  ci.setAttribute("aria-invalid","false"); co.setAttribute("aria-invalid","false");
+  if (!ci.value || !co.value){ show(idle); lastState = "idle"; return; }
+
+  const a = new Date(ci.value), b = new Date(co.value), n = nightsOf(a,b);
+  if (n < MIN_NIGHTS){
+    co.setAttribute("aria-invalid","true"); warn("bk.errMinT","bk.errMinM"); show(idle); lastState="idle"; return;
+  }
+  if (overlaps(a,b)){
+    ci.setAttribute("aria-invalid","true"); co.setAttribute("aria-invalid","true");
+    warn("bk.errOccT","bk.errOccM"); show(idle); lastState="idle"; return;
+  }
+
+  const render = () => {
+    const base = n * RATE;
+    const disc = n >= LONG_STAY ? Math.round(base * DISCOUNT) : 0;
+    const tax = Math.min(n,10) * TAX * guests;
+    nightsTitle.textContent = plural("bk.nights", n);
+    rangeLabel.textContent = `${fmtDate(a)} → ${fmtDate(b)} · ${guests} ${t(`bk.guest_${guests===1?"one":"other"}`)}`;
+    lines.innerHTML = `
+      <li><span>${plural("bk.lineNights", n, {price: money(RATE)})}</span><span>${money(base)}</span></li>
+      ${disc ? `<li class="disc"><span>${t("bk.lineDiscount")}</span><span>-${money(disc)}</span></li>` : ""}
+      <li><span>${t("bk.lineCleaning")}</span><span>${money(CLEANING)}</span></li>
+      <li><span>${t("bk.lineTax")}</span><span>${money(tax)}</span></li>`;
+    totalEl.textContent = money(base - disc + CLEANING + tax);
+    submitBtn.disabled = false; submitBtn.textContent = t("bk.submit");
+    show(live); lastState = "live";
+  };
+
+  if (silent && lastState === "live"){ render(); return; }
+  show(loading); lastState = "loading";
+  clearTimeout(quoteTimer);
+  quoteTimer = setTimeout(render, 700);
+}
+
+let doneMode = "stripe";
+function renderDone(){
+  document.getElementById("doneMsg").textContent =
+    t(doneMode === "arrival" ? "bk.doneArrival" : "bk.doneStripe");
+  show(done); lastState = "done";
+}
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const name = document.getElementById("name"), email = document.getElementById("email");
+  [name,email].forEach(f => f.setAttribute("aria-invalid", f.checkValidity() ? "false" : "true"));
+  if (!name.checkValidity() || !email.checkValidity()){
+    warn("bk.errNameT","bk.errNameM");
+    (name.checkValidity() ? email : name).focus();
+    return;
+  }
+  clearWarn();
+  submitBtn.disabled = true; submitBtn.textContent = t("bk.submitting");
+  setTimeout(() => { doneMode = document.getElementById("pay").value; renderDone(); }, 1100);
+});
+
+/* ============================================================ BOOT ============================================================ */
+lang = detectLang();
+buildLangMenu();
+applyI18n();
+setGuests(2);
+play();
+if (window.lucide) lucide.createIcons();
+</script>
+
+
+</div><!----><!----></cu-root><script type="importmap">{ "imports": {"./common.js":"./common-2403dc182a.js","./main.js":"./main-f68b4762f6.js","./artifact-editor-runtime.js":"./artifact-editor-runtime-1baad41e9d.js","./startRecording.js":"./startRecording-e2f14c42a9.js","./artifact-editor-chrome.component.js":"./artifact-editor-chrome.component-c4841c6bbc.js","./profiler.js":"./profiler-72c532caef.js","./rolldown-runtime.js":"./rolldown-runtime-2681143a8f.js"} }</script><script src="polyfills-RMGRH36F.js" type="module" crossorigin="anonymous"></script><script src="main-f68b4762f6.js" type="module" crossorigin="anonymous"></script><div class="design-ui-credit" aria-hidden="true" style="opacity: 0;">💜 by ClickUp Brain</div></body></html>

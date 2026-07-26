@@ -32,12 +32,12 @@ export function AuthForm() {
   };
 
   return (
-    <div className="w-full max-w-sm rounded-[2rem] border border-white/10 bg-zinc-950/60 p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl transition-all duration-300">
+    <div className="w-full max-w-sm rounded-2xl border border-line bg-plaster p-8 shadow-sm transition-all duration-300">
       <div className="mb-6 text-left">
-        <h3 className="text-2xl font-bold tracking-tight text-white">
+        <h3 className="font-serif text-2xl font-bold tracking-tight text-ink">
           {isSignUp ? "Crea un account" : "Bentornato"}
         </h3>
-        <p className="mt-1 text-sm text-zinc-400">
+        <p className="mt-1 text-sm text-ink-soft">
           {isSignUp
             ? "Inserisci i tuoi dati per iniziare"
             : "Accedi per continuare verso la tua dashboard"}
@@ -45,9 +45,9 @@ export function AuthForm() {
       </div>
 
       {error && (
-        <div className="mb-5 flex items-center gap-2.5 rounded-xl border border-red-500/20 bg-red-950/40 p-3.5 text-xs font-medium text-red-300">
+        <div className="mb-5 flex items-center gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-xs font-medium text-red-700">
           <svg
-            className="h-4 w-4 shrink-0 text-red-400"
+            className="h-4 w-4 shrink-0 text-red-600"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -64,7 +64,7 @@ export function AuthForm() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {isSignUp && (
           <div className="flex flex-col gap-1.5 text-left">
-            <label className="text-xs font-medium tracking-wider text-zinc-400 uppercase">
+            <label className="text-xs font-medium tracking-wider text-ink-soft uppercase">
               Nome Completo
             </label>
             <input
@@ -73,13 +73,13 @@ export function AuthForm() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-sm text-white placeholder-zinc-600 shadow-[inset_0_1px_2px_rgba(0,0,0,0.2)] transition-all duration-200 focus:border-white/30 focus:bg-white/[0.06] focus:ring-2 focus:ring-white/10 focus:outline-none"
+              className="w-full rounded-xl border border-line bg-plaster-deep px-3.5 py-2.5 text-sm text-ink placeholder-ink-faint shadow-2xs transition-all duration-200 focus:border-terracotta focus:bg-white focus:ring-2 focus:ring-terracotta/10 focus:outline-none"
             />
           </div>
         )}
 
         <div className="flex flex-col gap-1.5 text-left">
-          <label className="text-xs font-medium tracking-wider text-zinc-400 uppercase">
+          <label className="text-xs font-medium tracking-wider text-ink-soft uppercase">
             Email
           </label>
           <input
@@ -88,12 +88,12 @@ export function AuthForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-sm text-white placeholder-zinc-600 shadow-[inset_0_1px_2px_rgba(0,0,0,0.2)] transition-all duration-200 focus:border-white/30 focus:bg-white/[0.06] focus:ring-2 focus:ring-white/10 focus:outline-none"
+            className="w-full rounded-xl border border-line bg-plaster-deep px-3.5 py-2.5 text-sm text-ink placeholder-ink-faint shadow-2xs transition-all duration-200 focus:border-terracotta focus:bg-white focus:ring-2 focus:ring-terracotta/10 focus:outline-none"
           />
         </div>
 
         <div className="flex flex-col gap-1.5 text-left">
-          <label className="text-xs font-medium tracking-wider text-zinc-400 uppercase">
+          <label className="text-xs font-medium tracking-wider text-ink-soft uppercase">
             Password
           </label>
           <input
@@ -102,19 +102,19 @@ export function AuthForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-sm text-white placeholder-zinc-600 shadow-[inset_0_1px_2px_rgba(0,0,0,0.2)] transition-all duration-200 focus:border-white/30 focus:bg-white/[0.06] focus:ring-2 focus:ring-white/10 focus:outline-none"
+            className="w-full rounded-xl border border-line bg-plaster-deep px-3.5 py-2.5 text-sm text-ink placeholder-ink-faint shadow-2xs transition-all duration-200 focus:border-terracotta focus:bg-white focus:ring-2 focus:ring-terracotta/10 focus:outline-none"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-zinc-950 shadow-[0_1px_2px_rgba(0,0,0,0.1)] transition-all duration-200 hover:bg-zinc-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
+          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-terracotta px-4 py-2.5 text-sm font-semibold text-plaster shadow-2xs transition-all duration-200 hover:bg-terracotta-d active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
         >
           {loading ? (
             <>
               <svg
-                className="h-4 w-4 animate-spin text-zinc-950"
+                className="h-4 w-4 animate-spin text-plaster"
                 viewBox="0 0 24 24"
                 fill="none"
               >
@@ -143,11 +143,11 @@ export function AuthForm() {
       </form>
 
       <div className="my-6 flex items-center gap-3">
-        <div className="h-[1px] flex-1 bg-white/10" />
-        <span className="text-[11px] font-medium tracking-widest text-zinc-500 uppercase">
+        <div className="h-[1px] flex-1 bg-line" />
+        <span className="text-[11px] font-medium tracking-widest text-ink-faint uppercase">
           Oppure
         </span>
-        <div className="h-[1px] flex-1 bg-white/10" />
+        <div className="h-[1px] flex-1 bg-line" />
       </div>
 
       <div className="flex flex-col gap-2.5">
@@ -156,7 +156,7 @@ export function AuthForm() {
           onClick={() =>
             authClient.signIn.social({ provider: "github", callbackURL: "/" })
           }
-          className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-zinc-900/80 px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:border-white/20 hover:bg-zinc-900 active:scale-[0.98]"
+          className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-line bg-plaster-deep px-4 py-2.5 text-sm font-medium text-ink transition-all duration-200 hover:border-line-strong hover:bg-white active:scale-[0.98]"
         >
           <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
             <path
@@ -173,7 +173,7 @@ export function AuthForm() {
           onClick={() =>
             authClient.signIn.social({ provider: "google", callbackURL: "/" })
           }
-          className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.05] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:border-white/20 hover:bg-white/[0.08] active:scale-[0.98]"
+          className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-line bg-plaster-deep px-4 py-2.5 text-sm font-medium text-ink transition-all duration-200 hover:border-line-strong hover:bg-white active:scale-[0.98]"
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24">
             <path
@@ -204,7 +204,7 @@ export function AuthForm() {
             setIsSignUp(!isSignUp);
             setError("");
           }}
-          className="text-xs text-zinc-400 transition-colors duration-200 hover:text-white"
+          className="text-xs text-ink-soft transition-colors duration-200 hover:text-ink"
         >
           {isSignUp
             ? "Hai già un account? Accedi"

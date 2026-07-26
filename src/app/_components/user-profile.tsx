@@ -29,9 +29,9 @@ export function UserProfile({ user }: UserProfileProps) {
   const initials = (user.name ?? user.email ?? "U").slice(0, 2).toUpperCase();
 
   return (
-    <div className="flex w-full max-w-sm flex-col items-center gap-5 rounded-[2rem] border border-white/10 bg-zinc-950/60 p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl">
+    <div className="flex w-full max-w-sm flex-col items-center gap-5 rounded-2xl border border-line bg-plaster p-6 shadow-sm">
       <div className="flex w-full items-center gap-4">
-        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-zinc-900 shadow-inner">
+        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line-strong bg-plaster-deep shadow-inner">
           {user.image ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
@@ -40,31 +40,31 @@ export function UserProfile({ user }: UserProfileProps) {
               className="h-full w-full object-cover"
             />
           ) : (
-            <span className="text-sm font-semibold tracking-wider text-zinc-300">
+            <span className="text-sm font-semibold tracking-wider text-ink">
               {initials}
             </span>
           )}
         </div>
         <div className="flex min-w-0 flex-col text-left">
-          <h4 className="truncate text-base font-bold text-white">
+          <h4 className="truncate text-base font-bold text-ink">
             {user.name ?? "Utente"}
           </h4>
-          <span className="truncate text-xs font-medium text-zinc-400">
+          <span className="truncate text-xs font-medium text-ink-soft">
             {user.email}
           </span>
         </div>
       </div>
 
-      <div className="h-[1px] w-full bg-white/10" />
+      <div className="h-[1px] w-full bg-line" />
 
       <button
         type="button"
         onClick={handleSignOut}
         disabled={loading}
-        className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-950/30 px-4 py-2.5 text-sm font-medium text-red-300 transition-all duration-200 hover:border-red-500/30 hover:bg-red-950/50 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50/60 px-4 py-2.5 text-sm font-medium text-red-700 transition-all duration-200 hover:border-red-300 hover:bg-red-100/80 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
       >
         <svg
-          className="h-4 w-4 shrink-0"
+          className="h-4 w-4 shrink-0 text-red-600"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
