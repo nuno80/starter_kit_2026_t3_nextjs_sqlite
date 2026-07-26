@@ -4,6 +4,8 @@ import { type Metadata } from "next";
 import { Fraunces, Instrument_Sans } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { I18nProvider } from "~/app/_components/i18n-provider";
+import { Navbar } from "~/app/_components/navbar";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -27,9 +29,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${instrumentSans.variable}`}>
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <I18nProvider>
+            <Navbar />
+            <div className="pt-14">{children}</div>
+          </I18nProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );
 }
+
 
