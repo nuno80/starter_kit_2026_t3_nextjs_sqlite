@@ -214,12 +214,13 @@ export function Navbar() {
                 onClick={() => setAuthOpen(!authOpen)}
                 className="rounded-lg bg-terracotta px-4 py-1.5 text-xs font-semibold text-plaster shadow-sm transition-colors hover:bg-terracotta-d"
                 aria-expanded={authOpen}
+                data-testid="nav-login-btn"
               >
                 {t("nav.login")}
               </button>
 
               {authOpen && (
-                <div className="absolute right-0 mt-2 z-50">
+                <div className="absolute right-0 mt-2 z-50" data-testid="auth-overlay">
                   <AuthForm />
                 </div>
               )}
