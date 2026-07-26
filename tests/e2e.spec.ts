@@ -44,5 +44,8 @@ test.describe("Admin Dashboard & Guard Seams", () => {
 
     const usersRes = await request.get("http://localhost:3000/api/trpc/admin.getUsers");
     expect(usersRes.status()).toBe(401);
+
+    const rolesRes = await request.get("http://localhost:3000/api/trpc/admin.getRoles");
+    expect(rolesRes.status()).toBe(401);
   });
 });
