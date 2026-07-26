@@ -41,5 +41,8 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     expect(res.status()).toBe(401);
     const body = await res.json();
     expect(JSON.stringify(body)).toContain("UNAUTHORIZED");
+
+    const usersRes = await request.get("http://localhost:3000/api/trpc/admin.getUsers");
+    expect(usersRes.status()).toBe(401);
   });
 });

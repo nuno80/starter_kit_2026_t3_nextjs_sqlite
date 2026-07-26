@@ -4,6 +4,7 @@ import { getSession } from "~/server/better-auth/server";
 import { db } from "~/server/db";
 import { user } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
+import { AdminDashboardClient } from "./client";
 
 export default async function AdminDashboardPage() {
   const session = await getSession();
@@ -21,7 +22,7 @@ export default async function AdminDashboardPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-plaster text-ink">
-      <div className="container flex flex-col gap-8 px-4 py-16 max-w-4xl">
+      <div className="container flex flex-col gap-8 px-4 py-16 max-w-5xl">
         <div className="flex w-full justify-between items-center border-b border-line pb-4">
           <Link href="/" className="font-serif text-2xl font-bold hover:text-terracotta">
             ← Nuno Starter SQlite
@@ -40,27 +41,7 @@ export default async function AdminDashboardPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-          <div className="p-6 rounded-lg bg-plaster-deep border border-line flex flex-col gap-2">
-            <h3 className="font-serif text-xl font-bold text-ink">Users</h3>
-            <p className="text-ink-soft text-sm">Manage registered users and assign dynamic roles.</p>
-          </div>
-          <div className="p-6 rounded-lg bg-plaster-deep border border-line flex flex-col gap-2">
-            <h3 className="font-serif text-xl font-bold text-ink">Roles</h3>
-            <p className="text-ink-soft text-sm">Configure system roles and permission scopes.</p>
-          </div>
-          <div className="p-6 rounded-lg bg-plaster-deep border border-line flex flex-col gap-2">
-            <h3 className="font-serif text-xl font-bold text-ink">Security</h3>
-            <p className="text-ink-soft text-sm">Review tRPC procedure guards and access logs.</p>
-          </div>
-        </div>
-
-        <div className="mt-8 p-8 rounded-lg bg-plaster-deep border border-line-strong flex flex-col items-center justify-center text-center gap-4">
-          <p className="font-serif text-xl text-ink">Dashboard Skeleton Active</p>
-          <p className="text-ink-soft text-sm max-w-md">
-            This protected workspace is only visible to sessions with the <code className="text-terracotta font-mono">admin</code> role.
-          </p>
-        </div>
+        <AdminDashboardClient currentUserId={session.user.id} />
       </div>
     </main>
   );
