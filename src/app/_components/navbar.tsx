@@ -48,6 +48,39 @@ export function Navbar() {
     ? (session.user.name ?? session.user.email ?? "U").slice(0, 2).toUpperCase()
     : "";
 
+  if (!mounted) {
+    return (
+      <nav className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-line bg-plaster/90 px-4 py-3 text-ink backdrop-blur-md md:px-8">
+        <Link href="/" className="flex items-baseline gap-2 font-serif text-xl font-bold tracking-tight text-ink">
+          <span>T3</span>
+          <span className="font-sans text-xs font-normal tracking-widest text-ink-soft uppercase">Starter</span>
+        </Link>
+        <ul className="hidden items-center gap-6 text-sm font-medium text-ink-soft md:flex">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <Link href={link.href} className="transition-colors hover:text-terracotta">
+                {link.label}
+              </Link>
+            </li>
+          ))}
+          {pathname !== "/posts" && (
+            <li>
+              <Link href="/posts" className="rounded-md bg-plaster-deep px-2.5 py-1 text-xs font-semibold text-ink border border-line">
+                {t("nav.demo")} →
+              </Link>
+            </li>
+          )}
+        </ul>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 rounded-full border border-line bg-plaster-deep px-3 py-1.5 text-xs font-semibold tracking-wider text-ink">
+            <span className="uppercase">{lang}</span>
+          </div>
+          <div className="h-8 w-16 animate-pulse rounded-lg bg-plaster-deep border border-line" />
+        </div>
+      </nav>
+    );
+  }
+
   return (
     <nav className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-line bg-plaster/90 px-4 py-3 text-ink backdrop-blur-md md:px-8">
       {/* Brand */}
@@ -145,7 +178,7 @@ export function Navbar() {
 
         {/* Auth Widget */}
         <div className="relative" ref={authRef}>
-          {!mounted || isPending ? (
+          {isPending ? (
             <div className="h-8 w-16 animate-pulse rounded-lg bg-plaster-deep border border-line" />
           ) : session ? (
             <>
