@@ -16,7 +16,9 @@ export default async function AdminDashboardPage() {
     where: eq(user.id, session.user.id),
   });
 
-  if (dbUser?.role !== "admin" && (session.user as { role?: string }).role !== "admin") {
+  const isAdmin = (r?: string | null) => r?.split(",").map(x => x.trim()).includes("admin") ?? false;
+
+  if (!isAdmin(dbUser?.role) && !isAdmin((session.user as { role?: string }).role)) {
     redirect("/");
   }
 
