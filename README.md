@@ -50,7 +50,18 @@ pnpm db:push
 pnpm db:studio
 ```
 
-### 4. Avvio del Server di Sviluppo
+### 4. Primo Utente Admin & Admin Dashboard
+
+Lo starter kit include il plugin Admin di Better-Auth per la gestione utenti su un'interfaccia protetta (`/admin-dashboard`). Essendo i ruoli salvati come testo direttamente in SQLite, per diventare il primo amministratore del sistema basta un singolo comando dal terminale:
+
+1. Fai il login nell'applicazione dal browser per creare il tuo account utente.
+2. Apri il terminale nella cartella del progetto ed esegui:
+   ```bash
+   sqlite3 db.sqlite "UPDATE user SET role = 'admin' WHERE email = 'la-tua@email.com';"
+   ```
+3. Ricarica la pagina: vedrai il pulsante **Admin ⚙️** apparire nella Navbar in alto. Da lì potrai accedere alla dashboard per gestire gli accessi o promuovere comodamente i futuri utenti dalla UI web.
+
+### 5. Avvio del Server di Sviluppo
 
 Avvia il server con il supporto a **Turbopack** per reload istantanei:
 

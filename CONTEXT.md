@@ -16,6 +16,18 @@ _Avoid_: DB esterno, Turso, Cloud DB
 Il motore di autenticazione moderno e type-safe preconfigurato per gestire accesso tramite email/password e login social (GitHub, Google), integrato sia in ambito client che server.
 _Avoid_: NextAuth, Auth.js, Clerk
 
+**Admin**:
+Un utente dotato di privilegi di amministrazione di sistema il cui identificativo o ruolo è esplicitamente riconosciuto dal sistema di autenticazione per gestire altri utenti e permessi.
+_Avoid_: Superuser, Root, Gestore
+
+**Admin Dashboard (`/admin-dashboard`)**:
+L'interfaccia protetta accessibile ai soli amministratori per il controllo degli accessi, l'auditing degli utenti registrati e l'assegnazione dei ruoli di sistema.
+_Avoid_: Control Panel, Dashboard generale, Impostazioni utente
+
+**User Role**:
+Il livello di privilegio associato a un utente all'interno del sistema di autenticazione (es. `user`, `admin`), governato da regole statiche di controllo degli accessi e salvato come testo (anche multiplo) senza tabelle relazionali dinamiche.
+_Avoid_: Gruppo di sicurezza, Profilo di accesso, Ruolo dinamico nel DB
+
 **tRPC Procedure**:
 Un endpoint API type-safe esposto dal server e consumabile direttamente dal client React tramite TanStack Query, garantendo type-checking continuo dal database alla UI.
 _Avoid_: API Route, REST endpoint, Controller
@@ -32,9 +44,9 @@ _Avoid_: Home generica, Vetrina statica, Boilerplate index
 La sezione finale della Landing Page adibita a guida di avvio rapido in 60 secondi, strutturata a due colonne (ispirata al layout originale di prenotazione): a sinistra i comandi CLI essenziali (`pnpm install`, `pnpm db:push`, `pnpm dev`), a destra il box di riepilogo "sticky" che indirizza verso l'applicazione di prova.
 _Avoid_: Form di prenotazione, Contatti, Footer semplice
 
-**Demo App Page (`/posts` o `/dashboard`)**:
+**Demo App Page (`/posts`)**:
 La pagina dedicata e separata dalla Landing Page che ospita le funzionalità di test e dimostrazione delle operazioni CRUD sul database locale SQLite tramite tRPC e Drizzle ORM.
-_Avoid_: Sandbox in-page, Sandbox monolitica
+_Avoid_: Sandbox in-page, Sandbox monolitica, Dashboard generale
 
 **Navbar Auth Widget**:
 L'integrazione del sistema di autenticazione Better-Auth direttamente all'interno della barra di navigazione globale, che permette l'accesso immediato o la visualizzazione del profilo utente da qualsiasi rotta del progetto.

@@ -27,7 +27,11 @@ export const posts = sqliteTable(
   ],
 );
 
-// Better Auth core tables
+export const role = sqliteTable("role", (d) => ({
+  name: d.text({ length: 255 }).primaryKey(),
+  description: d.text({ length: 1024 }),
+}));
+
 export const user = sqliteTable("user", (d) => ({
   id: d
     .text({ length: 255 })
@@ -38,6 +42,12 @@ export const user = sqliteTable("user", (d) => ({
   email: d.text({ length: 255 }).notNull().unique(),
   emailVerified: d.integer({ mode: "boolean" }).default(false),
   image: d.text({ length: 255 }),
+  role: d
+    .text({ length: 255 })
+    .default("user"),
+  banned: d.integer({ mode: "boolean" }).default(false),
+  banReason: d.text({ length: 1024 }),
+  banExpires: d.integer({ mode: "timestamp" }),
   createdAt: d
     .integer({ mode: "timestamp" })
     .default(sql`(unixepoch())`)
@@ -105,6 +115,7 @@ export const session = sqliteTable(
     expiresAt: d.integer({ mode: "timestamp" }).notNull(),
     ipAddress: d.text({ length: 255 }),
     userAgent: d.text({ length: 255 }),
+    impersonatedBy: d.text({ length: 255 }),
     createdAt: d
       .integer({ mode: "timestamp" })
       .default(sql`(unixepoch())`)

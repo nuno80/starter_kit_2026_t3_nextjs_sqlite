@@ -4,10 +4,15 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
+  adminProcedure,
 } from "~/server/api/trpc";
 import { posts } from "~/server/db/schema";
 
 export const postRouter = createTRPCRouter({
+  adminCheck: adminProcedure.query(() => {
+    return "admin secret message";
+  }),
+
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(({ input }) => {
