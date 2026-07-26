@@ -1,6 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --color-plaster: oklch(96.5% 0.014 82);
+  --color-plaster-deep: oklch(93% 0.021 80);
+  --color-plaster-warm: oklch(89% 0.028 76);
+  --color-ink: oklch(24% 0.021 48);
+  --color-ink-soft: oklch(41% 0.019 52);
+  --color-ink-faint: oklch(58% 0.014 56);
+  --color-terracotta: oklch(56% 0.135 40);
+  --color-terracotta-d: oklch(46% 0.118 38);
+  --color-terracotta-l: oklch(72% 0.086 46);
+  --color-olive: oklch(43% 0.052 122);
+  --color-brass: oklch(75% 0.104 84);
+  --color-line: oklch(84% 0.018 74);
+  --color-line-strong: oklch(72% 0.024 70);
 }
+
