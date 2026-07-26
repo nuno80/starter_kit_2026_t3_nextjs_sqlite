@@ -18,5 +18,13 @@
   --color-brass: oklch(75% 0.104 84);
   --color-line: oklch(84% 0.018 74);
   --color-line-strong: oklch(72% 0.024 70);
+
+  --keyframes-drift: {
+    "0%": { transform: "scale(1.0)" },
+    "50%": { transform: "scale(1.08)" },
+    "100%": { transform: "scale(1.0)" },
+  };
+  --animation-drift: drift 20s ease-in-out infinite;
 }
+
 

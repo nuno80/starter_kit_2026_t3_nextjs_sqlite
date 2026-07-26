@@ -11,6 +11,19 @@ interface Dictionary {
   "nav.quick": string;
   "nav.login": string;
   "nav.demo": string;
+  "hero.badge": string;
+  "hero.title1": string;
+  "hero.title2": string;
+  "hero.desc": string;
+  "hero.cta.demo": string;
+  "hero.cta.stack": string;
+  "stack.label": string;
+  "stack.title": string;
+  "stack.desc": string;
+  "stack.db.title": string;
+  "stack.db.desc": string;
+  "stack.types.title": string;
+  "stack.types.desc": string;
 }
 
 const dictionaries: Record<Language, Dictionary> = {
@@ -21,6 +34,19 @@ const dictionaries: Record<Language, Dictionary> = {
     "nav.quick": "04 / Quick Start",
     "nav.login": "Accedi",
     "nav.demo": "Demo App",
+    "hero.badge": "Artigianato Digitale & Modern Stack",
+    "hero.title1": "Ingegneria T3,",
+    "hero.title2": "Anima Editoriale.",
+    "hero.desc": "Uno starter kit che fonde la robustezza dei tipi end-to-end con l'estetica materica di Plaster & Terracotta. Veloce, locale, senza compromessi.",
+    "hero.cta.demo": "Esplora Demo App",
+    "hero.cta.stack": "Architettura 01 ↓",
+    "stack.label": "01 / Architettura & Tech Stack",
+    "stack.title": "Frequenze locali, rigore di tipo.",
+    "stack.desc": "La semplicità di un database su file accoppiata con la certezza del fully-typed end-to-end. Niente overhead di rete, niente drift dei contratti.",
+    "stack.db.title": "Local SQLite & Drizzle",
+    "stack.db.desc": "Un singolo file db.sqlite ad altissime prestazioni per un isolamento immediato, zero latenza di rete e migrazioni istantanee sul tuo disco.",
+    "stack.types.title": "End-to-End Type Safety",
+    "stack.types.desc": "Dai contratti Zod ai router tRPC e ai componenti React: un unico filo conduttore che cattura gli errori a tempo di compilazione.",
   },
   en: {
     "nav.stack": "01 / Architecture",
@@ -29,6 +55,19 @@ const dictionaries: Record<Language, Dictionary> = {
     "nav.quick": "04 / Quick Start",
     "nav.login": "Sign In",
     "nav.demo": "Demo App",
+    "hero.badge": "Digital Craftsmanship & Modern Stack",
+    "hero.title1": "T3 Engineering,",
+    "hero.title2": "Editorial Soul.",
+    "hero.desc": "A starter kit blending end-to-end type robustness with the tactile aesthetics of Plaster & Terracotta. Fast, local, uncompromising.",
+    "hero.cta.demo": "Explore Demo App",
+    "hero.cta.stack": "Architecture 01 ↓",
+    "stack.label": "01 / Architecture & Tech Stack",
+    "stack.title": "Local frequencies, type rigor.",
+    "stack.desc": "The simplicity of a file-based database coupled with the absolute certainty of fully-typed end-to-end communication. Zero network overhead, zero contract drift.",
+    "stack.db.title": "Local SQLite & Drizzle",
+    "stack.db.desc": "A single ultra-high-performance db.sqlite file for immediate isolation, zero network latency, and instant schema migrations on your disk.",
+    "stack.types.title": "End-to-End Type Safety",
+    "stack.types.desc": "From Zod contracts to tRPC routers and React components: a continuous thread that catches errors at compile time before runtime.",
   },
 };
 
@@ -54,7 +93,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = next;
   };
 
-  const t = (key: keyof Dictionary) => dictionaries[lang][key] || key;
+  const t = (key: keyof Dictionary) => (dictionaries[lang] as unknown as Record<string, string>)[key] ?? key;
 
   return (
     <I18nContext.Provider value={{ lang, setLang, t }}>
