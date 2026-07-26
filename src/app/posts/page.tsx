@@ -39,7 +39,10 @@ export default async function PostsPage() {
 
         {session?.user && (
           <div className="w-full max-w-xl">
-            <LatestPost />
+            <LatestPost
+              currentUserId={session.user.id}
+              userRole={(session.user as { role?: string }).role ?? "user"}
+            />
           </div>
         )}
       </div>

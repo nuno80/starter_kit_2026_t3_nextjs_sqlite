@@ -180,6 +180,85 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     }
   });
 
+  test("post update and delete mutations enforce owner or admin permissions", async () => {
+    process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET ?? "mock";
+
+    const { postRouter } = await import("~/server/api/routers/post");
+    const { TRPCError } = await import("@trpc/server");
+
+    let updatedName: string | null = null;
+    let deletedId: number | null = null;
+
+    const createMockCtx = (userId: string, role: string) => ({
+      db: {
+        query: {
+          posts: {
+            findFirst: ({ where }: any) => {
+              return Promise.resolve({ id: 1, name: "Original Post", createdById: "owner-id" });
+            },
+          },
+        },
+        update: () => ({
+          set: ({ name }: any) => ({
+            where: () => {
+              updatedName = name;
+              return Promise.resolve();
+            },
+          }),
+        }),
+        delete: () => ({
+          where: () => {
+            deletedId = 1;
+            return Promise.resolve();
+          },
+        }),
+      } as any,
+      session: {
+        user: {
+          id: userId,
+          role,
+        },
+      } as any,
+      headers: new Headers(),
+    });
+
+    const ownerCaller = postRouter.createCaller(createMockCtx("owner-id", "user"));
+    const adminCaller = postRouter.createCaller(createMockCtx("admin-id", "admin"));
+    const otherCaller = postRouter.createCaller(createMockCtx("other-id", "user"));
+
+    // Owner can update
+    await ownerCaller.update({ id: 1, name: "Updated by Owner" });
+    expect(updatedName).toBe("Updated by Owner");
+
+    // Admin can update someone else's post
+    await adminCaller.update({ id: 1, name: "Updated by Admin" });
+    expect(updatedName).toBe("Updated by Admin");
+
+    // Other user cannot update
+    try {
+      await otherCaller.update({ id: 1, name: "Hacked" });
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("FORBIDDEN");
+    }
+
+    // Other user cannot delete
+    try {
+      await otherCaller.delete({ id: 1 });
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("FORBIDDEN");
+    }
+
+    // Admin can delete
+    await adminCaller.delete({ id: 1 });
+    expect(deletedId).toBe(1);
+  });
+
   test("updateUserRole mutation rejects self-demotion when userId === session.user.id and newRole !== 'admin'", async () => {
     process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
     process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
