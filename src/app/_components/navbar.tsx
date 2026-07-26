@@ -70,7 +70,7 @@ export function Navbar() {
               </Link>
             </li>
           )}
-          {session?.user && (session.user as { role?: string }).role === "admin" && (
+          {session?.user && ((session.user as { role?: string }).role === "admin" || (session.user as { role?: string }).role?.toLowerCase() === "admin") && (
             <li>
               <Link href="/admin-dashboard" className="rounded-md bg-terracotta/10 px-2.5 py-1 text-xs font-semibold text-terracotta border border-terracotta/30">
                 Admin ⚙️
@@ -118,7 +118,7 @@ export function Navbar() {
             </Link>
           </li>
         )}
-        {session?.user && (session.user as { role?: string }).role === "admin" && (
+        {session?.user && ((session.user as { role?: string }).role === "admin" || (session.user as { role?: string }).role?.toLowerCase() === "admin") && (
           <li>
             <Link
               href="/admin-dashboard"
