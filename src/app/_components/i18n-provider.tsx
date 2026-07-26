@@ -81,8 +81,10 @@ const I18nContext = createContext<I18nContextType | null>(null);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Language>("it");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const saved = localStorage.getItem("t3-lang") as Language;
     if (saved === "it" || saved === "en") setLangState(saved);
   }, []);
@@ -93,10 +95,11 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = next;
   };
 
-  const t = (key: keyof Dictionary) => (dictionaries[lang] as unknown as Record<string, string>)[key] ?? key;
+  const activeLang = mounted ? lang : "it";
+  const t = (key: keyof Dictionary) => (dictionaries[activeLang] as unknown as Record<string, string>)[key] ?? key;
 
   return (
-    <I18nContext.Provider value={{ lang, setLang, t }}>
+    <I18nContext.Provider value={{ lang: activeLang, setLang, t }}>
       {children}
     </I18nContext.Provider>
   );
