@@ -70,6 +70,13 @@ export function Navbar() {
               </Link>
             </li>
           )}
+          {session?.user && (session.user as { role?: string }).role === "admin" && (
+            <li>
+              <Link href="/admin-dashboard" className="rounded-md bg-terracotta/10 px-2.5 py-1 text-xs font-semibold text-terracotta border border-terracotta/30">
+                Admin ⚙️
+              </Link>
+            </li>
+          )}
         </ul>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 rounded-full border border-line bg-plaster-deep px-3 py-1.5 text-xs font-semibold tracking-wider text-ink">
@@ -108,6 +115,16 @@ export function Navbar() {
               className="rounded-md bg-plaster-deep px-2.5 py-1 text-xs font-semibold text-ink border border-line transition-colors hover:border-terracotta hover:text-terracotta"
             >
               {t("nav.demo")} →
+            </Link>
+          </li>
+        )}
+        {session?.user && (session.user as { role?: string }).role === "admin" && (
+          <li>
+            <Link
+              href="/admin-dashboard"
+              className="rounded-md bg-terracotta/10 px-2.5 py-1 text-xs font-semibold text-terracotta border border-terracotta/30 transition-colors hover:bg-terracotta hover:text-plaster"
+            >
+              Admin ⚙️
             </Link>
           </li>
         )}
