@@ -36,10 +36,10 @@ export default async function AdminDashboardPage() {
 
         <div className="flex flex-col gap-2">
           <h1 className="font-serif text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-            System <span className="text-terracotta">Administration</span>
+            Amministrazione <span className="text-terracotta">Sistema</span>
           </h1>
           <p className="text-lg text-ink-soft">
-            Manage user roles and system access within the SQLite workspace.
+            Gestisci i ruoli utente e gli accessi al sistema all&apos;interno del workspace SQLite.
           </p>
         </div>
 

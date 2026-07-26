@@ -77,28 +77,32 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
       {/* Role Catalog Management Section */}
       <section className="flex flex-col gap-6 p-6 rounded-lg bg-plaster-deep border border-line">
         <div className="flex flex-col gap-1">
-          <h2 className="font-serif text-2xl font-bold text-ink">Role Catalog Management</h2>
+          <h2 className="font-serif text-2xl font-bold text-ink">Gestione Catalogo Ruoli</h2>
           <p className="text-sm text-ink-soft">
-            Manage active system and custom roles.
+            Crea e gestisci le etichette per i ruoli personalizzati o di sistema.
           </p>
+        </div>
+
+        <div className="p-3.5 rounded-md bg-plaster border border-line text-xs leading-relaxed text-ink-soft">
+          <span className="font-semibold text-terracotta">Nota per gli sviluppatori:</span> Nello Starter Kit i ruoli operativi di base con protezioni di sicurezza backend integrate sono <code className="font-mono bg-plaster-deep px-1 py-0.5 rounded text-ink">admin</code> e <code className="font-mono bg-plaster-deep px-1 py-0.5 rounded text-ink">user</code>. La creazione di ruoli personalizzati (es. <code className="font-mono bg-plaster-deep px-1 py-0.5 rounded text-ink">editor</code>, <code className="font-mono bg-plaster-deep px-1 py-0.5 rounded text-ink">moderator</code>) è una funzionalità dimostrativa predisposta come giunzione architettonica (<em>seam</em>): puoi collegare queste etichette alle tue specifiche regole di business o ai tuoi middleware tRPC in base alle necessità del tuo progetto.
         </div>
 
         <div className="flex gap-4 items-end">
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-ink-soft">Role Name</label>
+            <label className="text-xs font-semibold text-ink-soft">Nome Ruolo</label>
             <input
               type="text"
-              placeholder="e.g. editor"
+              placeholder="es. editor"
               value={newRoleName}
               onChange={(e) => setNewRoleName(e.target.value)}
               className="px-3 py-1.5 rounded border border-line bg-plaster text-sm text-ink"
             />
           </div>
           <div className="flex flex-col gap-1 flex-1">
-            <label className="text-xs font-semibold text-ink-soft">Description (optional)</label>
+            <label className="text-xs font-semibold text-ink-soft">Descrizione (opzionale)</label>
             <input
               type="text"
-              placeholder="e.g. Can edit content"
+              placeholder="es. Può modificare i contenuti"
               value={newRoleDesc}
               onChange={(e) => setNewRoleDesc(e.target.value)}
               className="px-3 py-1.5 rounded border border-line bg-plaster text-sm text-ink w-full"
@@ -110,19 +114,19 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
             onClick={() => createRoleMutation.mutate({ name: newRoleName.trim(), description: newRoleDesc.trim() || undefined })}
             className="px-4 py-1.5 rounded bg-terracotta text-plaster text-sm font-medium hover:bg-terracotta/90 disabled:opacity-50"
           >
-            Create Role
+            Crea Ruolo
           </button>
         </div>
 
         {rolesLoading ? (
-          <p className="text-sm text-ink-soft">Loading roles...</p>
+          <p className="text-sm text-ink-soft">Caricamento ruoli in corso...</p>
         ) : (
           <Table className="bg-plaster rounded-md border border-line">
             <TableHeader>
               <TableRow>
-                <TableHead>Role</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead>Ruolo</TableHead>
+                <TableHead>Descrizione</TableHead>
+                <TableHead>Azione</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -134,7 +138,7 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
                     <TableCell>{r.description ?? "—"}</TableCell>
                     <TableCell>
                       {isCore ? (
-                        <span className="text-xs text-ink-faint">System Role</span>
+                        <span className="text-xs text-ink-faint">Ruolo di Sistema</span>
                       ) : (
                         <button
                           type="button"
@@ -142,7 +146,7 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
                           onClick={() => deleteRoleMutation.mutate({ name: r.name })}
                           className="text-xs text-red-600 hover:underline disabled:opacity-50"
                         >
-                          Delete
+                          Elimina
                         </button>
                       )}
                     </TableCell>
@@ -157,9 +161,9 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
       {/* Assign Role by Email Section */}
       <section className="flex flex-col gap-6 p-6 rounded-lg bg-plaster-deep border border-line">
         <div className="flex flex-col gap-1">
-          <h2 className="font-serif text-2xl font-bold text-ink">Assign Role by Email</h2>
+          <h2 className="font-serif text-2xl font-bold text-ink">Assegna Ruolo tramite Email</h2>
           <p className="text-sm text-ink-soft">
-            Instantly assign a role to a registered user by their email address.
+            Assegna istantaneamente un ruolo a un utente registrato inserendo il suo indirizzo email.
           </p>
         </div>
 
@@ -176,10 +180,10 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
 
         <div className="flex gap-4 items-end">
           <div className="flex flex-col gap-1 flex-1">
-            <label className="text-xs font-semibold text-ink-soft">User Email</label>
+            <label className="text-xs font-semibold text-ink-soft">Email Utente</label>
             <input
               type="email"
-              placeholder="user@example.com"
+              placeholder="utente@esempio.com"
               value={assignEmail}
               onChange={(e) => {
                 setAssignEmail(e.target.value);
@@ -190,7 +194,7 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-ink-soft">Role</label>
+            <label className="text-xs font-semibold text-ink-soft">Ruolo</label>
             <Select
               value={assignRole}
               onChange={(e) => setAssignRole(e.target.value)}
@@ -208,7 +212,7 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
             onClick={() => assignRoleByEmailMutation.mutate({ email: assignEmail.trim(), role: assignRole })}
             className="px-4 py-1.5 rounded bg-terracotta text-plaster text-sm font-medium hover:bg-terracotta/90 disabled:opacity-50"
           >
-            Assign Role
+            Assegna Ruolo
           </button>
         </div>
       </section>
@@ -216,22 +220,22 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
       {/* Registered Users Section */}
       <section className="flex flex-col gap-6 p-6 rounded-lg bg-plaster-deep border border-line">
         <div className="flex flex-col gap-1">
-          <h2 className="font-serif text-2xl font-bold text-ink">Registered Users</h2>
+          <h2 className="font-serif text-2xl font-bold text-ink">Utenti Registrati</h2>
           <p className="text-sm text-ink-soft">
-            Audit platform access and reassign user roles instantly.
+            Verifica gli accessi alla piattaforma e riassegna i ruoli utente in tempo reale.
           </p>
         </div>
 
         {usersLoading ? (
-          <p className="text-sm text-ink-soft">Loading users...</p>
+          <p className="text-sm text-ink-soft">Caricamento utenti in corso...</p>
         ) : (
           <Table className="bg-plaster rounded-md border border-line">
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
+                <TableHead>Nome</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Current Role</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead>Ruolo Attuale</TableHead>
+                <TableHead>Azione</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -259,7 +263,7 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
                           </option>
                         ))}
                       </Select>
-                      {isSelf && <span className="ml-2 text-xs text-ink-faint">(Locked)</span>}
+                      {isSelf && <span className="ml-2 text-xs text-ink-faint">(Bloccato)</span>}
                     </TableCell>
                   </TableRow>
                 );
