@@ -11,12 +11,17 @@ import { useI18n } from "~/app/_components/i18n-provider";
 export function Navbar() {
   const pathname = usePathname();
   const { lang, setLang, t } = useI18n();
+  const [mounted, setMounted] = useState(false);
   const { data: session, isPending } = authClient.useSession();
 
   const [authOpen, setAuthOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const authRef = useRef<HTMLDivElement>(null);
   const langRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close popovers on outside click
   useEffect(() => {
@@ -140,7 +145,7 @@ export function Navbar() {
 
         {/* Auth Widget */}
         <div className="relative" ref={authRef}>
-          {isPending ? (
+          {!mounted || isPending ? (
             <div className="h-8 w-16 animate-pulse rounded-lg bg-plaster-deep border border-line" />
           ) : session ? (
             <>
