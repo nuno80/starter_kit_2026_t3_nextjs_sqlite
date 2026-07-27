@@ -501,5 +501,89 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     expect(sess.length).toBe(0);
     expect(psts.length).toBe(0);
   });
+
+  test("banUser mutation bans user, revokes sessions, and subsequent requests are rejected as FORBIDDEN", async () => {
+    process.env.DATABASE_URL = "file:./test-ban.sqlite";
+    process.env.BETTER_AUTH_SECRET = "mock-secret-key-for-testing-purposes-only-1234";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_ID = "mock";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = "mock";
+
+    const { createClient } = await import("@libsql/client");
+    const { drizzle } = await import("drizzle-orm/libsql");
+    const { eq } = await import("drizzle-orm");
+    const schema = await import("~/server/db/schema");
+    const { TRPCError } = await import("@trpc/server");
+    const { adminRouter } = await import("~/server/api/routers/admin");
+    const { postRouter } = await import("~/server/api/routers/post");
+
+    const testClient = createClient({ url: "file:./test-ban.sqlite" });
+    await testClient.executeMultiple(`
+      PRAGMA foreign_keys = ON;
+      CREATE TABLE IF NOT EXISTS user (id text PRIMARY KEY, name text, email text NOT NULL UNIQUE, emailVerified integer, image text, role text, banned integer DEFAULT 0, banReason text, banExpires integer, createdAt integer NOT NULL DEFAULT 0, updatedAt integer);
+      CREATE TABLE IF NOT EXISTS session (id text PRIMARY KEY, userId text NOT NULL REFERENCES user(id) ON DELETE CASCADE, token text NOT NULL UNIQUE, expiresAt integer NOT NULL, ipAddress text, userAgent text, impersonatedBy text, createdAt integer NOT NULL DEFAULT 0, updatedAt integer);
+    `);
+    const testDb = drizzle(testClient, { schema });
+
+    await testClient.executeMultiple(`
+      INSERT OR REPLACE INTO user (id, email, role, banned) VALUES ('admin-id', 'admin@test.com', 'admin', 0);
+      INSERT OR REPLACE INTO user (id, email, role, banned) VALUES ('target-id', 'target@test.com', 'user', 0);
+      INSERT OR REPLACE INTO session (id, userId, token, expiresAt) VALUES ('s-target-1', 'target-id', 'tok-target-1', 9999999999);
+      INSERT OR REPLACE INTO session (id, userId, token, expiresAt) VALUES ('s-target-2', 'target-id', 'tok-target-2', 9999999999);
+    `);
+
+    const adminCtx = {
+      db: testDb as any,
+      session: {
+        user: { id: "admin-id", role: "admin" },
+      } as any,
+      headers: new Headers(),
+    };
+
+    const adminCaller = adminRouter.createCaller(adminCtx);
+
+    // Ensure self-ban is forbidden
+    try {
+      await adminCaller.banUser({ userId: "admin-id" });
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("FORBIDDEN");
+    }
+
+    // Ban target user
+    await adminCaller.banUser({ userId: "target-id", reason: "Spam behavior" });
+
+    // Verify user record in DB is banned and sessions are deleted
+    const targetDbUser = await testDb.query.user.findFirst({ where: eq(schema.user.id, "target-id") });
+    expect(targetDbUser?.banned).toBe(true);
+    expect(targetDbUser?.banReason).toBe("Spam behavior");
+
+    const targetSessions = await testDb.select().from(schema.session).where(eq(schema.session.userId, "target-id"));
+    expect(targetSessions.length).toBe(0);
+
+    // Verify subsequent protected procedure calls with target token/session fail with FORBIDDEN
+    const targetCtx = {
+      db: testDb as any,
+      session: {
+        user: { id: "target-id", role: "user" },
+      } as any,
+      headers: new Headers(),
+    };
+    const targetCaller = postRouter.createCaller(targetCtx);
+
+    try {
+      await targetCaller.getSecretMessage();
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("FORBIDDEN");
+    }
+
+    // Unban target user
+    await adminCaller.unbanUser({ userId: "target-id" });
+    const unbannedDbUser = await testDb.query.user.findFirst({ where: eq(schema.user.id, "target-id") });
+    expect(unbannedDbUser?.banned).toBe(false);
+    expect(unbannedDbUser?.banReason).toBeNull();
+  });
 });
 

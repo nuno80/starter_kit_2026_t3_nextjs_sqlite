@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 
 import { createTRPCRouter, adminProcedure } from "~/server/api/trpc";
-import { user, role } from "~/server/db/schema";
+import { user, role, session } from "~/server/db/schema";
 
 export const adminRouter = createTRPCRouter({
   getRoles: adminProcedure.query(async ({ ctx }) => {
@@ -116,6 +116,44 @@ export const adminRouter = createTRPCRouter({
       await ctx.db
         .update(user)
         .set({ role: input.newRole })
+        .where(eq(user.id, input.userId));
+      return { success: true };
+    }),
+
+  banUser: adminProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        reason: z.string().default("Violazione dei termini di servizio"),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (input.userId === ctx.session.user.id) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Cannot ban your own admin account.",
+        });
+      }
+      await ctx.db.transaction(async (tx) => {
+        await tx
+          .update(user)
+          .set({ banned: true, banReason: input.reason, banExpires: null })
+          .where(eq(user.id, input.userId));
+        await tx.delete(session).where(eq(session.userId, input.userId));
+      });
+      return { success: true };
+    }),
+
+  unbanUser: adminProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(user)
+        .set({ banned: false, banReason: null, banExpires: null })
         .where(eq(user.id, input.userId));
       return { success: true };
     }),

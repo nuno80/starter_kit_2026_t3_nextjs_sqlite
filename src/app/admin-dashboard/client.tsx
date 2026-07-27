@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-type User = { id: string; name: string | null; email: string; role: string | null };
+type User = { id: string; name: string | null; email: string; role: string | null; banned: boolean | null };
 
 export function AdminDashboardClient({ currentUserId }: { currentUserId: string }) {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -58,6 +58,22 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
   });
 
   const updateUserRoleMutation = api.admin.updateUserRole.useMutation({
+    onSuccess: async () => {
+      setErrorMsg(null);
+      await refetchUsers();
+    },
+    onError: (err) => setErrorMsg(err.message),
+  });
+
+  const banUserMutation = api.admin.banUser.useMutation({
+    onSuccess: async () => {
+      setErrorMsg(null);
+      await refetchUsers();
+    },
+    onError: (err) => setErrorMsg(err.message),
+  });
+
+  const unbanUserMutation = api.admin.unbanUser.useMutation({
     onSuccess: async () => {
       setErrorMsg(null);
       await refetchUsers();
@@ -236,21 +252,34 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
                 <TableHead>Nome</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Ruolo Attuale</TableHead>
+                <TableHead>Stato</TableHead>
                 <TableHead>Azione</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {users?.map((u: User) => {
                 const isSelf = u.id === currentUserId;
+                const isBanned = Boolean(u.banned);
                 return (
-                  <TableRow key={u.id}>
+                  <TableRow key={u.id} className={isBanned ? "bg-red-50/50 opacity-75" : ""}>
                     <TableCell className="font-medium">{u.name ?? "—"}</TableCell>
                     <TableCell>{u.email}</TableCell>
                     <TableCell className="capitalize font-mono text-terracotta">{u.role ?? "user"}</TableCell>
                     <TableCell>
+                      {isBanned ? (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+                          Sospeso
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                          Attivo
+                        </span>
+                      )}
+                    </TableCell>
+                    <TableCell className="flex items-center gap-2">
                       <Select
                         value={u.role ?? "user"}
-                        disabled={isSelf || updateUserRoleMutation.isPending}
+                        disabled={isSelf || isBanned || updateUserRoleMutation.isPending}
                         onChange={(e) =>
                           updateUserRoleMutation.mutate({
                             userId: u.id,
@@ -264,7 +293,27 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
                           </option>
                         ))}
                       </Select>
-                      {isSelf && <span className="ml-2 text-xs text-ink-faint">(Bloccato)</span>}
+                      {isSelf ? (
+                        <span className="text-xs text-ink-faint">(Bloccato)</span>
+                      ) : isBanned ? (
+                        <button
+                          type="button"
+                          disabled={unbanUserMutation.isPending}
+                          onClick={() => unbanUserMutation.mutate({ userId: u.id })}
+                          className="px-3 py-1 rounded text-xs font-medium bg-green-600 text-white hover:bg-green-700 disabled:opacity-50"
+                        >
+                          Sblocca
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled={banUserMutation.isPending}
+                          onClick={() => banUserMutation.mutate({ userId: u.id })}
+                          className="px-3 py-1 rounded text-xs font-medium bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
+                        >
+                          Banna
+                        </button>
+                      )}
                     </TableCell>
                   </TableRow>
                 );
