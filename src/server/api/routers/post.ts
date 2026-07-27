@@ -50,10 +50,9 @@ export const postRouter = createTRPCRouter({
         throw new TRPCError({ code: "NOT_FOUND", message: "Post non trovato" });
       }
 
-      const isAdmin = (role?: string | null) => role ? role.split(",").map((r) => r.trim()).includes("admin") : false;
       const isOwner = targetPost.createdById === ctx.session.user.id;
 
-      if (!isOwner && !isAdmin((ctx.session.user as { role?: string }).role)) {
+      if (!isOwner && !ctx.isAdmin) {
         const { TRPCError } = await import("@trpc/server");
         throw new TRPCError({
           code: "FORBIDDEN",
@@ -80,10 +79,9 @@ export const postRouter = createTRPCRouter({
         throw new TRPCError({ code: "NOT_FOUND", message: "Post non trovato" });
       }
 
-      const isAdmin = (role?: string | null) => role ? role.split(",").map((r) => r.trim()).includes("admin") : false;
       const isOwner = targetPost.createdById === ctx.session.user.id;
 
-      if (!isOwner && !isAdmin((ctx.session.user as { role?: string }).role)) {
+      if (!isOwner && !ctx.isAdmin) {
         const { TRPCError } = await import("@trpc/server");
         throw new TRPCError({
           code: "FORBIDDEN",

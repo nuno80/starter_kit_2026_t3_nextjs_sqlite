@@ -67,8 +67,7 @@ export const adminRouter = createTRPCRouter({
         });
       }
 
-      const isAdmin = (r?: string | null) => r?.split(",").map(x => x.trim()).includes("admin") ?? false;
-      if (targetUser.id === ctx.session.user.id && !isAdmin(input.role)) {
+      if (targetUser.id === ctx.session.user.id && !input.role.split(",").map(x => x.trim()).includes("admin")) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Cannot demote your own admin account.",
@@ -83,11 +82,22 @@ export const adminRouter = createTRPCRouter({
       return { success: true };
     }),
 
-  getUsers: adminProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.user.findMany({
-      orderBy: (users, { desc }) => [desc(users.createdAt)],
-    });
-  }),
+  getUsers: adminProcedure
+    .input(z.object({ limit: z.number().max(100).default(50) }).optional())
+    .query(async ({ ctx, input }) => {
+      return ctx.db.query.user.findMany({
+        columns: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          banned: true,
+          createdAt: true,
+        },
+        orderBy: (users, { desc }) => [desc(users.createdAt)],
+        limit: input?.limit ?? 50,
+      });
+    }),
 
   updateUserRole: adminProcedure
     .input(
@@ -97,8 +107,7 @@ export const adminRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const isAdmin = (r?: string | null) => r?.split(",").map(x => x.trim()).includes("admin") ?? false;
-      if (input.userId === ctx.session.user.id && !isAdmin(input.newRole)) {
+      if (input.userId === ctx.session.user.id && !input.newRole.split(",").map(x => x.trim()).includes("admin")) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Cannot demote your own admin account.",

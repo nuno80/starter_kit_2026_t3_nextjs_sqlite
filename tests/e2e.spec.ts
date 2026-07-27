@@ -133,7 +133,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
       db: {
         query: {
           user: {
-            findFirst: () => Promise.resolve({ role: "admin" }),
+            findFirst: () => Promise.resolve({ id: "admin-user-id", role: "admin", banned: false }),
           },
         },
         delete: () => ({
@@ -190,13 +190,17 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     let updatedRole: string | null = null;
     let updatedId: string | null = null;
 
+    let findFirstCallCount = 0;
     const mockCtx = {
       db: {
         query: {
           user: {
             findFirst: ({ where }: any) => {
-              // Simulating Drizzle eq check behavior
-              return Promise.resolve(where ? { id: "target-user-id", email: "existing@example.com", role: "user" } : undefined);
+              findFirstCallCount++;
+              if (findFirstCallCount === 1) {
+                return Promise.resolve({ id: "admin-user-id", email: "admin@example.com", role: "admin", banned: false });
+              }
+              return Promise.resolve(where ? { id: "target-user-id", email: "existing@example.com", role: "user", banned: false } : undefined);
             },
           },
         },
@@ -228,7 +232,13 @@ test.describe("Admin Dashboard & Guard Seams", () => {
         ...mockCtx.db,
         query: {
           user: {
-            findFirst: () => Promise.resolve(undefined),
+            findFirst: () => {
+              if (findFirstCallCount === 0) {
+                findFirstCallCount++;
+                return Promise.resolve({ id: "admin-user-id", email: "admin@example.com", role: "admin", banned: false });
+              }
+              return Promise.resolve(undefined);
+            },
           },
         },
       },
@@ -242,6 +252,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     expect(updatedRole).toBe("editor");
     expect(updatedId).toBe("target-user-id");
 
+    findFirstCallCount = 0;
     try {
       await callerNotFound.assignRoleByEmail({ email: "missing@example.com", role: "editor" });
       expect(true).toBe(false);
@@ -267,6 +278,9 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     const createMockCtx = (userId: string, role: string) => ({
       db: {
         query: {
+          user: {
+            findFirst: () => Promise.resolve({ id: userId, role, banned: false }),
+          },
           posts: {
             findFirst: ({ where }: any) => {
               return Promise.resolve({ id: 1, name: "Original Post", createdById: "owner-id" });
@@ -345,7 +359,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
       db: {
         query: {
           user: {
-            findFirst: () => Promise.resolve({ role: "admin" }),
+            findFirst: () => Promise.resolve({ id: "admin-user-id", role: "admin", banned: false }),
           },
         },
         update: () => ({
@@ -394,6 +408,59 @@ test.describe("Admin Dashboard & Guard Seams", () => {
       expect(err.code).toBe("FORBIDDEN");
       expect(err.message).toBe("Cannot demote your own admin account.");
     }
+  });
+
+  test("tRPC protectedProcedure rejects banned user and re-evaluates dbUser role at runtime", async () => {
+    process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
+    process.env.BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET ?? "mock-secret-key-for-testing-purposes-only-1234";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET ?? "mock";
+
+    const { postRouter } = await import("~/server/api/routers/post");
+    const { TRPCError } = await import("@trpc/server");
+
+    // 1. Verify banned user is rejected with FORBIDDEN
+    const bannedCtx = {
+      db: {
+        query: {
+          user: {
+            findFirst: () => Promise.resolve({ id: "banned-id", role: "user", banned: true, banExpires: null }),
+          },
+        },
+      } as any,
+      session: {
+        user: { id: "banned-id", role: "user" },
+      } as any,
+      headers: new Headers(),
+    };
+
+    const bannedCaller = postRouter.createCaller(bannedCtx);
+    try {
+      await bannedCaller.getSecretMessage();
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("FORBIDDEN");
+    }
+
+    // 2. Verify dynamic role change: session token says 'user', but DB says 'admin' -> adminCheck passes without regenerating session
+    const promotedCtx = {
+      db: {
+        query: {
+          user: {
+            findFirst: () => Promise.resolve({ id: "promoted-id", role: "admin", banned: false }),
+          },
+        },
+      } as any,
+      session: {
+        user: { id: "promoted-id", role: "user" },
+      } as any,
+      headers: new Headers(),
+    };
+
+    const promotedCaller = postRouter.createCaller(promotedCtx);
+    const msg = await promotedCaller.adminCheck();
+    expect(msg).toBe("admin secret message");
   });
 
   test("deleting a user cascades to remove their sessions, accounts, and posts", async () => {

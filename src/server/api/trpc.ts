@@ -123,20 +123,25 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
  */
 export const protectedProcedure = t.procedure
   .use(timingMiddleware)
-  .use(({ ctx, next }) => {
+  .use(async ({ ctx, next }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
+    const dbUser = await ctx.db.query.user.findFirst({
+      where: eq(user.id, ctx.session.user.id),
+    });
+    if (!dbUser || (dbUser.banned && (!dbUser.banExpires || dbUser.banExpires > new Date()))) {
+      throw new TRPCError({ code: "FORBIDDEN" });
+    }
+    const isAdmin = dbUser.role ? dbUser.role.split(",").map((r) => r.trim()).includes("admin") : false;
     return next({
       ctx: {
-        // infers the `session` as non-nullable
         session: { ...ctx.session, user: ctx.session.user },
+        dbUser,
+        isAdmin,
       },
     });
   });
-
-const isAdmin = (role?: string | null) =>
-  role ? role.split(",").map((r) => r.trim()).includes("admin") : false;
 
 /**
  * Admin (elevated) procedure
@@ -144,10 +149,7 @@ const isAdmin = (role?: string | null) =>
  * Guarantees `ctx.session.user` is not null and has an "admin" role.
  */
 export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
-  const dbUser = await ctx.db.query.user.findFirst({
-    where: eq(user.id, ctx.session.user.id),
-  });
-  if (!isAdmin(dbUser?.role) && !isAdmin((ctx.session.user as { role?: string }).role)) {
+  if (!ctx.isAdmin) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({ ctx });
