@@ -37,6 +37,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
   });
 
   test("tRPC adminProcedure rejects unauthenticated request with UNAUTHORIZED", async ({ request }) => {
+    process.env.BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET ?? "mock-secret-key-for-testing-purposes-only-1234";
     const res = await request.get("http://localhost:3000/api/trpc/post.adminCheck");
     expect(res.status()).toBe(401);
     const body = await res.json();
@@ -51,6 +52,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
 
   test("tRPC role catalog procedures enforce admin rights and protect system roles", async () => {
     process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
+    process.env.BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET ?? "mock-secret-key-for-testing-purposes-only-1234";
     process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
     process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET ?? "mock";
 
@@ -109,6 +111,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
 
   test("assignRoleByEmail assigns role to existing user and throws NOT_FOUND for unregistered email", async () => {
     process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
+    process.env.BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET ?? "mock-secret-key-for-testing-purposes-only-1234";
     process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
     process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET ?? "mock";
 
@@ -182,6 +185,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
 
   test("post update and delete mutations enforce owner or admin permissions", async () => {
     process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
+    process.env.BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET ?? "mock-secret-key-for-testing-purposes-only-1234";
     process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
     process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET ?? "mock";
 
@@ -261,6 +265,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
 
   test("updateUserRole mutation rejects self-demotion when userId === session.user.id and newRole !== 'admin'", async () => {
     process.env.DATABASE_URL = process.env.DATABASE_URL ?? "file:./db.sqlite";
+    process.env.BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET ?? "mock-secret-key-for-testing-purposes-only-1234";
     process.env.BETTER_AUTH_GITHUB_CLIENT_ID = process.env.BETTER_AUTH_GITHUB_CLIENT_ID ?? "mock";
     process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET ?? "mock";
 
@@ -320,6 +325,45 @@ test.describe("Admin Dashboard & Guard Seams", () => {
       expect(err.code).toBe("FORBIDDEN");
       expect(err.message).toBe("Cannot demote your own admin account.");
     }
+  });
+
+  test("deleting a user cascades to remove their sessions, accounts, and posts", async () => {
+    process.env.DATABASE_URL = "file:./test-cascade.sqlite";
+    process.env.BETTER_AUTH_SECRET = "mock-secret-key-for-testing-purposes-only-1234";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_ID = "mock";
+    process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET = "mock";
+
+    const { createClient } = await import("@libsql/client");
+    const { drizzle } = await import("drizzle-orm/libsql");
+    const { eq } = await import("drizzle-orm");
+    const schema = await import("~/server/db/schema");
+
+    const testClient = createClient({ url: "file:./test-cascade.sqlite" });
+    await testClient.executeMultiple(`
+      PRAGMA foreign_keys = ON;
+      CREATE TABLE IF NOT EXISTS user (id text PRIMARY KEY, name text, email text NOT NULL UNIQUE, emailVerified integer, image text, role text, banned integer, banReason text, banExpires integer, createdAt integer NOT NULL DEFAULT 0, updatedAt integer);
+      CREATE TABLE IF NOT EXISTS account (id text PRIMARY KEY, userId text NOT NULL REFERENCES user(id) ON DELETE CASCADE, accountId text NOT NULL, providerId text NOT NULL, accessToken text, refreshToken text, accessTokenExpiresAt integer, refreshTokenExpiresAt integer, scope text, idToken text, password text, createdAt integer NOT NULL DEFAULT 0, updatedAt integer);
+      CREATE TABLE IF NOT EXISTS session (id text PRIMARY KEY, userId text NOT NULL REFERENCES user(id) ON DELETE CASCADE, token text NOT NULL UNIQUE, expiresAt integer NOT NULL, ipAddress text, userAgent text, impersonatedBy text, createdAt integer NOT NULL DEFAULT 0, updatedAt integer);
+      CREATE TABLE IF NOT EXISTS post (id integer PRIMARY KEY AUTOINCREMENT, name text, createdById text NOT NULL REFERENCES user(id) ON DELETE CASCADE, createdAt integer NOT NULL DEFAULT 0, updatedAt integer);
+    `);
+    const testDb = drizzle(testClient, { schema });
+
+    await testClient.executeMultiple(`
+      INSERT OR REPLACE INTO user (id, email) VALUES ('u1', 'u1@test.com');
+      INSERT OR REPLACE INTO account (id, userId, accountId, providerId) VALUES ('a1', 'u1', 'acc1', 'prov1');
+      INSERT OR REPLACE INTO session (id, userId, token, expiresAt) VALUES ('s1', 'u1', 'tok1', 9999999999);
+      INSERT OR REPLACE INTO post (id, createdById) VALUES (100, 'u1');
+    `);
+
+    await testDb.delete(schema.user).where(eq(schema.user.id, "u1"));
+
+    const accs = await testDb.select().from(schema.account).where(eq(schema.account.userId, "u1"));
+    const sess = await testDb.select().from(schema.session).where(eq(schema.session.userId, "u1"));
+    const psts = await testDb.select().from(schema.posts).where(eq(schema.posts.createdById, "u1"));
+
+    expect(accs.length).toBe(0);
+    expect(sess.length).toBe(0);
+    expect(psts.length).toBe(0);
   });
 });
 

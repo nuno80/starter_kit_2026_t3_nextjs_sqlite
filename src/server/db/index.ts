@@ -16,5 +16,12 @@ export const client =
   globalForDb.client ?? createClient({ url: env.DATABASE_URL });
 if (env.NODE_ENV !== "production") globalForDb.client = client;
 
+await client.executeMultiple(`
+  PRAGMA foreign_keys = ON;
+  PRAGMA journal_mode = WAL;
+  PRAGMA busy_timeout = 5000;
+  PRAGMA synchronous = NORMAL;
+`);
+
 export const db = drizzle(client, { schema });
 

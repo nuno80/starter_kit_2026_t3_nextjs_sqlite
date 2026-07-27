@@ -14,7 +14,7 @@ export const posts = sqliteTable(
     createdById: d
       .text({ length: 255 })
       .notNull()
-      .references(() => user.id),
+      .references(() => user.id, { onDelete: "cascade" }),
     createdAt: d
       .integer({ mode: "timestamp" })
       .default(sql`(unixepoch())`)
@@ -76,7 +76,7 @@ export const account = sqliteTable(
     userId: d
       .text({ length: 255 })
       .notNull()
-      .references(() => user.id),
+      .references(() => user.id, { onDelete: "cascade" }),
     accountId: d.text({ length: 255 }).notNull(),
     providerId: d.text({ length: 255 }).notNull(),
     accessToken: d.text(),
@@ -110,7 +110,7 @@ export const session = sqliteTable(
     userId: d
       .text({ length: 255 })
       .notNull()
-      .references(() => user.id),
+      .references(() => user.id, { onDelete: "cascade" }),
     token: d.text({ length: 255 }).notNull().unique(),
     expiresAt: d.integer({ mode: "timestamp" }).notNull(),
     ipAddress: d.text({ length: 255 }),
