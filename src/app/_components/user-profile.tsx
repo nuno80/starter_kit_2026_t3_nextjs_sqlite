@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { authClient } from "~/server/better-auth/client";
+import { authClient } from "~/lib/auth-client";
 
 interface UserProfileProps {
   user: {

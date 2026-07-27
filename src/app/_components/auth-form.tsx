@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { authClient } from "~/server/better-auth/client";
+import { authClient } from "~/lib/auth-client";
 
 export function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false);

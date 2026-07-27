@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { authClient } from "~/server/better-auth/client";
+import { authClient } from "~/lib/auth-client";
 import { AuthForm } from "~/app/_components/auth-form";
 import { UserProfile } from "~/app/_components/user-profile";
 import { useI18n } from "~/app/_components/i18n-provider";
