@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { authClient } from "~/server/better-auth/client";
 import { AuthForm } from "~/app/_components/auth-form";
@@ -207,10 +208,11 @@ export function Navbar() {
                 aria-expanded={authOpen}
               >
                 {session.user.image ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
+                  <Image
                     src={session.user.image}
                     alt={session.user.name ?? "Avatar"}
+                    width={32}
+                    height={32}
                     className="h-full w-full rounded-full object-cover"
                   />
                 ) : (

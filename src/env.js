@@ -11,10 +11,10 @@ export const env = createEnv({
       .string()
       .min(32, "BETTER_AUTH_SECRET must be at least 32 characters long. Generate one using: openssl rand -base64 32"),
     BETTER_AUTH_URL: z.string().url().default("http://localhost:3000"),
-    BETTER_AUTH_GITHUB_CLIENT_ID: z.string(),
-    BETTER_AUTH_GITHUB_CLIENT_SECRET: z.string(),
-    BETTER_AUTH_GOOGLE_CLIENT_ID: z.string().default("mock_id"),
-    BETTER_AUTH_GOOGLE_CLIENT_SECRET: z.string().default("mock_secret"),
+    BETTER_AUTH_GITHUB_CLIENT_ID: z.string().optional(),
+    BETTER_AUTH_GITHUB_CLIENT_SECRET: z.string().optional(),
+    BETTER_AUTH_GOOGLE_CLIENT_ID: z.string().optional(),
+    BETTER_AUTH_GOOGLE_CLIENT_SECRET: z.string().optional(),
     DATABASE_URL: z.string().url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])

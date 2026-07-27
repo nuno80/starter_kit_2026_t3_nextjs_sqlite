@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { authClient } from "~/server/better-auth/client";
 
 interface UserProfileProps {
@@ -33,10 +34,11 @@ export function UserProfile({ user }: UserProfileProps) {
       <div className="flex w-full items-center gap-4">
         <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line-strong bg-plaster-deep shadow-inner">
           {user.image ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+            <Image
               src={user.image}
               alt={user.name ?? "User avatar"}
+              width={48}
+              height={48}
               className="h-full w-full object-cover"
             />
           ) : (
