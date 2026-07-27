@@ -38,7 +38,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${fraunces.variable} ${instrumentSans.variable}`}>
+    <html lang="it" suppressHydrationWarning className={`${fraunces.variable} ${instrumentSans.variable}`}>
       <body>
         <TRPCReactProvider>
           <I18nProvider>
