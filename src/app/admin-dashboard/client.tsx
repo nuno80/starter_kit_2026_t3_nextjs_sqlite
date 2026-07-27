@@ -60,6 +60,7 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
   const updateUserRoleMutation = api.admin.updateUserRole.useMutation({
     onSuccess: async () => {
       setErrorMsg(null);
+      await refetchUsers();
     },
     onError: (err) => setErrorMsg(err.message),
   });
