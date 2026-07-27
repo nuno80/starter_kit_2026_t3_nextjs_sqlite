@@ -1,5 +1,74 @@
 import { test, expect } from "@playwright/test";
 
+test.describe("Better-Auth Hardening & Email Verification Seams", () => {
+  test("password validation rejects passwords shorter than 12 characters and verification link is logged in local dev", async () => {
+    process.env.DATABASE_URL = "file:./test-auth-hardening.sqlite";
+    process.env.BETTER_AUTH_SECRET = "mock-secret-key-for-testing-purposes-only-1234";
+    delete process.env.RESEND_API_KEY;
+
+    const { createClient } = await import("@libsql/client");
+    const { drizzle } = await import("drizzle-orm/libsql");
+    const schema = await import("~/server/db/schema");
+
+    const testClient = createClient({ url: "file:./test-auth-hardening.sqlite" });
+    await testClient.executeMultiple(`
+      CREATE TABLE IF NOT EXISTS user (id text PRIMARY KEY, name text, email text NOT NULL UNIQUE, emailVerified integer, image text, role text, banned integer, banReason text, banExpires integer, createdAt integer NOT NULL DEFAULT 0, updatedAt integer);
+      CREATE TABLE IF NOT EXISTS account (id text PRIMARY KEY, userId text NOT NULL REFERENCES user(id) ON DELETE CASCADE, accountId text NOT NULL, providerId text NOT NULL, accessToken text, refreshToken text, accessTokenExpiresAt integer, refreshTokenExpiresAt integer, scope text, idToken text, password text, createdAt integer NOT NULL DEFAULT 0, updatedAt integer);
+      CREATE TABLE IF NOT EXISTS verification (id text PRIMARY KEY, identifier text NOT NULL, value text NOT NULL, expiresAt integer NOT NULL, createdAt integer, updatedAt integer);
+    `);
+
+    const { auth } = await import("~/server/better-auth/config");
+
+    // 1. Check password length validation (< 12 chars rejected)
+    const ctx = await auth.$context;
+    const resShort = await auth.api.signUpEmail({
+      body: {
+        email: "test-short@example.com",
+        password: "shortpass", // 9 chars -> should fail
+        name: "Short Pass User",
+      },
+      asResponse: true,
+    });
+    expect(resShort.status).toBe(400);
+    const shortData = await resShort.json();
+    expect(JSON.stringify(shortData)).toContain("Password");
+
+    // 2. Check valid password & verification email console log in dev
+    const logs: string[] = [];
+    const origLog = console.log;
+    console.log = (...args: any[]) => {
+      logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(" "));
+      origLog(...args);
+    };
+
+    try {
+      const resValid = await auth.api.signUpEmail({
+        body: {
+          email: "test-valid@example.com",
+          password: "validpassword123!", // >= 12 chars -> should succeed
+          name: "Valid Pass User",
+        },
+        asResponse: true,
+      });
+      expect(resValid.status).toBe(200);
+
+      // Trigger verification email explicitly in test context if sendOnSignUp doesn't fire in direct API calls
+      await auth.api.sendVerificationEmail({
+        body: {
+          email: "test-valid@example.com",
+        },
+      });
+
+      const logOutput = logs.join("\n");
+      expect(logOutput).toContain("=== URL DI VERIFICA EMAIL (DEV LOCALE) ===");
+      expect(logOutput).toContain("test-valid@example.com");
+      expect(logOutput).toContain("http://");
+    } finally {
+      console.log = origLog;
+    }
+  });
+});
+
 test.describe("Landing Page and Demo App Bridge Seams", () => {
   test("clicking 'Apri la Demo App' transitions to /posts and renders SQLite workspace", async ({ page }) => {
     await page.goto("/");

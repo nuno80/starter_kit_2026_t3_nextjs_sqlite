@@ -16,9 +16,38 @@ export const env = createEnv({
     BETTER_AUTH_GOOGLE_CLIENT_ID: z.string().optional(),
     BETTER_AUTH_GOOGLE_CLIENT_SECRET: z.string().optional(),
     DATABASE_URL: z.string().url(),
+    RESEND_API_KEY: z.string().optional(),
+    EMAIL_FROM: z.string().default("onboarding@resend.dev"),
     NODE_ENV: z
       .enum(["development", "test", "production"])
-      .default("development"),
+      .default("development")
+      .superRefine((val, ctx) => {
+        const isBuildOrTest =
+          !!process.env.SKIP_ENV_VALIDATION ||
+          !!process.env.npm_lifecycle_event ||
+          process.argv.some((arg) =>
+            arg.includes("node_modules") ||
+            arg.includes("next") ||
+            arg.includes("playwright") ||
+            arg.includes("test")
+          );
+        if (val === "production" && !isBuildOrTest) {
+          if (!process.env.RESEND_API_KEY) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "RESEND_API_KEY is required in production",
+              path: ["RESEND_API_KEY"],
+            });
+          }
+          if (!process.env.EMAIL_FROM) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "EMAIL_FROM is required in production",
+              path: ["EMAIL_FROM"],
+            });
+          }
+        }
+      }),
   },
 
   /**
@@ -44,13 +73,17 @@ export const env = createEnv({
     BETTER_AUTH_GOOGLE_CLIENT_SECRET:
       process.env.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    EMAIL_FROM: process.env.EMAIL_FROM,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
    * useful for Docker builds.
    */
-  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
+  skipValidation:
+    !!process.env.SKIP_ENV_VALIDATION ||
+    process.env.npm_lifecycle_event === "lint",
   /**
    * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
    * `SOME_VAR=''` will throw an error.
