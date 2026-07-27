@@ -61,6 +61,10 @@ Lo starter kit include il plugin Admin di Better-Auth per la gestione utenti su 
    ```
 3. Ricarica la pagina: vedrai il pulsante **Admin ⚙️** apparire nella Navbar in alto. Da lì potrai accedere alla dashboard per gestire gli accessi o promuovere comodamente i futuri utenti dalla UI web.
 
+#### Nota di Architettura e Trade-off (Rimozione Ruoli Custom & Multi-Ruolo)
+Nel rispetto del protocollo Ponytail (minimo codice, zero over-engineering), la mutazione di eliminazione di un ruolo personalizzato (`admin.deleteRole`) implementa un fallback atomico di sicurezza anti-orfani per riassegnare il ruolo di default `"user"` solo agli utenti che possiedono esattamente come ruolo singolo il nome del ruolo in eliminazione (`UPDATE user SET role = 'user' WHERE role = ?`).
+Gli account ai quali sono stati assegnati ruoli compositi multipli concatenati (es. `"editor,admin"`) richiedono la rimozione e l'aggiornamento manuale dall'interfaccia UI di gestione utente, evitando deliberatamente l'introduzione di parser di stringhe custom o di query di pulizia complesse che aumenterebbero la complessità e la fragilità di manutenzione del sistema di autenticazione.
+
 ### 5. Avvio del Server di Sviluppo
 
 Avvia il server con il supporto a **Turbopack** per reload istantanei:

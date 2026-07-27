@@ -129,6 +129,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     const { TRPCError } = await import("@trpc/server");
 
     let deletedRole: string | null = null;
+    let fallbackUpdatedRole: string | null = null;
     const mockCtx = {
       db: {
         query: {
@@ -136,6 +137,14 @@ test.describe("Admin Dashboard & Guard Seams", () => {
             findFirst: () => Promise.resolve({ id: "admin-user-id", role: "admin", banned: false }),
           },
         },
+        update: () => ({
+          set: ({ role }: any) => ({
+            where: () => {
+              fallbackUpdatedRole = role;
+              return Promise.resolve();
+            },
+          }),
+        }),
         delete: () => ({
           where: () => {
             deletedRole = "mock-deleted";
@@ -176,6 +185,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     const res = await caller.deleteRole({ name: "custom-role" });
     expect(res.success).toBe(true);
     expect(deletedRole).toBe("mock-deleted");
+    expect(fallbackUpdatedRole).toBe("user");
   });
 
   test("assignRoleByEmail assigns role to existing user and throws NOT_FOUND for unregistered email", async () => {

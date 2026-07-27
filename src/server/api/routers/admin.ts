@@ -44,6 +44,8 @@ export const adminRouter = createTRPCRouter({
           message: "Cannot delete core system roles.",
         });
       }
+      // ponytail: fallback atomico per ruoli singoli; gli utenti con ruoli compositi (es. "editor,admin") richiedono aggiornamento manuale dall'UI di gestione per prevenire complessità di parsing
+      await ctx.db.update(user).set({ role: "user" }).where(eq(user.role, input.name));
       await ctx.db.delete(role).where(eq(role.name, input.name));
       return { success: true };
     }),
