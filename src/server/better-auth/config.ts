@@ -22,6 +22,12 @@ export const auth = betterAuth({
       "/forget-password": { window: 60, max: 5 },
     },
   },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60,
+    },
+  },
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 12,

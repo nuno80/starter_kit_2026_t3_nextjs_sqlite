@@ -129,10 +129,18 @@ export const protectedProcedure = t.procedure
     }
     const dbUser = await ctx.db.query.user.findFirst({
       where: eq(user.id, ctx.session.user.id),
+      columns: { id: true, role: true, banned: true, banExpires: true },
     });
-    if (!dbUser || (dbUser.banned && (!dbUser.banExpires || dbUser.banExpires > new Date()))) {
-      throw new TRPCError({ code: "FORBIDDEN" });
+
+    if (!dbUser) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
     }
+
+    const banActive = dbUser.banned && (!dbUser.banExpires || dbUser.banExpires > new Date());
+    if (banActive) {
+      throw new TRPCError({ code: "FORBIDDEN", message: "Account suspended" });
+    }
+
     const isAdmin = dbUser.role ? dbUser.role.split(",").map((r) => r.trim()).includes("admin") : false;
     return next({
       ctx: {

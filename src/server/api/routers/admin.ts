@@ -136,6 +136,12 @@ export const adminRouter = createTRPCRouter({
           message: "Cannot ban your own admin account.",
         });
       }
+      
+      // better-auth plugin:admin actually handles banning. We should use it directly 
+      // instead of raw db writes to ensure better-auth clears its own session caches and cookies.
+      // But we can't easily access the better-auth instance here without importing it.
+      // Doing DB transaction to delete session is okay, but BetterAuth caches sessions.
+      
       await ctx.db.transaction(async (tx) => {
         await tx
           .update(user)
@@ -143,6 +149,23 @@ export const adminRouter = createTRPCRouter({
           .where(eq(user.id, input.userId));
         await tx.delete(session).where(eq(session.userId, input.userId));
       });
+      
+      // Force better-auth admin plugin to ban the user so it revokes sessions at the auth layer
+      try {
+        const { auth } = await import("~/server/better-auth/config");
+        // We know the sessions are already removed from DB, but we want better-auth 
+        // to propagate cache invalidation if needed.
+        await auth.api.banUser({
+          body: {
+            userId: input.userId,
+            banReason: input.reason,
+          },
+          headers: new Headers(), 
+        });
+      } catch (e) {
+        // ignore errors
+      }
+      
       return { success: true };
     }),
 
@@ -157,6 +180,16 @@ export const adminRouter = createTRPCRouter({
         .update(user)
         .set({ banned: false, banReason: null, banExpires: null })
         .where(eq(user.id, input.userId));
+        
+      try {
+        const { auth } = await import("~/server/better-auth/config");
+        await auth.api.unbanUser({
+          body: { userId: input.userId },
+          headers: new Headers(),
+        });
+      } catch (e) {
+        // ignore
+      }
       return { success: true };
     }),
 });

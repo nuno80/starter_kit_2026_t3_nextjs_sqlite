@@ -261,10 +261,10 @@ export function AdminDashboardClient({ currentUserId }: { currentUserId: string 
                 const isSelf = u.id === currentUserId;
                 const isBanned = Boolean(u.banned);
                 return (
-                  <TableRow key={u.id} className={isBanned ? "bg-red-50/50 opacity-75" : ""}>
-                    <TableCell className="font-medium">{u.name ?? "—"}</TableCell>
-                    <TableCell>{u.email}</TableCell>
-                    <TableCell className="capitalize font-mono text-terracotta">{u.role ?? "user"}</TableCell>
+                  <TableRow key={u.id} className={isBanned ? "bg-red-50/50" : ""}>
+                    <TableCell className={isBanned ? "font-medium opacity-50" : "font-medium"}>{u.name ?? "—"}</TableCell>
+                    <TableCell className={isBanned ? "opacity-50" : ""}>{u.email}</TableCell>
+                    <TableCell className={`capitalize font-mono text-terracotta ${isBanned ? "opacity-50" : ""}`}>{u.role ?? "user"}</TableCell>
                     <TableCell>
                       {isBanned ? (
                         <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
