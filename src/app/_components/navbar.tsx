@@ -17,8 +17,10 @@ export function Navbar() {
 
   const [authOpen, setAuthOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const authRef = useRef<HTMLDivElement>(null);
   const langRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -32,6 +34,9 @@ export function Navbar() {
       }
       if (langRef.current && !langRef.current.contains(e.target as Node)) {
         setLangOpen(false);
+      }
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target as Node)) {
+        setMobileMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -80,6 +85,7 @@ export function Navbar() {
           )}
         </ul>
         <div className="flex items-center gap-3">
+          <div className="md:hidden h-8 w-8 animate-pulse rounded-lg bg-plaster-deep border border-line" />
           <div className="flex items-center gap-1.5 rounded-full border border-line bg-plaster-deep px-3 py-1.5 text-xs font-semibold tracking-wider text-ink">
             <span className="uppercase">{lang}</span>
           </div>
@@ -133,6 +139,73 @@ export function Navbar() {
 
       {/* Right controls: Lang globe & Auth Widget */}
       <div className="flex items-center gap-3">
+        {/* Mobile menu button */}
+        <div className="relative md:hidden" ref={mobileMenuRef}>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-line bg-plaster-deep text-ink transition-colors hover:border-terracotta"
+            aria-label="Toggle mobile menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            <svg
+              className="h-4 w-4 text-ink"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {mobileMenuOpen ? (
+                <>
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </>
+              ) : (
+                <>
+                  <line x1="4" x2="20" y1="12" y2="12" />
+                  <line x1="4" x2="20" y1="6" y2="6" />
+                  <line x1="4" x2="20" y1="18" y2="18" />
+                </>
+              )}
+            </svg>
+          </button>
+          
+          {mobileMenuOpen && (
+            <div className="absolute right-0 mt-2 w-48 rounded-xl border border-line bg-plaster p-2 shadow-md flex flex-col gap-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-lg px-3 py-2 text-xs font-medium text-ink-soft transition-colors hover:bg-plaster-deep hover:text-terracotta"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {pathname !== "/posts" && (
+                <Link
+                  href="/posts"
+                  className="mt-1 rounded-md bg-plaster-deep px-3 py-2 text-xs font-semibold text-ink border border-line transition-colors hover:border-terracotta hover:text-terracotta"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {t("nav.demo")} →
+                </Link>
+              )}
+              {session?.user && ((session.user as { role?: string }).role?.split(",").map(r => r.trim()).includes("admin")) && (
+                <Link
+                  href="/admin-dashboard"
+                  className="mt-1 rounded-md bg-terracotta/10 px-3 py-2 text-xs font-semibold text-terracotta border border-terracotta/30 transition-colors hover:bg-terracotta hover:text-plaster"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Admin ⚙️
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
+
         {/* Lang Selector */}
         <div className="relative" ref={langRef}>
           <button
