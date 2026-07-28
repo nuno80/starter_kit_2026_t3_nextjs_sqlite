@@ -176,11 +176,7 @@ export const adminRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await ctx.db
-        .update(user)
-        .set({ banned: false, banReason: null, banExpires: null })
-        .where(eq(user.id, input.userId));
-        
+      // 1. Prima facciamo sban col plugin di better-auth per invalidare la cache
       try {
         const { auth } = await import("~/server/better-auth/config");
         await auth.api.unbanUser({
@@ -190,6 +186,19 @@ export const adminRouter = createTRPCRouter({
       } catch (e) {
         // ignore
       }
+
+      // 2. Poi aggiorniamo noi a forza il DB per sovrascrivere eventuali bug del plugin 
+      //    (il plugin admin di better-auth a volte resetta involontariamente emailVerified)
+      await ctx.db
+        .update(user)
+        .set({ 
+          banned: false, 
+          banReason: null, 
+          banExpires: null,
+          emailVerified: true // ponytail: forza a true per prevenire il bug del plugin che richiede la reverifica dell'email post-unban
+        })
+        .where(eq(user.id, input.userId));
+        
       return { success: true };
     }),
 });
