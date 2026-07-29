@@ -59,3 +59,18 @@ _Avoid_: next-intl, i18n routing, server-side translations
 **Plaster & Terracotta Theme**:
 Il design system visivo editoriale basato su toni caldi (intonaco, terracotta, ottone, verde oliva) e tipografia ad alto contrasto (Fraunces per i titoli, Instrument Sans per i testi), integrato nativamente in Tailwind CSS v4 tramite il blocco `@theme` e variabili CSS di Next.js.
 _Avoid_: Dark mode tecnologico, Palette standard di Tailwind, CSS config esterne
+
+**Stripe Checkout**:
+Il sistema integrato per la gestione dei pagamenti una tantum e degli abbonamenti ricorrenti, ospitato direttamente da Stripe. Gestisce in autonomia la sicurezza (PCI compliance), metodi di pagamento multipli e l'inserimento sicuro delle carte di credito.
+_Avoid_: Form custom, Stripe Elements, Componenti di pagamento a mano
+
+**Stripe Webhooks**:
+La singola e unica "fonte di verità" per la conferma dell'esito di un pagamento o dello stato di un abbonamento. Il database viene aggiornato tramite gli eventi webhook (`checkout.session.completed`, `customer.subscription.*`), mai fidandosi ciecamente del reindirizzamento del browser del cliente alla pagina di successo.
+_Avoid_: Polling, Success URL state mutation, Aggiornamenti client-driven
+
+**Billing Portal**:
+L'interfaccia sicura offerta e ospitata da Stripe a cui gli utenti possono accedere per aggiornare carte di credito, visualizzare e scaricare le fatture, e cancellare l'abbonamento ricorrente, con zero codice backend addizionale da parte nostra.
+_Avoid_: Form di disdetta custom, Tabella fatture locale, UI gestione carte
+
+Il design system visivo editoriale basato su toni caldi (intonaco, terracotta, ottone, verde oliva) e tipografia ad alto contrasto (Fraunces per i titoli, Instrument Sans per i testi), integrato nativamente in Tailwind CSS v4 tramite il blocco `@theme` e variabili CSS di Next.js.
+_Avoid_: Dark mode tecnologico, Palette standard di Tailwind, CSS config esterne
