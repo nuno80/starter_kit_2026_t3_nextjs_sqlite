@@ -59,6 +59,7 @@ export const userRelations = relations(user, ({ many }) => ({
   account: many(account),
   session: many(session),
   posts: many(posts),
+  pushSubscriptions: many(pushSubscription),
 }));
 
 export const postsRelations = relations(posts, ({ one }) => ({
@@ -128,6 +129,45 @@ export const session = sqliteTable(
 export const sessionRelations = relations(session, ({ one }) => ({
   user: one(user, { fields: [session.userId], references: [user.id] }),
 }));
+
+/**
+ * Web Push subscriptions (one row per browser/device the user has granted notification
+ * permission on - a user can have several). Populated by ~/server/api/routers/push,
+ * consumed by ~/server/push/send-notification.
+ */
+export const pushSubscription = sqliteTable(
+  "push_subscription",
+  (d) => ({
+    id: d
+      .text({ length: 255 })
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: d
+      .text({ length: 255 })
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    endpoint: d.text({ length: 1024 }).notNull().unique(),
+    p256dh: d.text({ length: 255 }).notNull(),
+    auth: d.text({ length: 255 }).notNull(),
+    userAgent: d.text({ length: 255 }),
+    createdAt: d
+      .integer({ mode: "timestamp" })
+      .default(sql`(unixepoch())`)
+      .notNull(),
+  }),
+  (t) => [index("push_subscription_user_id_idx").on(t.userId)],
+);
+
+export const pushSubscriptionRelations = relations(
+  pushSubscription,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [pushSubscription.userId],
+      references: [user.id],
+    }),
+  }),
+);
 
 export const verification = sqliteTable(
   "verification",
