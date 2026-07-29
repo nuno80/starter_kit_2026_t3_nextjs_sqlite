@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
-
 export default function CheckoutCancelPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-plaster px-4 py-16 text-ink">

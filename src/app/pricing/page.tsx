@@ -3,8 +3,6 @@ import Link from "next/link";
 import { getSession } from "~/server/better-auth/server";
 import { PricingOneTime } from "~/app/_components/pricing-one-time";
 
-export const dynamic = "force-dynamic";
-
 export default async function PricingPage() {
   const session = await getSession();
 
