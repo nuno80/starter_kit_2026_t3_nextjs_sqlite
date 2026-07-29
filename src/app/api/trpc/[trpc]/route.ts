@@ -15,8 +15,12 @@ const createContext = async (req: NextRequest) => {
   });
 };
 
-const handler = (req: NextRequest) =>
-  fetchRequestHandler({
+export const dynamic = "force-dynamic";
+
+const handler = (req: NextRequest) => {
+  // force dynamic execution, avoiding static DB access at build time
+  req.headers.get("x-invoke-dynamic");
+  return fetchRequestHandler({
     endpoint: "/api/trpc",
     req,
     router: appRouter,
@@ -30,5 +34,6 @@ const handler = (req: NextRequest) =>
           }
         : undefined,
   });
+};
 
 export { handler as GET, handler as POST };

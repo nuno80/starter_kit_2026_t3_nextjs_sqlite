@@ -6,6 +6,8 @@ import { UserProfile } from "~/app/_components/user-profile";
 import { getSession } from "~/server/better-auth/server";
 import { api, HydrateClient } from "~/trpc/server";
 
+export const dynamic = "force-dynamic";
+
 export default async function PostsPage() {
   const session = await getSession();
 

@@ -48,6 +48,7 @@ export function Navbar() {
     { href: "/#dx", label: t("nav.dx") },
     { href: "/#filosofia", label: t("nav.phil") },
     { href: "/#quickstart", label: t("nav.quick") },
+    { href: "/pricing", label: t("nav.pricing") },
   ];
 
   const initials = session?.user

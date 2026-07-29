@@ -9,6 +9,7 @@ interface Dictionary {
   "nav.dx": string;
   "nav.phil": string;
   "nav.quick": string;
+  "nav.pricing": string;
   "nav.login": string;
   "nav.demo": string;
   "hero.badge": string;
