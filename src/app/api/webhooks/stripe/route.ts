@@ -23,6 +23,7 @@ import { stripe } from "~/server/stripe/client";
 // Route handlers already receive the unparsed request; make sure no global body-parsing
 // middleware is added later, since Stripe signature verification requires the raw payload.
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   if (!env.STRIPE_WEBHOOK_SECRET) {
