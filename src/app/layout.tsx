@@ -7,6 +7,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { I18nProvider } from "~/app/_components/i18n-provider";
 import { Navbar } from "~/app/_components/navbar";
 import { InstallButton } from "~/components/InstallButton";
+import { PwaUpdateToast } from "~/app/_components/pwa-update-toast";
 
 export const metadata: Metadata = {
   title: "Nuno Starter SQlite",
@@ -47,6 +48,7 @@ export default function RootLayout({
             <Navbar />
             <div className="pt-14">{children}</div>
             <InstallButton />
+            <PwaUpdateToast />
           </I18nProvider>
         </TRPCReactProvider>
       </body>
