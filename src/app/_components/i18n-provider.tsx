@@ -173,7 +173,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let mounted = true;
-    void dictionaries[lang]().then((d) => {
+    void Promise.resolve(dictionaries[lang]).then((d) => {
       if (mounted) setDict(d);
     });
     return () => {
