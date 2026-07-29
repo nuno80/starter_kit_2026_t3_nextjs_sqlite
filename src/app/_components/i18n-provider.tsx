@@ -9,6 +9,7 @@ interface Dictionary {
   "nav.dx": string;
   "nav.phil": string;
   "nav.quick": string;
+  "nav.pricing": string;
   "nav.login": string;
   "nav.demo": string;
   "hero.badge": string;
@@ -58,6 +59,7 @@ const dictionaries: Record<Language, Dictionary> = {
     "nav.dx": "02 / Dev Experience",
     "nav.phil": "03 / Filosofia",
     "nav.quick": "04 / Quick Start",
+    "nav.pricing": "Prezzi",
     "nav.login": "Accedi",
     "nav.demo": "Demo App",
     "hero.badge": "Artigianato Digitale & Modern Stack",
@@ -105,6 +107,7 @@ const dictionaries: Record<Language, Dictionary> = {
     "nav.dx": "02 / Dev Experience",
     "nav.phil": "03 / Philosophy",
     "nav.quick": "04 / Quick Start",
+    "nav.pricing": "Pricing",
     "nav.login": "Sign In",
     "nav.demo": "Demo App",
     "hero.badge": "Digital Craftsmanship & Modern Stack",
