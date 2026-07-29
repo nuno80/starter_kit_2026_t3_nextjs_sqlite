@@ -24,6 +24,7 @@ export const posts = sqliteTable(
   (t) => [
     index("created_by_idx").on(t.createdById),
     index("name_idx").on(t.name),
+    index("post_created_at_idx").on(t.createdAt),
   ],
 );
 
@@ -53,7 +54,9 @@ export const user = sqliteTable("user", (d) => ({
     .default(sql`(unixepoch())`)
     .notNull(),
   updatedAt: d.integer({ mode: "timestamp" }).$onUpdate(() => new Date()),
-}));
+}), (t) => [
+  index("user_created_at_idx").on(t.createdAt)
+]);
 
 export const userRelations = relations(user, ({ many }) => ({
   account: many(account),

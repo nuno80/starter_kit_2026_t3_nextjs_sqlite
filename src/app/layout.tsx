@@ -27,11 +27,13 @@ export const viewport: Viewport = {
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-fraunces",
+  display: "swap",
 });
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
   variable: "--font-instrument-sans",
+  display: "swap",
 });
 
 export default function RootLayout({

@@ -158,6 +158,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
           email: "admin@example.com",
           name: "Admin User",
           role: "admin",
+          banned: false,
         },
       } as any,
       headers: new Headers(),
@@ -206,10 +207,6 @@ test.describe("Admin Dashboard & Guard Seams", () => {
         query: {
           user: {
             findFirst: ({ where }: any) => {
-              findFirstCallCount++;
-              if (findFirstCallCount === 1) {
-                return Promise.resolve({ id: "admin-user-id", email: "admin@example.com", role: "admin", banned: false });
-              }
               return Promise.resolve(where ? { id: "target-user-id", email: "existing@example.com", role: "user", banned: false } : undefined);
             },
           },
@@ -230,6 +227,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
           email: "admin@example.com",
           name: "Admin User",
           role: "admin",
+          banned: false,
         },
       } as any,
       headers: new Headers(),
@@ -243,10 +241,6 @@ test.describe("Admin Dashboard & Guard Seams", () => {
         query: {
           user: {
             findFirst: () => {
-              if (findFirstCallCount === 0) {
-                findFirstCallCount++;
-                return Promise.resolve({ id: "admin-user-id", email: "admin@example.com", role: "admin", banned: false });
-              }
               return Promise.resolve(undefined);
             },
           },
@@ -316,6 +310,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
         user: {
           id: userId,
           role,
+          banned: false,
         },
       } as any,
       headers: new Headers(),
@@ -431,15 +426,9 @@ test.describe("Admin Dashboard & Guard Seams", () => {
 
     // 1. Verify banned user is rejected with FORBIDDEN
     const bannedCtx = {
-      db: {
-        query: {
-          user: {
-            findFirst: () => Promise.resolve({ id: "banned-id", role: "user", banned: true, banExpires: null }),
-          },
-        },
-      } as any,
+      db: {} as any,
       session: {
-        user: { id: "banned-id", role: "user" },
+        user: { id: "banned-id", role: "user", banned: true },
       } as any,
       headers: new Headers(),
     };
@@ -453,17 +442,11 @@ test.describe("Admin Dashboard & Guard Seams", () => {
       expect(err.code).toBe("FORBIDDEN");
     }
 
-    // 2. Verify dynamic role change: session token says 'user', but DB says 'admin' -> adminCheck passes without regenerating session
+    // 2. Verify dynamic role change is now handled by the session directly
     const promotedCtx = {
-      db: {
-        query: {
-          user: {
-            findFirst: () => Promise.resolve({ id: "promoted-id", role: "admin", banned: false }),
-          },
-        },
-      } as any,
+      db: {} as any,
       session: {
-        user: { id: "promoted-id", role: "user" },
+        user: { id: "promoted-id", role: "admin", banned: false },
       } as any,
       headers: new Headers(),
     };
@@ -575,7 +558,7 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     const targetCtx = {
       db: testDb as any,
       session: {
-        user: { id: "target-id", role: "user" },
+        user: { id: "target-id", role: "user", banned: true },
       } as any,
       headers: new Headers(),
     };

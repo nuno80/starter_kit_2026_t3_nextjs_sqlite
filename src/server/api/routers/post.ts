@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { eq } from "drizzle-orm";
+import { TRPCError } from "@trpc/server";
 
 import {
   createTRPCRouter,
@@ -12,14 +14,6 @@ export const postRouter = createTRPCRouter({
   adminCheck: adminProcedure.query(() => {
     return "admin secret message";
   }),
-
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
 
   create: protectedProcedure
     .input(z.object({ name: z.string().min(1) }))
@@ -40,20 +34,17 @@ export const postRouter = createTRPCRouter({
   update: protectedProcedure
     .input(z.object({ id: z.number(), name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      const { eq } = await import("drizzle-orm");
       const targetPost = await ctx.db.query.posts.findFirst({
         where: eq(posts.id, input.id),
       });
 
       if (!targetPost) {
-        const { TRPCError } = await import("@trpc/server");
         throw new TRPCError({ code: "NOT_FOUND", message: "Post non trovato" });
       }
 
       const isOwner = targetPost.createdById === ctx.session.user.id;
 
       if (!isOwner && !ctx.isAdmin) {
-        const { TRPCError } = await import("@trpc/server");
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Non hai i permessi per modificare questo post.",
@@ -69,20 +60,17 @@ export const postRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const { eq } = await import("drizzle-orm");
       const targetPost = await ctx.db.query.posts.findFirst({
         where: eq(posts.id, input.id),
       });
 
       if (!targetPost) {
-        const { TRPCError } = await import("@trpc/server");
         throw new TRPCError({ code: "NOT_FOUND", message: "Post non trovato" });
       }
 
       const isOwner = targetPost.createdById === ctx.session.user.id;
 
       if (!isOwner && !ctx.isAdmin) {
-        const { TRPCError } = await import("@trpc/server");
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Non hai i permessi per eliminare questo post.",

@@ -89,18 +89,9 @@ export const createTRPCRouter = t.router;
  */
 const timingMiddleware = t.middleware(async ({ next, path }) => {
   const start = Date.now();
-
-  if (t._config.isDev) {
-    // artificial delay in dev
-    const waitMs = Math.floor(Math.random() * 400) + 100;
-    await new Promise((resolve) => setTimeout(resolve, waitMs));
-  }
-
   const result = await next();
-
   const end = Date.now();
   console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
-
   return result;
 });
 
@@ -127,25 +118,18 @@ export const protectedProcedure = t.procedure
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
-    const dbUser = await ctx.db.query.user.findFirst({
-      where: eq(user.id, ctx.session.user.id),
-      columns: { id: true, role: true, banned: true, banExpires: true },
-    });
 
-    if (!dbUser) {
-      throw new TRPCError({ code: "UNAUTHORIZED" });
-    }
-
-    const banActive = dbUser.banned && (!dbUser.banExpires || dbUser.banExpires > new Date());
+    // BetterAuth admin plugin provides 'role' and 'banned' on the session user object
+    const banActive = ctx.session.user.banned;
     if (banActive) {
       throw new TRPCError({ code: "FORBIDDEN", message: "Account suspended" });
     }
 
-    const isAdmin = dbUser.role ? dbUser.role.split(",").map((r) => r.trim()).includes("admin") : false;
+    const isAdmin = ctx.session.user.role === "admin";
+    
     return next({
       ctx: {
         session: { ...ctx.session, user: ctx.session.user },
-        dbUser,
         isAdmin,
       },
     });
