@@ -85,8 +85,10 @@ https://docs.stripe.com/testing#cards
 | `src/server/stripe/client.ts` | Istanza singleton dell'SDK Stripe |
 | `src/server/stripe/catalog.ts` | Mappa `productKey`/`planKey` → Price ID (mai fidarsi di prezzi lato client) |
 | `src/app/api/webhooks/stripe/route.ts` | Verifica firma + aggiorna DB (fonte di verità) |
-| `src/server/api/routers/checkout.ts` | Router tRPC per creare Checkout Session e Billing Portal |
+| `src/server/api/routers/checkout.ts` | Router tRPC: checkout one-time/subscription, stato abbonamento, Billing Portal |
 | `src/server/db/schema.ts` | Tabelle `stripeCustomer`, `payment`, `subscription` |
+| `src/app/pricing/page.tsx` | Pagina demo con prodotti one-time + piani abbonamento |
+| `src/app/account/page.tsx` | Stato abbonamento utente + link al Billing Portal Stripe |
 
 Dopo aver aggiunto/modificato le tabelle, applica lo schema al DB SQLite locale:
 
