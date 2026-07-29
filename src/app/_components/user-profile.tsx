@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { authClient } from "~/lib/auth-client";
 
 interface UserProfileProps {
@@ -58,6 +59,13 @@ export function UserProfile({ user }: UserProfileProps) {
       </div>
 
       <div className="h-[1px] w-full bg-line" />
+
+      <Link
+        href="/account"
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-plaster px-4 py-2.5 text-sm font-medium text-ink transition-all duration-200 hover:border-line-strong hover:bg-plaster-deep active:scale-[0.98]"
+      >
+        Account e abbonamento
+      </Link>
 
       <button
         type="button"
