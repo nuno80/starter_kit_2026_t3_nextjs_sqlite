@@ -3,6 +3,7 @@ export default {
   "nav.dx": "02 / Dev Experience",
   "nav.phil": "03 / Philosophy",
   "nav.quick": "04 / Quick Start",
+  "nav.pricing": "Pricing",
   "nav.login": "Sign In",
   "nav.demo": "Demo App",
   "hero.badge": "Digital Craftsmanship & Modern Stack",
