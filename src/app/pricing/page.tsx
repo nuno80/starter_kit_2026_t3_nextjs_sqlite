@@ -2,8 +2,7 @@ import Link from "next/link";
 
 import { getSession } from "~/server/better-auth/server";
 import { PricingOneTime } from "~/app/_components/pricing-one-time";
-
-export const dynamic = "force-dynamic";
+import { PricingSubscriptions } from "~/app/_components/pricing-subscriptions";
 
 export default async function PricingPage() {
   const session = await getSession();
@@ -32,6 +31,24 @@ export default async function PricingPage() {
         </div>
 
         <PricingOneTime isLoggedIn={!!session?.user} />
+
+        <div className="flex w-full flex-col items-center gap-8">
+          <div className="h-[1px] w-full bg-line" />
+          <div className="text-center">
+            <h2 className="font-serif text-3xl font-bold tracking-tight">
+              Oppure <span className="text-terracotta">abbonati</span>
+            </h2>
+            <p className="mx-auto mt-2 max-w-xl text-ink-soft">
+              Fatturazione ricorrente gestita da Stripe. Gestisci o disdici in
+              qualsiasi momento dalla tua{" "}
+              <Link href="/account" className="text-terracotta underline">
+                pagina account
+              </Link>
+              .
+            </p>
+          </div>
+          <PricingSubscriptions isLoggedIn={!!session?.user} />
+        </div>
 
         {!session?.user && (
           <p className="text-sm text-ink-soft">
