@@ -43,8 +43,13 @@ temporaneamente quella riga o lancia una build di produzione (`npm run build && 
 
 - **HTTPS obbligatorio in produzione** (localhost è considerato sicuro in dev).
 - **iOS Safari** non supporta `beforeinstallprompt`: l'utente deve usare
-  manualmente "Aggiungi a schermata Home". Il bottone custom quindi non
-  comparirà su iOS, ma i metadata `appleWebApp` in `layout.tsx` migliorano
-  comunque l'esperienza una volta aggiunta.
+  manualmente "Aggiungi a schermata Home". `<IosInstallHint />`
+  (`src/components/IosInstallHint.tsx`) mostra queste istruzioni solo su iOS,
+  solo quando l'app non è già installata, ed è dismissibile (ricordato in
+  `localStorage`).
 - Dopo aver aggiunto le icone, verifica il manifest visitando
   `/manifest.webmanifest` in locale.
+- Il manifest include già `shortcuts` (jump-list sull'icona installata) e
+  `categories`/`id`. Manca `screenshots`: aggiungile quando hai contenuto
+  reale da mostrare (migliora molto la UI di installazione su desktop
+  Chrome/Edge) — vedi https://developer.mozilla.org/en-US/docs/Web/Manifest/screenshots.
