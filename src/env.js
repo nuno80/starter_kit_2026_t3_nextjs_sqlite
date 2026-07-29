@@ -18,6 +18,13 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     RESEND_API_KEY: z.string().optional(),
     EMAIL_FROM: z.string().default("onboarding@resend.dev"),
+    // Stripe
+    STRIPE_SECRET_KEY: z.string().optional(),
+    STRIPE_WEBHOOK_SECRET: z.string().optional(),
+    STRIPE_PRICE_ONE_TIME_BASIC: z.string().optional(),
+    STRIPE_PRICE_ONE_TIME_PRO: z.string().optional(),
+    STRIPE_PRICE_SUB_MONTHLY: z.string().optional(),
+    STRIPE_PRICE_SUB_YEARLY: z.string().optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development")
@@ -75,6 +82,12 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     EMAIL_FROM: process.env.EMAIL_FROM,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+    STRIPE_PRICE_ONE_TIME_BASIC: process.env.STRIPE_PRICE_ONE_TIME_BASIC,
+    STRIPE_PRICE_ONE_TIME_PRO: process.env.STRIPE_PRICE_ONE_TIME_PRO,
+    STRIPE_PRICE_SUB_MONTHLY: process.env.STRIPE_PRICE_SUB_MONTHLY,
+    STRIPE_PRICE_SUB_YEARLY: process.env.STRIPE_PRICE_SUB_YEARLY,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**

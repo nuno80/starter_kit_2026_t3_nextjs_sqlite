@@ -55,10 +55,16 @@ export const user = sqliteTable("user", (d) => ({
   updatedAt: d.integer({ mode: "timestamp" }).$onUpdate(() => new Date()),
 }));
 
-export const userRelations = relations(user, ({ many }) => ({
+export const userRelations = relations(user, ({ many, one }) => ({
   account: many(account),
   session: many(session),
   posts: many(posts),
+  stripeCustomer: one(stripeCustomer, {
+    fields: [user.id],
+    references: [stripeCustomer.userId],
+  }),
+  payments: many(payment),
+  subscriptions: many(subscription),
 }));
 
 export const postsRelations = relations(posts, ({ one }) => ({
@@ -127,6 +133,110 @@ export const session = sqliteTable(
 
 export const sessionRelations = relations(session, ({ one }) => ({
   user: one(user, { fields: [session.userId], references: [user.id] }),
+}));
+
+/**
+ * Stripe integration tables
+ *
+ * - stripeCustomer: 1:1 mapping between our `user` and a Stripe Customer object.
+ * - payment: records of one-time (mode: "payment") Checkout Sessions.
+ * - subscription: records of recurring (mode: "subscription") Checkout Sessions, kept in
+ *   sync via the /api/webhooks/stripe handler.
+ */
+export const stripeCustomer = sqliteTable("stripe_customer", (d) => ({
+  id: d
+    .text({ length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: d
+    .text({ length: 255 })
+    .notNull()
+    .unique()
+    .references(() => user.id, { onDelete: "cascade" }),
+  stripeCustomerId: d.text({ length: 255 }).notNull().unique(),
+  createdAt: d
+    .integer({ mode: "timestamp" })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+}));
+
+export const stripeCustomerRelations = relations(
+  stripeCustomer,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [stripeCustomer.userId],
+      references: [user.id],
+    }),
+  }),
+);
+
+export const payment = sqliteTable(
+  "payment",
+  (d) => ({
+    id: d
+      .text({ length: 255 })
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: d
+      .text({ length: 255 })
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    stripeCheckoutSessionId: d.text({ length: 255 }).notNull().unique(),
+    stripePaymentIntentId: d.text({ length: 255 }),
+    productKey: d.text({ length: 255 }).notNull(),
+    amountTotal: d.integer(), // in minor units (e.g. cents)
+    currency: d.text({ length: 10 }),
+    // pending -> created, checkout not completed yet
+    // paid -> payment succeeded (webhook: checkout.session.completed / payment_intent.succeeded)
+    // failed -> payment failed (webhook: payment_intent.payment_failed)
+    status: d.text({ length: 32 }).notNull().default("pending"),
+    createdAt: d
+      .integer({ mode: "timestamp" })
+      .default(sql`(unixepoch())`)
+      .notNull(),
+    updatedAt: d.integer({ mode: "timestamp" }).$onUpdate(() => new Date()),
+  }),
+  (t) => [index("payment_user_id_idx").on(t.userId)],
+);
+
+export const paymentRelations = relations(payment, ({ one }) => ({
+  user: one(user, { fields: [payment.userId], references: [user.id] }),
+}));
+
+export const subscription = sqliteTable(
+  "subscription",
+  (d) => ({
+    id: d
+      .text({ length: 255 })
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: d
+      .text({ length: 255 })
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    stripeCustomerId: d.text({ length: 255 }).notNull(),
+    stripeSubscriptionId: d.text({ length: 255 }).notNull().unique(),
+    stripePriceId: d.text({ length: 255 }).notNull(),
+    planKey: d.text({ length: 255 }).notNull(),
+    // mirrors Stripe subscription.status: trialing | active | past_due | canceled |
+    // incomplete | incomplete_expired | unpaid | paused
+    status: d.text({ length: 32 }).notNull().default("incomplete"),
+    currentPeriodEnd: d.integer({ mode: "timestamp" }),
+    cancelAtPeriodEnd: d.integer({ mode: "boolean" }).default(false),
+    createdAt: d
+      .integer({ mode: "timestamp" })
+      .default(sql`(unixepoch())`)
+      .notNull(),
+    updatedAt: d.integer({ mode: "timestamp" }).$onUpdate(() => new Date()),
+  }),
+  (t) => [index("subscription_user_id_idx").on(t.userId)],
+);
+
+export const subscriptionRelations = relations(subscription, ({ one }) => ({
+  user: one(user, { fields: [subscription.userId], references: [user.id] }),
 }));
 
 export const verification = sqliteTable(
