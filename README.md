@@ -12,6 +12,7 @@ Questo starter kit è preconfigurato e pronto all'uso con le migliori tecnologie
   - Autenticazione con Email & Password
   - Social Login (GitHub & Google) pronti per l'uso
   - Dashboard utente integrata e form di accesso minimal
+- **PWA (Progressive Web App)**: Installabile con shell offline generata da Serwist per Next.js 16 / Turbopack. Include meccanismo di aggiornamento client-side manuale.
 - **API & State Management**: [tRPC 11](https://trpc.io/) + [TanStack React Query v5](https://tanstack.com/query) per type-safety perfetta tra client e server
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) per design moderno e responsive
 - **Validazione & Utility**: [Zod](https://zod.dev/) per la validazione degli schemi e la gestione sicura delle variabili d'ambiente (`@t3-oss/env-nextjs`)

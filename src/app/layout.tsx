@@ -7,9 +7,12 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { I18nProvider } from "~/app/_components/i18n-provider";
 import { Navbar } from "~/app/_components/navbar";
 import { InstallButton } from "~/components/InstallButton";
+import { NetworkStatus } from "~/components/NetworkStatus";
+import { SerwistProvider } from "~/components/SerwistProvider";
+import { UpdateBanner } from "~/components/UpdateBanner";
 
 export const metadata: Metadata = {
-  title: "Nuno Starter SQlite",
+  title: "Nuno Starter SQLite",
   description: "Modern full-stack starter kit with Next.js, tRPC, Drizzle, and Better-Auth on SQLite",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   manifest: "/manifest.webmanifest",
@@ -21,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: "#281c17",
 };
 
 const fraunces = Fraunces({
@@ -42,13 +45,17 @@ export default function RootLayout({
   return (
     <html lang="it" suppressHydrationWarning className={`${fraunces.variable} ${instrumentSans.variable}`}>
       <body>
-        <TRPCReactProvider>
-          <I18nProvider>
-            <Navbar />
-            <div className="pt-14">{children}</div>
-            <InstallButton />
-          </I18nProvider>
-        </TRPCReactProvider>
+        <SerwistProvider>
+          <TRPCReactProvider>
+            <I18nProvider>
+              <Navbar />
+              <NetworkStatus />
+              <div className="pt-14">{children}</div>
+              <InstallButton />
+              <UpdateBanner />
+            </I18nProvider>
+          </TRPCReactProvider>
+        </SerwistProvider>
       </body>
     </html>
   );

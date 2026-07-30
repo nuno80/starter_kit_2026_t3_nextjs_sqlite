@@ -2,14 +2,19 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Nuno Starter SQlite",
+    id: "/",
+    name: "Nuno Starter SQLite",
     short_name: "Starter",
-    description: "Modern full-stack starter kit with Next.js, tRPC, Drizzle, and Better-Auth on SQLite",
+    description:
+      "Modern full-stack starter kit with Next.js, tRPC, Drizzle, and Better-Auth on SQLite",
     start_url: "/",
+    scope: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#000000",
-    orientation: "portrait",
+    display_override: ["standalone", "browser"],
+    background_color: "#f8f3e9",
+    theme_color: "#281c17",
+    orientation: "portrait-primary",
+    categories: ["developer", "productivity"],
     icons: [
       {
         src: "/icon-192.png",
@@ -26,6 +31,20 @@ export default function manifest(): MetadataRoute.Manifest {
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",
+      },
+    ],
+    shortcuts: [
+      {
+        name: "Landing",
+        short_name: "Home",
+        description: "Starter kit landing page",
+        url: "/",
+      },
+      {
+        name: "Demo App",
+        short_name: "Posts",
+        description: "SQLite CRUD workspace",
+        url: "/posts",
       },
     ],
   };

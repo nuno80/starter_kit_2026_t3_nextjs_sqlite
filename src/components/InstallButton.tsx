@@ -41,8 +41,9 @@ export function InstallButton() {
 
   return (
     <button
+      type="button"
       onClick={handleInstall}
-      className="fixed bottom-4 right-4 z-50 rounded-full bg-neutral-900 px-5 py-3 font-medium text-white shadow-lg transition-transform hover:scale-105 active:scale-95 dark:bg-white dark:text-neutral-900"
+      className="fixed bottom-4 right-4 z-50 rounded-full bg-terracotta px-5 py-3 font-medium text-plaster shadow-lg transition-transform hover:scale-105 active:scale-95"
     >
       Installa app
     </button>

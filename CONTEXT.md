@@ -72,5 +72,6 @@ _Avoid_: Polling, Success URL state mutation, Aggiornamenti client-driven
 L'interfaccia sicura offerta e ospitata da Stripe a cui gli utenti possono accedere per aggiornare carte di credito, visualizzare e scaricare le fatture, e cancellare l'abbonamento ricorrente, con zero codice backend addizionale da parte nostra.
 _Avoid_: Form di disdetta custom, Tabella fatture locale, UI gestione carte
 
-Il design system visivo editoriale basato su toni caldi (intonaco, terracotta, ottone, verde oliva) e tipografia ad alto contrasto (Fraunces per i titoli, Instrument Sans per i testi), integrato nativamente in Tailwind CSS v4 tramite il blocco `@theme` e variabili CSS di Next.js.
-_Avoid_: Dark mode tecnologico, Palette standard di Tailwind, CSS config esterne
+**Installable Shell (PWA)**:
+La shell pubblica installabile basata su Serwist (service worker + precache) e Web App Manifest, che consente offline sulla landing/demo già visitate, prompt di installazione e aggiornamento manuale del client, senza mettere in cache sessioni Better-Auth, routes admin o mutazioni.
+_Avoid_: Offline-first sync, cache API autenticate, push notifications obbligatori, background sync
