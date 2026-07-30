@@ -18,6 +18,7 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     RESEND_API_KEY: z.string().optional(),
     EMAIL_FROM: z.string().default("onboarding@resend.dev"),
+    INITIAL_ADMIN_EMAIL: z.string().email().optional(),
     // Stripe
     STRIPE_SECRET_KEY: z.string().optional(),
     STRIPE_WEBHOOK_SECRET: z.string().optional(),
@@ -82,6 +83,7 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     EMAIL_FROM: process.env.EMAIL_FROM,
+    INITIAL_ADMIN_EMAIL: process.env.INITIAL_ADMIN_EMAIL,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     STRIPE_PRICE_ONE_TIME_BASIC: process.env.STRIPE_PRICE_ONE_TIME_BASIC,

@@ -11,6 +11,23 @@ export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "sqlite", // or "pg" or "mysql"
   }),
+  databaseHooks: {
+    user: {
+      create: {
+        before: (user) => {
+          if (env.INITIAL_ADMIN_EMAIL && user.email === env.INITIAL_ADMIN_EMAIL) {
+            return {
+              data: {
+                ...user,
+                role: "admin",
+              },
+            };
+          }
+          return { data: user };
+        },
+      },
+    },
+  },
   plugins: [admin()],
   rateLimit: {
     enabled: true,

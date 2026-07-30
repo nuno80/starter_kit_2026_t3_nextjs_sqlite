@@ -35,6 +35,8 @@ Copia il file di esempio per creare il tuo `.env` locale:
 cp .env.example .env
 ```
 
+Puoi opzionalmente impostare `INITIAL_ADMIN_EMAIL="tua@email.com"` nel file `.env`: il primo utente che si registrerà con questa email otterrà automaticamente i privilegi di `admin` e l'accesso alla dashboard di amministrazione.
+
 *(Nota: il database SQLite punta di default al file locale `db.sqlite`)*
 
 ### 3. Setup del Database
