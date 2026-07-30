@@ -29,13 +29,20 @@ pnpm install
 
 ### 2. Variabili d'Ambiente
 
-Copia il file di esempio per creare il tuo `.env` locale:
+Copia il file di esempio per creare il tuo `.env` locale (questo file è ignorato da Git e conterrà i tuoi dati reali):
 
 ```bash
 cp .env.example .env
 ```
 
-Puoi opzionalmente impostare `INITIAL_ADMIN_EMAIL="tua@email.com"` nel file `.env`: il primo utente che si registrerà con questa email otterrà automaticamente i privilegi di `admin` e l'accesso alla dashboard di amministrazione.
+**Admin Iniziale (Opzionale ma raccomandato):**
+Per creare facilmente il primo amministratore del sistema, apri il tuo file `.env` appena creato e inserisci la tua email nella variabile dedicata:
+
+```env
+INITIAL_ADMIN_EMAIL="tua@email.com"
+```
+*(Se il server di sviluppo era già avviato, ricordati di riavviarlo).* 
+Il primo account che si registrerà sul sito utilizzando **esattamente quella email**, otterrà automaticamente i privilegi di `admin` e potrà accedere alla dashboard di amministrazione (`/admin-dashboard`).
 
 *(Nota: il database SQLite punta di default al file locale `db.sqlite`)*
 
