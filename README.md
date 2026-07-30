@@ -44,6 +44,8 @@ INITIAL_ADMIN_EMAIL="tua@email.com"
 *(Se il server di sviluppo era già avviato, ricordati di riavviarlo).* 
 Il primo account che si registrerà sul sito utilizzando **esattamente quella email**, otterrà automaticamente i privilegi di `admin` e potrà accedere alla dashboard di amministrazione (`/admin-dashboard`).
 
+⚠️ **Importante:** Se salti questo passaggio, nessun utente avrà i privilegi amministrativi di base. Di conseguenza, sarà impossibile accedere all'Admin Dashboard per modificare i permessi degli altri utenti tramite interfaccia web.
+
 *(Nota: il database SQLite punta di default al file locale `db.sqlite`)*
 
 ### 3. Setup del Database
