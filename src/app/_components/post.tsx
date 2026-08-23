@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { api } from "~/trpc/react";
+import { hasRole } from "~/lib/roles";
 
 export function LatestPost({
   currentUserId,
@@ -17,9 +18,7 @@ export function LatestPost({
   const [editingName, setEditingName] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const isAdmin = (r?: string | null) =>
-    r ? r.split(",").map((x) => x.trim()).includes("admin") : false;
-  const userIsAdmin = isAdmin(userRole);
+  const userIsAdmin = hasRole(userRole, "admin");
 
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {

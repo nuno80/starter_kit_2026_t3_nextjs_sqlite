@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 
 import { createTRPCRouter, adminProcedure } from "~/server/api/trpc";
 import { user, role, session } from "~/server/db/schema";
+import { hasRole } from "~/lib/roles";
 
 export const adminRouter = createTRPCRouter({
   getRoles: adminProcedure.query(async ({ ctx }) => {
@@ -69,7 +70,7 @@ export const adminRouter = createTRPCRouter({
         });
       }
 
-      if (targetUser.id === ctx.session.user.id && !input.role.split(",").map(x => x.trim()).includes("admin")) {
+      if (targetUser.id === ctx.session.user.id && !hasRole(input.role, "admin")) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Cannot demote your own admin account.",
@@ -109,7 +110,7 @@ export const adminRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (input.userId === ctx.session.user.id && !input.newRole.split(",").map(x => x.trim()).includes("admin")) {
+      if (input.userId === ctx.session.user.id && !hasRole(input.newRole, "admin")) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Cannot demote your own admin account.",
@@ -137,11 +138,6 @@ export const adminRouter = createTRPCRouter({
         });
       }
       
-      // better-auth plugin:admin actually handles banning. We should use it directly 
-      // instead of raw db writes to ensure better-auth clears its own session caches and cookies.
-      // But we can't easily access the better-auth instance here without importing it.
-      // Doing DB transaction to delete session is okay, but BetterAuth caches sessions.
-      
       await ctx.db.transaction(async (tx) => {
         await tx
           .update(user)
@@ -149,23 +145,10 @@ export const adminRouter = createTRPCRouter({
           .where(eq(user.id, input.userId));
         await tx.delete(session).where(eq(session.userId, input.userId));
       });
-      
-      // Force better-auth admin plugin to ban the user so it revokes sessions at the auth layer
-      try {
-        const { auth } = await import("~/server/better-auth/config");
-        // We know the sessions are already removed from DB, but we want better-auth 
-        // to propagate cache invalidation if needed.
-        await auth.api.banUser({
-          body: {
-            userId: input.userId,
-            banReason: input.reason,
-          },
-          headers: new Headers(), 
-        });
-      } catch (e) {
-        // ignore errors
-      }
-      
+
+      // ponytail: ban effettivo dopo la scadenza del cookieCache di better-auth (max 5 min).
+      // Se serve revoca immediata, passare ctx.headers a auth.api.banUser.
+
       return { success: true };
     }),
 

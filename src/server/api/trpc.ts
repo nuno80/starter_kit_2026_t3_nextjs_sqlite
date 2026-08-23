@@ -14,6 +14,7 @@ import { ZodError } from "zod";
 import { auth } from "~/server/better-auth";
 import { db } from "~/server/db";
 import { user } from "~/server/db/schema";
+import { hasRole } from "~/lib/roles";
 import { eq } from "drizzle-orm";
 
 /**
@@ -88,6 +89,7 @@ export const createTRPCRouter = t.router;
  * network latency that would occur in production but not in local development.
  */
 const timingMiddleware = t.middleware(async ({ next, path }) => {
+  if (process.env.NODE_ENV !== "development") return next();
   const start = Date.now();
   const result = await next();
   const end = Date.now();
@@ -125,7 +127,7 @@ export const protectedProcedure = t.procedure
       throw new TRPCError({ code: "FORBIDDEN", message: "Account suspended" });
     }
 
-    const isAdmin = ctx.session.user.role === "admin";
+    const isAdmin = hasRole(ctx.session.user.role, "admin");
     
     return next({
       ctx: {

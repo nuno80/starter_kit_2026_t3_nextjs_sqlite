@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { authClient } from "~/lib/auth-client";
+import { hasRole } from "~/lib/roles";
 import { AuthForm } from "~/app/_components/auth-form";
 import { UserProfile } from "~/app/_components/user-profile";
 import { useI18n } from "~/app/_components/i18n-provider";
@@ -62,7 +63,7 @@ export function Navbar() {
           <span>Nuno</span>
           <span className="font-sans text-xs font-normal tracking-widest text-ink-soft uppercase">Starter SQlite</span>
         </Link>
-        <ul className="hidden items-center gap-6 text-sm font-medium text-ink-soft md:flex">
+        <ul className="hidden items-center gap-6 text-sm font-medium text-ink-soft lg:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link href={link.href} className="transition-colors hover:text-terracotta">
@@ -77,7 +78,7 @@ export function Navbar() {
               </Link>
             </li>
           )}
-          {session?.user && ((session.user as { role?: string }).role?.split(",").map(r => r.trim()).includes("admin")) && (
+          {session?.user && hasRole((session.user as { role?: string }).role, "admin") && (
             <li>
               <Link href="/admin-dashboard" className="rounded-md bg-terracotta/10 px-2.5 py-1 text-xs font-semibold text-terracotta border border-terracotta/30">
                 Admin ⚙️
@@ -86,7 +87,7 @@ export function Navbar() {
           )}
         </ul>
         <div className="flex items-center gap-3">
-          <div className="md:hidden h-8 w-8 animate-pulse rounded-lg bg-plaster-deep border border-line" />
+          <div className="lg:hidden h-8 w-8 animate-pulse rounded-lg bg-plaster-deep border border-line" />
           <div className="flex items-center gap-1.5 rounded-full border border-line bg-plaster-deep px-3 py-1.5 text-xs font-semibold tracking-wider text-ink">
             <span className="uppercase">{lang}</span>
           </div>
@@ -105,7 +106,7 @@ export function Navbar() {
       </Link>
 
       {/* Navigation links (01-04) - only relevant on / or smooth scroll */}
-      <ul className="hidden items-center gap-6 text-sm font-medium text-ink-soft md:flex">
+      <ul className="hidden items-center gap-6 text-sm font-medium text-ink-soft lg:flex">
         {navLinks.map((link) => (
           <li key={link.href}>
             <Link
@@ -126,7 +127,7 @@ export function Navbar() {
             </Link>
           </li>
         )}
-        {session?.user && ((session.user as { role?: string }).role?.split(",").map(r => r.trim()).includes("admin")) && (
+        {session?.user && hasRole((session.user as { role?: string }).role, "admin") && (
           <li>
             <Link
               href="/admin-dashboard"
@@ -141,7 +142,7 @@ export function Navbar() {
       {/* Right controls: Lang globe & Auth Widget */}
       <div className="flex items-center gap-3">
         {/* Mobile menu button */}
-        <div className="relative md:hidden" ref={mobileMenuRef}>
+        <div className="relative lg:hidden" ref={mobileMenuRef}>
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -194,7 +195,7 @@ export function Navbar() {
                   {t("nav.demo")} →
                 </Link>
               )}
-              {session?.user && ((session.user as { role?: string }).role?.split(",").map(r => r.trim()).includes("admin")) && (
+              {session?.user && hasRole((session.user as { role?: string }).role, "admin") && (
                 <Link
                   href="/admin-dashboard"
                   className="mt-1 rounded-md bg-terracotta/10 px-3 py-2 text-xs font-semibold text-terracotta border border-terracotta/30 transition-colors hover:bg-terracotta hover:text-plaster"

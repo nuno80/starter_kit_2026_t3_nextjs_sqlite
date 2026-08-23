@@ -4,6 +4,7 @@ import { getSession } from "~/server/better-auth/server";
 import { db } from "~/server/db";
 import { user } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
+import { hasRole } from "~/lib/roles";
 import { AdminDashboardClient } from "./client";
 
 export const dynamic = "force-dynamic";
@@ -18,9 +19,7 @@ export default async function AdminDashboardPage() {
     where: eq(user.id, session.user.id),
   });
 
-  const isAdmin = (r?: string | null) => r?.split(",").map(x => x.trim()).includes("admin") ?? false;
-
-  if (!isAdmin(dbUser?.role) && !isAdmin((session.user as { role?: string }).role)) {
+  if (!hasRole(dbUser?.role, "admin") && !hasRole((session.user as { role?: string }).role, "admin")) {
     redirect("/");
   }
 
