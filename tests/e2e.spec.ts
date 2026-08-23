@@ -210,6 +210,9 @@ test.describe("Admin Dashboard & Guard Seams", () => {
               return Promise.resolve(where ? { id: "target-user-id", email: "existing@example.com", role: "user", banned: false } : undefined);
             },
           },
+          role: {
+            findMany: () => Promise.resolve([{ name: "editor" }]),
+          },
         },
         update: () => ({
           set: ({ role }: any) => ({
@@ -244,6 +247,9 @@ test.describe("Admin Dashboard & Guard Seams", () => {
               return Promise.resolve(undefined);
             },
           },
+          role: {
+            findMany: () => Promise.resolve([{ name: "editor" }]),
+          },
         },
       },
     };
@@ -255,6 +261,16 @@ test.describe("Admin Dashboard & Guard Seams", () => {
     expect(res.success).toBe(true);
     expect(updatedRole).toBe("editor");
     expect(updatedId).toBe("target-user-id");
+
+    // Unknown role is rejected before touching the user
+    try {
+      await caller.assignRoleByEmail({ email: "existing@example.com", role: "superadmin" });
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("BAD_REQUEST");
+      expect(err.message).toContain("superadmin");
+    }
 
     findFirstCallCount = 0;
     try {
@@ -366,6 +382,9 @@ test.describe("Admin Dashboard & Guard Seams", () => {
           user: {
             findFirst: () => Promise.resolve({ id: "admin-user-id", role: "admin", banned: false }),
           },
+          role: {
+            findMany: () => Promise.resolve([]),
+          },
         },
         update: () => ({
           set: () => ({
@@ -412,6 +431,19 @@ test.describe("Admin Dashboard & Guard Seams", () => {
       expect(err).toBeInstanceOf(TRPCError);
       expect(err.code).toBe("FORBIDDEN");
       expect(err.message).toBe("Cannot demote your own admin account.");
+    }
+
+    // Unknown role is rejected with BAD_REQUEST
+    try {
+      await caller.updateUserRole({
+        userId: "some-other-user",
+        newRole: "superadmin",
+      });
+      expect(true).toBe(false);
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(TRPCError);
+      expect(err.code).toBe("BAD_REQUEST");
+      expect(err.message).toContain("superadmin");
     }
   });
 

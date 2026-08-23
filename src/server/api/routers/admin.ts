@@ -1,10 +1,35 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
+import { type LibSQLDatabase } from "drizzle-orm/libsql";
 
 import { createTRPCRouter, adminProcedure } from "~/server/api/trpc";
 import { user, role, session } from "~/server/db/schema";
+import * as schema from "~/server/db/schema";
 import { hasRole } from "~/lib/roles";
+
+/**
+ * Every role in a comma-separated string must exist in the DB catalog (or be a
+ * core role). Prevents admins from writing roles that don't exist in `role`.
+ */
+async function assertKnownRoles(
+  db: LibSQLDatabase<typeof schema>,
+  roleStr: string,
+) {
+  const names = roleStr.split(",").map((r) => r.trim()).filter(Boolean);
+  if (names.length === 0) {
+    throw new TRPCError({ code: "BAD_REQUEST", message: "Role cannot be empty." });
+  }
+  const catalog = await db.query.role.findMany({ columns: { name: true } });
+  const known = new Set([...catalog.map((r) => r.name), "admin", "user"]);
+  const unknown = names.filter((n) => !known.has(n));
+  if (unknown.length > 0) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: `Unknown role(s): ${unknown.join(", ")}. Create them first with createRole.`,
+    });
+  }
+}
 
 export const adminRouter = createTRPCRouter({
   getRoles: adminProcedure.query(async ({ ctx }) => {
@@ -59,6 +84,8 @@ export const adminRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      await assertKnownRoles(ctx.db as LibSQLDatabase<typeof schema>, input.role);
+
       const targetUser = await ctx.db.query.user.findFirst({
         where: eq(user.email, input.email),
       });
@@ -110,6 +137,8 @@ export const adminRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      await assertKnownRoles(ctx.db as LibSQLDatabase<typeof schema>, input.newRole);
+
       if (input.userId === ctx.session.user.id && !hasRole(input.newRole, "admin")) {
         throw new TRPCError({
           code: "FORBIDDEN",

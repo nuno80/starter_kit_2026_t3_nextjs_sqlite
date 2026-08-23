@@ -14,7 +14,7 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        before: (user) => {
+        before: async (user) => {
           if (env.INITIAL_ADMIN_EMAIL && user.email === env.INITIAL_ADMIN_EMAIL) {
             return {
               data: {

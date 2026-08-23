@@ -1,9 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getSession } from "~/server/better-auth/server";
-import { db } from "~/server/db";
-import { user } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
 import { hasRole } from "~/lib/roles";
 import { AdminDashboardClient } from "./client";
 
@@ -15,11 +12,8 @@ export default async function AdminDashboardPage() {
     redirect("/");
   }
 
-  const dbUser = await db.query.user.findFirst({
-    where: eq(user.id, session.user.id),
-  });
-
-  if (!hasRole(dbUser?.role, "admin") && !hasRole((session.user as { role?: string }).role, "admin")) {
+  // The admin plugin already exposes `role` on the session; no extra DB read needed.
+  if (!hasRole((session.user as { role?: string }).role, "admin")) {
     redirect("/");
   }
 
